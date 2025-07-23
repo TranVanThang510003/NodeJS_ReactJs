@@ -1,8 +1,6 @@
-
 import React from 'react';
-import { Button, Form, Input } from 'antd';
-import Logo from "../componets/common/Logo.jsx";
-
+import { Button, Checkbox, Form, Input } from 'antd';
+import Logo from '../componets/common/Logo.jsx';
 const onFinish = values => {
     console.log('Success:', values);
 };
@@ -11,30 +9,29 @@ const onFinishFailed = errorInfo => {
     console.log('Failed:', errorInfo);
 };
 
-const Register = () => (
+const Login = () => (
     <div
         className="relative flex justify-center items-center h-screen bg-no-repeat bg-cover"
         style={{ backgroundImage: "url('/img/register.jpg')" }}
     >
-        {/* Logo góc trái */}
+        {/* Logo ở góc trái */}
         <div className="absolute top-0 left-0 flex items-center ">
-            <Logo width={60} height={60} />
+           <Logo width={60} height={60} />
         </div>
 
         {/* Form đăng ký */}
         <div className="bg-white/30 backdrop-blur-sm rounded-3xl">
             <Form
-                name="register"
+                name="basic"
                 labelCol={{ span: 8 }}
                 wrapperCol={{ span: 16 }}
                 style={{ maxWidth: "100%", padding: "60px" }}
-                initialValues={{ remember: true }}
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
                 autoComplete="off"
             >
                 <Form.Item
-                    label={<span className="text-[16px] font-semibold text-gray-800">Username</span>}
+                    label={<span className=" text-[16px] font-semibold text-gray-800">Username</span>}
                     name="username"
                     rules={[{ required: true, message: 'Please input your username!' }]}
                 >
@@ -42,45 +39,15 @@ const Register = () => (
                 </Form.Item>
 
                 <Form.Item
-                    label={<span className="text-[16px] font-semibold text-gray-800">Email</span>}
-                    name="email"
-                    rules={[
-                        { required: true, message: 'Please input your email!' },
-                        { type: 'email', message: 'Invalid email format!' }
-                    ]}
-                >
-                    <Input />
-                </Form.Item>
-
-                <Form.Item
-                    label={<span className="text-[16px] font-semibold text-gray-800">Password</span>}
+                    label={<span className=" text-[16px] font-semibold text-gray-800">Password</span>}
                     name="password"
                     rules={[{ required: true, message: 'Please input your password!' }]}
                 >
                     <Input.Password />
                 </Form.Item>
 
-                <Form.Item
-                    label={<span className="text-[16px] font-semibold text-gray-800">Confirm</span>}
-                    name="confirm"
-                    dependencies={['password']}
-                    hasFeedback
-                    rules={[
-                        { required: true, message: 'Please confirm your password!' },
-                        ({ getFieldValue }) => ({
-                            validator(_, value) {
-                                if (!value || getFieldValue('password') === value) {
-                                    return Promise.resolve();
-                                }
-                                return Promise.reject(new Error('Passwords do not match!'));
-                            },
-                        }),
-                    ]}
-                >
-                    <Input.Password />
-                </Form.Item>
 
-                <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                <Form.Item label={null}>
                     <Button
                         type="primary"
                         htmlType="submit"
@@ -95,12 +62,13 @@ const Register = () => (
                             fontWeight: 600,
                         }}
                     >
-                        Register
+                        Log In
                     </Button>
+
                 </Form.Item>
             </Form>
         </div>
     </div>
 );
 
-export default Register;
+export default Login;
