@@ -11,20 +11,28 @@ const Register = () => {
     const navigate = useNavigate();
     const onFinish = async(values) => {
        const { name, email, password } = values;
-       const  res= await createUserApi(name, email, password)
-        if(res) {
-            notification.success({
-                message: "Create user success ",
-
-            })
-            navigate("/login")
-        }else{
+        try {
+            const res = await createUserApi(name, email, password);
+            console.log("Response:", res); // Log response khi thành công
+            if (res.success) {
+                notification.success({
+                    message: res.message || "Tạo tài khoản thành công!",
+                });
+                navigate("/login");
+            } else {
+                notification.error({
+                    message: "Lỗi đăng ký",
+                    description: res.message || "Có lỗi xảy ra khi tạo tài khoản.",
+                });
+            }
+        } catch (error) {
+            console.log("Error:", error); // Log lỗi khi có exception
             notification.error({
-                message: "Create user error",
-            })
+                message: "Lỗi đăng ký",
+                description: error.message || "Có lỗi xảy ra khi kết nối đến server.",
+            });
         }
     };
-
     const onFinishFailed = errorInfo => {
         console.log('Failed:', errorInfo);
     };
