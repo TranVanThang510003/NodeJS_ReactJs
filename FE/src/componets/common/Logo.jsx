@@ -17,7 +17,7 @@ const Logo = ({ width = 60, height = 60, className = '' }) => {
                 className="object-contain"
             />
             <span className="ml-2 text-gray-500 text-2xl font-bold drop-shadow">
-                QuickCart
+                AStream
             </span>
         </div>
     );

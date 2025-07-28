@@ -1,4 +1,22 @@
-*{
-    padding: 0;
-    margin: 0;
+/* Tùy chỉnh thanh cuộn */
+.scrollbar-custom::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+
+
+.scrollbar-custom::-webkit-scrollbar-thumb {
+    background: #ff6500; /* Màu thanh cuộn */
+    border-radius: 4px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb:hover {
+    background: #6b7280; /* Màu khi hover */
+}
+
+/* Hỗ trợ Firefox */
+.scrollbar-custom {
+    scrollbar-width: thin;
+    scrollbar-color: #ff6500 #131314; /* Thumb và track */
 }

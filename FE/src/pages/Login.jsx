@@ -31,8 +31,8 @@ const Login = () => {
             className="relative flex justify-center items-center h-screen bg-no-repeat bg-cover"
             style={{ backgroundImage: "url('/img/register.jpg')" }}
         >
-            {/* Logo ở góc trái */}
-            <div className="absolute top-0 left-0 flex items-center ">
+
+            <div className="absolute top-4 left-4 flex items-center ">
                <Logo width={60} height={60} />
             </div>
 

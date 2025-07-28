@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { Space, Table, Tag } from 'antd';
+import {notification, Space, Table, Tag} from 'antd';
 import {getUserApi} from "../util/api.js";
 
 const UserPage = () =>{
@@ -8,11 +8,16 @@ const [userData, setUserData] = useState([]);
 useEffect(()=>{
 
 const fetchUser = async () => {
-        const res = await getUserApi();
-       if(res){
-           setUserData(res);
-       }
-      }
+    try {
+            const res = await getUserApi(); // nếu lỗi, sẽ nhảy vào catch
+            setUserData(res);
+        } catch (err) {
+            notification.error({
+                message: "Lỗi",
+                description: err.message || "Không thể lấy dữ liệu người dùng.",
+            });
+        }
+    }
       fetchUser();
 },[])
 const columns = [

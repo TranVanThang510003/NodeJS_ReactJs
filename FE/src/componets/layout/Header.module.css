@@ -1,0 +1,27 @@
+
+.authButton {
+    background-color: #ff6500;
+    color: #fff;
+    padding: 4px 12px;
+    border-radius: 6px;
+    width: 130px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    font-size: 16px;
+    cursor: pointer;
+    margin-right: 8px;
+    transition: background-color 0.3s, color 0.3s; /* Thêm hiệu ứng mượt mà */
+}
+
+.authButton.login {
+    padding: 4px 18px; /* Điều chỉnh padding cho Login */
+}
+
+.authButton:hover {
+    background-color: orange; /* Màu tối hơn khi hover */
+    color: #fff;
+}
+
