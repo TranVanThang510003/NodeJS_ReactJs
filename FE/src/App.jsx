@@ -7,7 +7,11 @@ import UserPage from "./pages/UserPage.jsx";
 import Login from "./pages/Login.jsx";
 import './index.css';
 import MovieDetail from "./componets/movieDetail/MovieDetail.jsx";
-
+import CreateMovieForm from "./componets/Admin/MovieManagement/CreateMovieForm.jsx";
+import CreateEpisode from "./componets/Admin/MovieManagement/CreateEpisode.jsx";
+import AdminLayout from "./AdminLayout.jsx";
+import MovieList from "./componets/Admin/MovieManagement/MovieList.jsx";
+import EpisodeList from "./componets/Admin/MovieManagement/EpisodeList.jsx";
 const AnimatedRoute = ({ children }) => {
     const location = useLocation();
 
@@ -51,6 +55,7 @@ export default function App() {
                             </AnimatedRoute>
                         }
                     />
+
                 </Route>
                 <Route
                     path="/register"
@@ -68,7 +73,44 @@ export default function App() {
                         </AnimatedRoute>
                     }
                 />
+
+                <Route path="/dashboard" element={<AdminLayout />}>
+                    <Route
+                        path="create-movie"
+                        element={
+                            <AnimatedRoute>
+                                <CreateMovieForm/>
+                            </AnimatedRoute>
+                        }
+                    />
+                    <Route
+                        path="create-episode"
+                        element={
+                            <AnimatedRoute>
+                                <CreateEpisode/>
+                            </AnimatedRoute>
+                        }
+                    />
+                    <Route
+                        path="movies"
+                        element={
+                            <AnimatedRoute>
+                                <MovieList/>
+                            </AnimatedRoute>
+                        }
+                    />
+                    <Route
+                        path="episode-list"
+                        element={
+                            <AnimatedRoute>
+                                <EpisodeList/>
+                            </AnimatedRoute>
+                        }
+                    />
+                </Route>
+
             </Routes>
+
         </BrowserRouter>
     );
 }

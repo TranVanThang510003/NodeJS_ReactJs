@@ -1,7 +1,7 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 import Header from "./componets/layout/Header.jsx";
-
+import Footer from "./componets/layout/Footer.jsx";
 const Layout = () => {
     return (
         <div className='app-container min-h-screen bg-[#131314]'  >
@@ -17,7 +17,7 @@ const Layout = () => {
                 </div>
             </div>
             <div className='footer-container'>
-                {/*<Footer />*/}
+                <Footer/>
             </div>
         </div>
     )

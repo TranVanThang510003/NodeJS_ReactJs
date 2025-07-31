@@ -20,3 +20,8 @@
     scrollbar-width: thin;
     scrollbar-color: #ff6500 #131314; /* Thumb và track */
 }
+
+
+.custom-rate .ant-rate-star-zero .ant-rate-star-second {
+    color: rgba(255, 255, 255, 0.3); /* hoặc màu bạn muốn */
+}

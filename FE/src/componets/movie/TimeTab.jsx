@@ -7,7 +7,7 @@ const TimeTabs = () => {
                 {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((day) => (
                     <button
                         key={day}
-                        className="px-3 py-2 w-full bg-[#ff6500] rounded-md text-white text-hover:bg-gray-600"
+                        className="px-3 py-2 w-full bg-gray-600 rounded-md text-white hover:bg-[#ff6500]"
                     >
                         {day}
                     </button>

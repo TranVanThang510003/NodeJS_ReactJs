@@ -1,6 +1,7 @@
-import MovieDetailCart from "./MovieDetailCard.jsx";
+import MovieDetailCard from "./MovieDetailCard.jsx";
 import TopRankings from "../movie/TopRanking.jsx";
 import EpisodeList from "./EpisodesList.jsx";
+import {useState} from "react";
 const newMovies = [
     {
         image: '/img/TM.jpg',
@@ -92,12 +93,13 @@ const topRankedMovies = [
     ...newMovies.slice(0, 3),
 ];
 const MovieDetail = () => {
+    const [selectedEpisode, setSelectedEpisode] = useState(null);
     return (
         <div className="p-6 text-white">
             <div className="flex space-x-2 ">
                 <div className="w-5/7">
-                    <MovieDetailCart  />
-                    <EpisodeList />
+                    <MovieDetailCard setSelectedEpisode={setSelectedEpisode} />
+                    <EpisodeList selectedEpisode={selectedEpisode} setSelectedEpisode={setSelectedEpisode} />
                 </div>
                 <div className="w-2/7">
                     <TopRankings movies={topRankedMovies} />
