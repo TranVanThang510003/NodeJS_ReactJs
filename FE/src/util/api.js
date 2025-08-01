@@ -23,7 +23,18 @@ const getUserApi =()=>{
     return axios.get(URL_API)
 }
 
+const createMovieApi = (data) => {
+    return axios.post('/api/movies', data);
+};
+const createEpisodeApi = (data) => {
+    return axios.post('/api/episodes', data);
+};
+
 export {
-    createUserApi,loginApi,getUserApi,
-}
+    createUserApi,
+    loginApi,
+    getUserApi,
+    createMovieApi,
+    createEpisodeApi
+};
 

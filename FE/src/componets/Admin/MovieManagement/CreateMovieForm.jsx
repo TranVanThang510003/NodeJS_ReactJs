@@ -9,6 +9,8 @@ import {
     message,
 } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
+import { uploadToCloudinary } from '../../../util/uploadToCloudinary.js';
+import { createMovieApi } from '../../../util/api.js';
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -30,18 +32,44 @@ const genres = [
 const CreateMovieForm = ({ onSubmit }) => {
     const [form] = Form.useForm();
 
-    const onFinish = (values) => {
-        const formatted = {
-            ...values,
-            releaseDate: values.releaseDate.format('YYYY-MM-DD'),
-            genres: values.genres,
-            poster: values.poster?.file?.name || '',
-            video: values.video?.file?.name || values.videoUrl || '',
-        };
-        console.log('Dữ liệu phim:', formatted);
-        onSubmit(formatted);
-        message.success('Tạo phim thành công!');
-        form.resetFields();
+    const onFinish = async (values) => {
+        try {
+            let posterUrl = '';
+
+            // Upload ảnh nếu có
+            console.log("Values từ form:", values); // Kiểm tra toàn bộ values
+            if (values.poster?.fileList && values.poster.fileList.length > 0) {
+                const file = values.poster.fileList[0].originFileObj || values.poster.fileList[0];
+                console.log("File được chọn:", file);
+                if (file) {
+                    posterUrl = await uploadToCloudinary(file);
+                    console.log("Poster URL:", posterUrl);
+                } else {
+                    console.log("File không hợp lệ hoặc không có originFileObj");
+                }
+            } else {
+                console.log("Không có file trong fileList");
+            }
+
+            const formatted = {
+                title: values.title,
+                originalTitle: values.originalTitle,
+                country: values.country,
+                releaseDate: values.releaseDate.toDate(), // kiểu Date
+                genres: values.genres, // array
+                description: values.description,
+                poster: posterUrl, // link ảnh đã upload
+            };
+
+            const res = await createMovieApi(formatted);
+            console.log('Phim đã được tạo:', res.data);
+
+            message.success('Tạo phim thành công!');
+            form.resetFields();
+        } catch (error) {
+            console.error('Lỗi khi tạo phim:', error);
+            message.error('Tạo phim thất bại!');
+        }
     };
 
     return (
@@ -96,18 +124,24 @@ const CreateMovieForm = ({ onSubmit }) => {
             </Form.Item>
 
             <Form.Item name="poster" label="Ảnh poster" valuePropName="file">
-                <Upload name="poster" listType="picture" maxCount={1}>
+                <Upload
+                    name="poster"
+                    listType="picture"
+                    maxCount={1}
+                    beforeUpload={() => false} // Ngăn upload tự động
+                    customRequest={({ file, onSuccess }) => {
+                        setTimeout(() => {
+                            onSuccess("ok"); // Giả lập upload thành công
+                        }, 0);
+                    }}
+                    onChange={(info) => {
+                        console.log("File thay đổi:", info.file);
+                        if (info.file.status === 'removed') {
+                            console.log("File đã bị xóa");
+                        }
+                    }}
+                >
                     <Button icon={<UploadOutlined />}>Chọn ảnh</Button>
-                </Upload>
-            </Form.Item>
-
-            <Form.Item name="videoUrl" label="Link video (nếu có)">
-                <Input placeholder="https://example.com/video.mp4" />
-            </Form.Item>
-
-            <Form.Item name="video" label="Hoặc upload video" valuePropName="file">
-                <Upload name="video" maxCount={1}>
-                    <Button icon={<UploadOutlined />}>Tải video lên</Button>
                 </Upload>
             </Form.Item>
 
