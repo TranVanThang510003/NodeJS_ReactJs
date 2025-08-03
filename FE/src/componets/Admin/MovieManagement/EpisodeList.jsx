@@ -1,108 +1,120 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-
-const mockEpisodes = [
-    {
-        id: 1,
-        title: "Tập 1: Thức tỉnh",
-        releaseDate: "2025-08-01",
-        status: "Published",
-    },
-    {
-        id: 2,
-        title: "Tập 2: Xâm nhập",
-        releaseDate: "2025-08-08",
-        status: "Scheduled",
-    },
-];
-
+import axios from "axios";
+import CreateEpisode from "./CreateEpisode.jsx"
 const EpisodeList = () => {
     const { movieId } = useParams();
     const [episodes, setEpisodes] = useState([]);
     const navigate = useNavigate();
-
+    const {id}=useParams()
+    // Gọi API khi component mount
     useEffect(() => {
-        // Thay bằng gọi API thật theo movieId nếu có
-        setEpisodes(mockEpisodes);
+        const fetchEpisodes = async () => {
+            try {
+                const res = await axios.get(`/api/movies/${id}`);
+                setEpisodes(res.episodes || []);
+
+            } catch (error) {
+                console.error("Lỗi khi lấy tập phim:", error);
+            }
+        };
+
+        fetchEpisodes();
     }, [movieId]);
 
     const handleEdit = (episodeId) => {
         navigate(`/dashboard/movies/${movieId}/episodes/edit/${episodeId}`);
     };
 
-    const handleDelete = (episodeId) => {
+    const handleDelete = async (episodeId) => {
         const confirmed = window.confirm("Bạn có chắc muốn xoá tập phim này?");
-        if (confirmed) {
+        if (!confirmed) return;
+
+        try {
+            await axios.delete(`/api/episodes/${episodeId}`);
             setEpisodes((prev) => prev.filter((e) => e.id !== episodeId));
+        } catch (error) {
+            console.error("Lỗi khi xoá:", error);
         }
     };
 
-    const handleAdd = () => {
-        navigate(`/dashboard/movies/${movieId}/episodes/create`);
-    };
 
+    const [showForm, setShowForm] = useState(false);
+
+    const handleAdd = () => setShowForm(true);
+    const handleCloseForm = () => setShowForm(false);
     return (
-        <div className="p-6">
-            <h1 className="text-2xl font-bold mb-4 text-gray-800">Danh sách tập phim</h1>
-            <button
-                onClick={handleAdd}
-                className="mb-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-            >
-                + Thêm tập phim
-            </button>
+        <div className="min-h-screen p-6">
+            <div className="max-w-7xl mx-auto">
+                <div className="flex justify-between items-center mb-8">
+                    <h1 className="text-3xl font-semibold text-gray-900">Danh sách tập phim</h1>
+                    <button
+                        onClick={handleAdd}
+                        className="bg-white text-black hover:bg-gray-200 px-4 py-2 rounded-md transition"
+                    >
+                        + Thêm tập phim
+                    </button>
+                </div>
+                {showForm && (
+                    <div className="fixed inset-0 bg-black/50 bg-opacity-60 flex items-center justify-center z-50">
+                        <div className="bg-white p-6 rounded-lg w-full max-w-xl relative">
+                            <button
+                                onClick={handleCloseForm}
+                                className="absolute top-2 right-2 text-gray-500 hover:text-black p-2 text-3xl"
+                            >
+                                ×
+                            </button>
+                            <CreateEpisode />
+                        </div>
+                    </div>
+                )}
 
-            <table className="w-full bg-white shadow-md rounded-lg overflow-hidden">
-                <thead className="bg-gray-100 text-left">
-                <tr>
-                    <th className="p-4">Tên tập</th>
-                    <th className="p-4">Ngày phát hành</th>
-                    <th className="p-4">Trạng thái</th>
-                    <th className="p-4 text-center">Hành động</th>
-                </tr>
-                </thead>
-                <tbody>
                 {episodes.length === 0 ? (
-                    <tr>
-                        <td colSpan="4" className="p-4 text-center text-gray-500">
-                            Chưa có tập phim nào.
-                        </td>
-                    </tr>
+                    <p className="text-gray-400 text-center">Chưa có tập phim nào.</p>
                 ) : (
-                    episodes.map((ep) => (
-                        <tr key={ep.id} className="border-t hover:bg-gray-50">
-                            <td className="p-4">{ep.title}</td>
-                            <td className="p-4">{ep.releaseDate}</td>
-                            <td className="p-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 text-gray-200 lg:grid-cols-3 gap-6">
+                        {episodes.map((ep) => (
+                            <div
+                                key={ep.id}
+                                className="bg-[#1c1c1e] border border-gray-700 rounded-xl p-5 transition-all duration-300 hover:shadow-lg hover:scale-[1.02]"
+                            >
+                                <h2 className="text-xl font-semibold mb-2">{ep.title}</h2>
+                                <p className="text-gray-400 mb-1">
+                                    <span className="text-gray-300 font-medium">Ngày phát hành:</span>{" "}
+                                    {ep.releaseDate}
+                                </p>
+                                <p className="mb-3">
                                     <span
-                                        className={`px-2 py-1 rounded-full text-xs font-semibold ${
+                                        className={`inline-block px-2 py-1 text-xs font-semibold rounded-full ${
                                             ep.status === "Published"
-                                                ? "bg-green-100 text-green-700"
-                                                : "bg-yellow-100 text-yellow-700"
+                                                ? "bg-green-700/30 text-green-300"
+                                                : "bg-yellow-700/30 text-yellow-300"
                                         }`}
                                     >
-                                        {ep.status}
+                                        {ep.status === "Published" ? "Đã phát hành" : "Chờ phát hành"}
                                     </span>
-                            </td>
-                            <td className="p-4 flex justify-center gap-3">
-                                <button
-                                    onClick={() => handleEdit(ep.id)}
-                                    className="text-blue-600 hover:underline"
-                                >
-                                    Sửa
-                                </button>
-                                <button
-                                    onClick={() => handleDelete(ep.id)}
-                                    className="text-red-600 hover:underline"
-                                >
-                                    Xoá
-                                </button>
-                            </td>
-                        </tr>
-                    ))
+                                </p>
+                                <div className="flex justify-end gap-4">
+                                    <button
+                                        onClick={() => handleEdit(ep.id)}
+                                        className="text-blue-400 hover:text-blue-300 text-sm"
+                                    >
+                                        Sửa
+                                    </button>
+                                    <button
+                                        onClick={() => handleDelete(ep.id)}
+                                        className="text-red-400 hover:text-red-300 text-sm"
+                                    >
+                                        Xoá
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 )}
-                </tbody>
-            </table>
+            </div>
         </div>
+
     );
 };
 

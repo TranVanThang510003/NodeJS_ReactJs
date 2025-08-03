@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
-import MovieDetail from "../movieDetail/MovieDetail.jsx";
 import {useNavigate} from "react-router-dom";
 
-const MovieCard = ({ image, rating, title, stats }) => {
+const MovieCard = ({ image, rating,ratingCount, title, stats, movieId }) => {
 
     const navigate= useNavigate();
     const handleCardClick = () => {
-    navigate('/phim/tenphim')
+    navigate(`/phim/${movieId}`)
     };
 
     return (

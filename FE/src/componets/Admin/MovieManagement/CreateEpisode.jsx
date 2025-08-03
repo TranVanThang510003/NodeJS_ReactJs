@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 export default function AddEpisodeForm() {
     const [title, setTitle] = useState('');
     const [episodeNumber, setEpisodeNumber] = useState('');
-    const [videoId, setVideoId] = useState('');
+    const [linkVideo, setLinkVideo] = useState('');
     const [releaseOption, setReleaseOption] = useState('now'); // 'now' | 'schedule'
     const [releaseTime, setReleaseTime] = useState('');
 
@@ -13,7 +13,7 @@ export default function AddEpisodeForm() {
         const payload = {
             title,
             episodeNumber,
-            videoId,
+            linkVideo,
             releaseOption,
             releaseTime: releaseOption === 'schedule' ? releaseTime : new Date().toISOString()
         };
@@ -36,13 +36,13 @@ export default function AddEpisodeForm() {
             />
 
 
-            <label className="block mb-2">Video ID (YouTube)</label>
+            <label className="block mb-2">Link video (YouTube)</label>
             <input
                 type="text"
-                value={videoId}
-                onChange={(e) => setVideoId(e.target.value)}
+                value={linkVideo}
+                onChange={(e) => setLinkVideo(e.target.value)}
                 className="w-full border p-2 rounded mb-4"
-                placeholder="Ví dụ: dQw4w9WgXcQ"
+                placeholder="....."
                 required
             />
 

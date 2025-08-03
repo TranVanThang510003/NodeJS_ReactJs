@@ -3,7 +3,7 @@ import React, { useRef, useEffect } from 'react';
 // Danh sách video YouTube theo tập (giả định)
 const episodeVideos = {
     1: 'cyF7m5syODA',
-    2: '3JZ_D3ELwOQ',
+    2: 'DP_CvMtaXxg',
     3: 'tgbNymZ7vqY',
     4: 'M7lc1UVf-VE',
     5: 'sNPnbI1arSE',

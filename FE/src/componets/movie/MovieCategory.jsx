@@ -6,7 +6,7 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 const MovieCategory = ({ title, movies }) => {
     return (
-        <div className="mb-6 relative">
+        <div className="mb-6 relative mt-4">
             <h2 className="text-xl font-bold text-white mb-4">{title}</h2>
             <div className="flex flex-wrap space-x-2 overflow-x-auto scrollbar-hide">
                 {movies.map((movie, index) => (

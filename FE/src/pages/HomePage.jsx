@@ -98,7 +98,7 @@ const HomePage = () => {
     return (
         <div className="p-6 bg-[#131314] text-white">
             <MovieList />
-            <TimeTabs />
+            {/*<TimeTabs />*/}
             <div className="flex ">
                 <div className="w-5/7">
                     <MovieCategory title="MỚI NHẤT" movies={newMovies} />

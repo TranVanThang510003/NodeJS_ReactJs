@@ -48,7 +48,7 @@ export default function App() {
                         }
                     />
                     <Route
-                        path="/phim/tenphim"
+                        path="/phim/:movieId"
                         element={
                             <AnimatedRoute>
                                 <MovieDetail />
@@ -84,7 +84,7 @@ export default function App() {
                         }
                     />
                     <Route
-                        path="create-episode"
+                        path="movies/:movieId/create-episode"
                         element={
                             <AnimatedRoute>
                                 <CreateEpisode/>
@@ -100,7 +100,7 @@ export default function App() {
                         }
                     />
                     <Route
-                        path="episode-list"
+                        path="movies/:id"
                         element={
                             <AnimatedRoute>
                                 <EpisodeList/>

@@ -1,108 +1,112 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-
-const mockMovies = [
-    {
-        id: 1,
-        title: "The Matrix",
-        genre: "Sci-Fi",
-        releaseDate: "1999-03-31",
-        status: "Published",
-    },
-    {
-        id: 2,
-        title: "Inception",
-        genre: "Action",
-        releaseDate: "2010-07-16",
-        status: "Draft",
-    },
-];
+import {useNavigate, useParams} from "react-router-dom";
+import { getMovieApi } from "../../../util/api.js";
 
 const MovieList = () => {
     const [movies, setMovies] = useState([]);
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        // Thay bằng gọi API thật nếu có
-        setMovies(mockMovies);
+        const fetchMovies = async () => {
+            try {
+                const response = await getMovieApi();
+                setMovies(response.sort((a, b) => new Date(b.releaseDate) - new Date(a.releaseDate)));
+            } catch (err) {
+                console.error("Error fetching movies:", err);
+                setError("Failed to load movies.");
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchMovies();
     }, []);
 
-    const handleEdit = (id) => {
-        navigate(`/dashboard/movies/edit/${id}`);
-    };
-    const handleView=()=>{
-        navigate(`/episode-list`);
-    }
+    const handleEdit = (id) => navigate(`/dashboard/movies/edit/${id}`);
+    const handleView = (id) => navigate(`/dashboard/movies/${id}`);
     const handleDelete = (id) => {
         const confirmed = window.confirm("Bạn có chắc muốn xoá phim này?");
         if (confirmed) {
-            setMovies(prev => prev.filter(movie => movie.id !== id));
+            setMovies((prev) => prev.filter((movie) => movie._id !== id));
         }
+    };
+
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return date.toLocaleDateString("vi-VN", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+        });
     };
 
     return (
         <div className="p-6">
-            <h1 className="text-2xl font-bold text-gray-800 mb-4">Danh sách phim</h1>
+            <h1 className="text-3xl font-semibold text-gray-800 mb-6">🎬 Danh sách phim</h1>
 
-            <table className="w-full bg-white shadow-md rounded-lg overflow-hidden">
-                <thead className="bg-gray-100 text-left">
-                <tr>
-                    <th className="p-4">Tên phim</th>
-                    <th className="p-4">Thể loại</th>
-                    <th className="p-4">Ngày phát hành</th>
-                    <th className="p-4">Trạng thái</th>
-                    <th className="p-4 text-center">Hành động</th>
-                </tr>
-                </thead>
-                <tbody>
-                {movies.length === 0 ? (
-                    <tr>
-                        <td colSpan="5" className="p-4 text-center text-gray-500">
-                            Không có phim nào.
-                        </td>
-                    </tr>
-                ) : (
-                    movies.map((movie) => (
-                        <tr key={movie.id} className="border-t hover:bg-gray-50">
-                            <td className="p-4">{movie.title}</td>
-                            <td className="p-4">{movie.genre}</td>
-                            <td className="p-4">{movie.releaseDate}</td>
-                            <td className="p-4">
-                                    <span
-                                        className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                                            movie.status === "Published"
-                                                ? "bg-green-100 text-green-700"
-                                                : "bg-yellow-100 text-yellow-700"
-                                        }`}
-                                    >
-                                        {movie.status}
-                                    </span>
-                            </td>
-                            <td className="p-4 flex justify-center gap-3">
-                                <button
-                                    onClick={() => handleView(movie.id)}
-                                    className="text-blue-600 hover:underline"
-                                >
-                                    Xem
-                                </button>
-                                <button
-                                    onClick={() => handleEdit(movie.id)}
-                                    className="text-blue-600 hover:underline"
-                                >
-                                    Sửa
-                                </button>
-                                <button
-                                    onClick={() => handleDelete(movie.id)}
-                                    className="text-red-600 hover:underline"
-                                >
-                                    Xoá
-                                </button>
-                            </td>
+            {loading ? (
+                <p className="text-center text-gray-500">Đang tải...</p>
+            ) : error ? (
+                <p className="text-center text-red-500">{error}</p>
+            ) : (
+                <div className="overflow-x-auto">
+                    <table className="min-w-full bg-white shadow rounded-lg">
+                        <thead className="bg-gray-100 text-gray-700 text-sm uppercase font-semibold">
+                        <tr>
+                            <th className="p-4 text-left">Tên phim</th>
+                            <th className="p-4 text-left">Thể loại</th>
+                            <th className="p-4 text-left">Ngày phát hành</th>
+                            <th className="p-4 text-center">Hành động</th>
                         </tr>
-                    ))
-                )}
-                </tbody>
-            </table>
+                        </thead>
+                        <tbody>
+                        {movies.length === 0 ? (
+                            <tr>
+                                <td colSpan="4" className="p-4 text-center text-gray-500">
+                                    Không có phim nào.
+                                </td>
+                            </tr>
+                        ) : (
+                            movies.map((movie) => (
+                                <tr
+                                    key={movie.id}
+                                    className="border-t hover:bg-gray-50 transition"
+                                >
+                                    <td className="p-4">{movie.title}</td>
+                                    <td className="p-4">
+                                        {Array.isArray(movie.genres) ? movie.genres.join(', ') : movie.genres}
+                                    </td>
+
+                                    <td className="p-4">{formatDate(movie.releaseDate)}</td>
+                                    <td className="p-4 flex justify-center gap-3">
+                                        <button
+                                            onClick={() => handleView(movie._id)}
+                                            className="px-3 py-1 text-sm bg-indigo-100 text-indigo-700 rounded hover:bg-indigo-200 transition"
+                                        >
+                                            Xem
+                                        </button>
+                                        <button
+                                            onClick={() => handleEdit(movie.id)}
+                                            className="px-3 py-1 text-sm bg-yellow-100 text-yellow-700 rounded hover:bg-yellow-200 transition"
+                                        >
+                                            Sửa
+                                        </button>
+                                        <button
+                                            onClick={() => handleDelete(movie.id)}
+                                            className="px-3 py-1 text-sm bg-red-100 text-red-700 rounded hover:bg-red-200 transition"
+                                        >
+                                            Xoá
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))
+                        )}
+                        </tbody>
+                    </table>
+                </div>
+            )}
         </div>
     );
 };
