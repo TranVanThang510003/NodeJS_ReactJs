@@ -36,10 +36,13 @@ const getMovieByIdApi =(movieId)=>{
 const createMovieApi = (data) => {
     return axios.post('/api/movies', data);
 };
-const createEpisodeApi = (data) => {
-    return axios.post('/api/episodes', data);
+const createEpisodeApi = (movieId, data) => {
+    return axios.post(`/api/movies/${movieId}/episodes`, data);
 };
-
+const getEpisodeByMovieId=(movieId)=>{
+    const URL_API=`/api/movies/${movieId}`
+    return axios.get(URL_API)
+}
 export {
     createUserApi,
     loginApi,
@@ -47,6 +50,8 @@ export {
     createMovieApi,
     createEpisodeApi,
     getMovieApi,
-    getMovieByIdApi
+    getMovieByIdApi,
+    getEpisodeByMovieId,
+
 };
 

@@ -6,62 +6,7 @@ const MovieList = () => {
     const [movies, setMovies] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    // const movies = [
-    //     {
-    //         image: '/img/DHT.jpg',
-    //         rating: '9.1',
-    //         title: 'Đảo Hải Tặc',
-    //         stats: '137 VS + 1128 TM',
-    //     },
-    //     {
-    //         image: '/img/TN.jpeg',
-    //         rating: '9.1',
-    //         title: 'Tiên Nghịch',
-    //         stats: '99 VS + 95 TM',
-    //     },
-    //     {
-    //         image: '/img/TM.jpg',
-    //         rating: '9.5',
-    //         title: 'Trong Tông Môn Trù...',
-    //         stats: '68 VS + 84 TM',
-    //     },
-    //     {
-    //         image: '/img/TN.jpeg',
-    //         rating: '8.7',
-    //         title: 'Naruto Shippuden',
-    //         stats: 'Full 500 VS',
-    //     },
-    //     {
-    //         image: '/img/TM.jpg',
-    //         rating: '9.5',
-    //         title: 'Trong Tông Môn Trù...',
-    //         stats: '68 VS + 84 TM',
-    //     },
-    //     {
-    //         image: '/img/D.jpg',
-    //         rating: '9.5',
-    //         title: 'Doraemon',
-    //         stats: '873 VS + 500 TM',
-    //     },
-    //     {
-    //         image: '/img/D.jpg',
-    //         rating: '9.5',
-    //         title: 'Doraemon',
-    //         stats: '873 VS + 500 TM',
-    //     },
-    //     {
-    //         image: '/img/TN.jpeg',
-    //         rating: '9.1',
-    //         title: 'Tiên Nghịch',
-    //         stats: '99 VS + 95 TM',
-    //     },
-    //     {
-    //         image: '/img/TM.jpg',
-    //         rating: '9.5',
-    //         title: 'Trong Tông Môn Trù...',
-    //         stats: '68 VS + 84 TM',
-    //     },
-    // ];
+
     useEffect(() => {
         const fetchMovies = async () => {
             try {

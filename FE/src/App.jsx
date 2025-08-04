@@ -8,7 +8,7 @@ import Login from "./pages/Login.jsx";
 import './index.css';
 import MovieDetail from "./componets/movieDetail/MovieDetail.jsx";
 import CreateMovieForm from "./componets/Admin/MovieManagement/CreateMovieForm.jsx";
-import CreateEpisode from "./componets/Admin/MovieManagement/CreateEpisode.jsx";
+import CreateEpisode from "./componets/Admin/MovieManagement/AddEpisodeForm.jsx";
 import AdminLayout from "./AdminLayout.jsx";
 import MovieList from "./componets/Admin/MovieManagement/MovieList.jsx";
 import EpisodeList from "./componets/Admin/MovieManagement/EpisodeList.jsx";
@@ -83,14 +83,7 @@ export default function App() {
                             </AnimatedRoute>
                         }
                     />
-                    <Route
-                        path="movies/:movieId/create-episode"
-                        element={
-                            <AnimatedRoute>
-                                <CreateEpisode/>
-                            </AnimatedRoute>
-                        }
-                    />
+
                     <Route
                         path="movies"
                         element={
@@ -100,7 +93,7 @@ export default function App() {
                         }
                     />
                     <Route
-                        path="movies/:id"
+                        path="movies/:movieId"
                         element={
                             <AnimatedRoute>
                                 <EpisodeList/>

@@ -71,7 +71,7 @@ const MovieList = () => {
                         ) : (
                             movies.map((movie) => (
                                 <tr
-                                    key={movie.id}
+                                    key={movie._id}
                                     className="border-t hover:bg-gray-50 transition"
                                 >
                                     <td className="p-4">{movie.title}</td>
