@@ -109,7 +109,7 @@ const Header = () => {
                     <Dropdown menu={{items: userMenu, onClick: handleMenuClick}} placement="bottomRight" arrow>
                         <Space className="cursor-pointer">
                             <span>{user.name}</span>
-                            <Avatar style={{backgroundColor: '#87d068'}} icon={<UserOutlined/>}/>
+                            <Avatar style={{backgroundColor: '#87d068', width:"40px" ,height:"40px",  fontSize:"25px"}} icon={<UserOutlined/>}/>
                         </Space>
                     </Dropdown>
                 ) : (

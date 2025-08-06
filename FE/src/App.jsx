@@ -1,14 +1,13 @@
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Layout from "./Layout.jsx";
-import Register from "./pages/Register";
+import Register from "./componets/auth/Register.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import UserPage from "./pages/UserPage.jsx";
-import Login from "./pages/Login.jsx";
+import Login from "./componets/auth/Login.jsx";
 import './index.css';
 import MovieDetail from "./componets/movieDetail/MovieDetail.jsx";
 import CreateMovieForm from "./componets/Admin/MovieManagement/CreateMovieForm.jsx";
-import CreateEpisode from "./componets/Admin/MovieManagement/AddEpisodeForm.jsx";
 import AdminLayout from "./AdminLayout.jsx";
 import MovieList from "./componets/Admin/MovieManagement/MovieList.jsx";
 import EpisodeList from "./componets/Admin/MovieManagement/EpisodeList.jsx";

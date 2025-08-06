@@ -12,10 +12,11 @@ const MovieCategory = ({ title, movies }) => {
                 {movies.map((movie, index) => (
                     <MovieCard
                         key={index}
-                        image={movie.image}
-                        rating={movie.rating}
+                        image={movie.poster}
+                        rating={movie.averageRating}
                         title={movie.title}
                         stats={movie.stats}
+                        movieId={movie._id}
                     />
                 ))}
             </div>

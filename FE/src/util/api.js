@@ -1,10 +1,10 @@
 import axios from "./axios.customize.js";
 
-const createUserApi =( name,email,password)=>{
+const createUserApi =( name,email,password,accountType)=>{
 
     const URL_API='/api/register'
     const  data={
-        name,email,password
+        name,email,password,accountType
     }
     return axios.post(URL_API,data)
 }
@@ -43,6 +43,24 @@ const getEpisodeByMovieId=(movieId)=>{
     const URL_API=`/api/movies/${movieId}`
     return axios.get(URL_API)
 }
+const getMoviesApi = (params = {}) => {
+    const URL_API = '/api/movie/filter'; // bỏ dấu "//"
+    return axios.get(URL_API, { params }); // đúng cú pháp
+};
+const increaseEpisodeViewsApi = async (episodeId) => {
+    try {
+        const URL_API = `/api/episodes/${episodeId}/increase-views`;
+        return await axios.post(URL_API);
+    } catch (err) {
+        console.error('Lỗi khi tăng lượt xem:', err);
+        throw err;
+    }
+};
+const updateAccountTypeApi = (accountType) => {
+    const URL_API = '/api/user/update-account-type';
+    return axios.put(URL_API, { accountType });
+};
+
 export {
     createUserApi,
     loginApi,
@@ -52,6 +70,8 @@ export {
     getMovieApi,
     getMovieByIdApi,
     getEpisodeByMovieId,
-
+    getMoviesApi,
+    increaseEpisodeViewsApi,
+    updateAccountTypeApi,
 };
 

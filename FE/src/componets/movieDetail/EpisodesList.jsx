@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-
+import {increaseEpisodeViewsApi} from '../../util/api.js'
 const EpisodeList = ({ episodes = [], selectedEpisode, setSelectedEpisode, isUserPremium = false }) => {
     const videoRef = useRef(null);
 
@@ -9,6 +9,14 @@ const EpisodeList = ({ episodes = [], selectedEpisode, setSelectedEpisode, isUse
         const match = originalUrl.match(/(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([^&]+)/);
         return match ? `https://www.youtube.com/embed/${match[1]}` : originalUrl;
     }
+  const handleWatch=async(episodeId)=>{
+    try {
+      await increaseEpisodeViewsApi(episodeId);
+      // Tiếp tục các xử lý khác
+    } catch (error) {
+      console.error('Không thể tăng view:', error);
+    }
+  }
 
     useEffect(() => {
         if (selectedEpisode && videoRef.current) {
@@ -49,6 +57,7 @@ const EpisodeList = ({ episodes = [], selectedEpisode, setSelectedEpisode, isUse
                       onClick={() => {
                           if (!isLocked) {
                               setSelectedEpisode(Number(ep.episodeNumber));
+                            handleWatch(ep._id);
                           }
                       }}
                       className={`py-2 rounded text-center cursor-pointer transition-colors select-none 
