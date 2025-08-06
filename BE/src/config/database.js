@@ -1,21 +1,27 @@
+require('dotenv').config();
+const mongoose = require('mongoose');
+
+const dbState = [{
+    value: 0,
+    label: "Disconnected"
+},
+    {
+        value: 1,
+        label: "Connected"
+    },
+    {
+        value: 2,
+        label: "Connecting"
+    },
+    {
+        value: 3,
+        label: "Disconnecting"
+    }];
 
 
-const Sequelize = require('sequelize');
-
-// Option 1: Passing parameters separately
-const sequelize = new Sequelize('hoidanit', 'root', null, {
-    host: 'localhost',
-    dialect: 'mysql',
-    logging: false
-});
-
-let connectDB = async () => {
-    try {
-        await sequelize.authenticate();
-        console.log('Connection has been established successfully.');
-    } catch (error) {
-        console.error('Unable to connect to the database:', error);
-    }
+const connection = async () => {
+    await mongoose.connect(process.env.MONGO_DB_URL);
+    const state = Number(mongoose.connection.readyState);
+    console.log(dbState.find(f => f.value === state).label, "to database"); // connected to db
 }
-
-module.exports = connectDB;
+module.exports = connection;
