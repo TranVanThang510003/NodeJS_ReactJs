@@ -8,7 +8,6 @@ const movieSchema = new mongoose.Schema({
     genres: [String],
     description: String,
     poster: String,
-    videoUrl: String,
     createdAt: {
         type: Date,
         default: Date.now
