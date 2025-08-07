@@ -4,6 +4,7 @@ const {createUser, handleLogin, getUser ,updateAccountType } = require('../contr
 const auth = require("../middleware/auth");
 const {createMovie, deleteMovie,updateMovie, getAllMovie,getMovieById,getMovies} = require("../controllers/movieController");
 const {createEpisode, deleteEpisode,updateEpisode,increaseViews} = require("../controllers/episodeController");
+const { handleRating ,postComment,getComments } = require('../controllers/ratingController');
  // routeAPI.all('/{*any}', auth);
 routeAPI.post('/register',createUser)
 routeAPI.post('/login',handleLogin)
@@ -20,5 +21,7 @@ routeAPI.get('/movie/filter', getMovies);
 routeAPI.post('/episodes/:id/increase-views', increaseViews);
 
 routeAPI.put('/user/update-account-type', auth, updateAccountType); // yêu cầu token để cập nhật
-
+routeAPI.post('/ratings', auth, handleRating);
+routeAPI.post('/comments', auth, postComment);
+routeAPI.post('/comments/:movieId', getComments);
 module.exports= routeAPI;

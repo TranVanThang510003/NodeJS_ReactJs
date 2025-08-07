@@ -60,7 +60,19 @@ const updateAccountTypeApi = (accountType) => {
     const URL_API = '/api/user/update-account-type';
     return axios.put(URL_API, { accountType });
 };
+const rating=(movieId, stars)=>{
+    const URL_API='/api/ratings';
+    return axios.post(URL_API, { movieId, stars});
+}
+const getCommentsByMovie = (movieId) =>{
+    const URL_API=`/api/comments/${movieId}`;
+    return axios.post(URL_API);
+}
 
+const addCommentApi = ({ movieId, content }) =>{
+    const URL_API=`/api/comments`;
+    return axios.post(URL_API, { movieId,content });
+}
 export {
     createUserApi,
     loginApi,
@@ -73,5 +85,8 @@ export {
     getMoviesApi,
     increaseEpisodeViewsApi,
     updateAccountTypeApi,
+   rating,
+    addCommentApi,
+    getCommentsByMovie
 };
 
