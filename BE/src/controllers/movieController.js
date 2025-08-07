@@ -1,3 +1,5 @@
+
+const Movie = require('../models/Movie');
 const { deleteMovieService, createMovieService,  updateMovieService,getMovieService,getMovieByIdService,getMoviesService} = require("../services/movieService");
 
 
@@ -50,6 +52,7 @@ const getMovies = async (req, res) => {
     }
 };
 
+
 module.exports = {
-    createMovie,deleteMovie,updateMovie, getAllMovie, getMovieById,getMovies
+    createMovie,deleteMovie,updateMovie, getAllMovie, getMovieById,getMovies,
 };

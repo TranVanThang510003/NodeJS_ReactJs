@@ -4,6 +4,7 @@ import MovieDetailCard from "./MovieDetailCard.jsx";
 import TopRankings from "../movie/TopRanking.jsx";
 import EpisodeList from "./EpisodesList.jsx";
 import { getEpisodeByMovieId } from "../../util/api.js";
+import CommentSection from './CommentSection.jsx'
 
 
 const MovieDetail = () => {
@@ -39,6 +40,7 @@ const MovieDetail = () => {
                         selectedEpisode={selectedEpisode}
                         setSelectedEpisode={setSelectedEpisode}
                     />
+                    <CommentSection />
                 </div>
 
                 {/* Cột phải: BXH */}

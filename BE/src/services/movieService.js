@@ -2,7 +2,6 @@ const Episode = require('../models/episode');
 const Movie = require("../models/movie");
 const {Types} = require("mongoose");
 
-
 const createMovieService = async (movieData) => {
     try {
         const newMovie = await Movie.create({
@@ -215,7 +214,7 @@ const getMovieByIdService = async (movieId) => {
                 $lookup: {
                     from: "ratings",
                     localField: "_id",
-                    foreignField: "movie",
+                    foreignField: "movieId",
                     as: "ratings"
                 }
             },
@@ -253,6 +252,9 @@ const getMovieByIdService = async (movieId) => {
         throw error;
     }
 };
+
+
+
 module.exports = {
-    createMovieService, deleteMovieService,updateMovieService,getMovieService,getMovieByIdService,getMoviesService
+    createMovieService, deleteMovieService,updateMovieService,getMovieService,getMovieByIdService,getMoviesService,
 };

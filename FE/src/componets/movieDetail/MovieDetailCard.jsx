@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import { Flex, Rate } from 'antd';
+import { Flex, message, Rate } from 'antd'
 import "../../style/global.css";
-import {getMovieByIdApi} from "../../util/api.js";
+import { getMovieByIdApi, rating } from '../../util/api.js'
 import {useParams} from "react-router-dom";
 
 const desc = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
@@ -9,6 +9,7 @@ const desc = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
 const MovieDetailCard = ( { title, setSelectedEpisode}) => {
     const [movie,setMovie] = useState({});
     const {movieId} = useParams()
+    const [value, setValue] = useState(0);
     useEffect(()=>{
         const fetchData = async () => {
             const response= await getMovieByIdApi(movieId)
@@ -17,21 +18,34 @@ const MovieDetailCard = ( { title, setSelectedEpisode}) => {
         }
             fetchData()
     },[])
-    // const movieData = {
-    //     image: '/img/LD.jpg',
-    //     title: "Dũng Sĩ Otaku Béo",
-    //     genres: "Busamen Gachi Fighter, Uglymug, Epicfighter",
 
-    //     country: "Nhật Bản",
-    //     year: "2025",
-    //     description:
-    //         "Đường Sĩ Otaku Béo kể về ông chú Shigeru Yoshioka một đời tất cả sự nghiệp...",
-    // };
     const year = new Date(movie.releaseDate).getFullYear();
 
 
     const handleWatchClick = () => {
         setSelectedEpisode(1); // Mở tập 1
+    };
+    const handleRatingChange = async (value) => {
+        const token = localStorage.getItem("accessToken");
+
+        if (!token) {
+            message.warning("Vui lòng đăng nhập để đánh giá phim");
+            return;
+        }
+        try {
+            setValue(value);
+            const res = await rating(movieId, value);
+            console.log(res)
+            if (res?.success) {
+                message.success(res.message || "Đánh giá thành công");
+            } else {
+                message.error("Đánh giá thất bại");
+            }
+
+        } catch (err) {
+            console.error(err);
+            message.error("Có lỗi khi đánh giá phim");
+        }
     };
 
     return (
@@ -56,8 +70,8 @@ const MovieDetailCard = ( { title, setSelectedEpisode}) => {
                             className="custom-rate"
                             allowHalf
                             tooltips={desc}
-                            // onChange={handleRatingChange}
-                            // value={value}
+                            onChange={handleRatingChange}
+                            value={value}
                         />
                         <div className='text-yellow-500 font-semibold text-lg'>
                             {movie.averageRating} / 5 ({movie.ratingCount} đánh giá)
