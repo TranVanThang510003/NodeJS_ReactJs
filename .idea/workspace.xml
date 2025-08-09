@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="5860cf09-a1cb-4eac-87e7-59eabfefcb1c" name="Changes" comment="create user">
+      <change afterPath="$PROJECT_DIR$/FE/src/componets/common/FilterBar.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/componets/layout/SearchBox.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/pages/FilterPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/my-react-app.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/services/movieService.js" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/services/movieService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/componets/layout/Header.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/componets/layout/Header.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/componets/movie/MovieCategory.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/componets/movie/MovieCategory.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/componets/movie/TopRanking.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/componets/movie/TopRanking.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/util/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/util/api.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;TranVanThang510003&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/TranVanThang510003/NodeJS_ReactJs.git&quot;,
+    &quot;accountId&quot;: &quot;a8c50911-3c83-4a5f-94df-24297d4a8741&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="30AquORdRK6I8xZSMkH16hIlyqk" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/LEARNING/reactJsNodeJs/my-react-app&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode.JavaScript&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\WebStorm 2024.3\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\LEARNING\reactJsNodeJs\my-react-app\FE\src\componets\auth" />
+      <recent name="D:\LEARNING\reactJsNodeJs\my-react-app\FE\src\componets\layout" />
+      <recent name="D:\LEARNING\reactJsNodeJs\my-react-app\FE\src\componets" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-WS-243.22562.112" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5860cf09-a1cb-4eac-87e7-59eabfefcb1c" name="Changes" comment="" />
+      <created>1753080947061</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1753080947061</updated>
+      <workItem from="1753080948347" duration="581000" />
+      <workItem from="1753162002612" duration="9066000" />
+      <workItem from="1753246002029" duration="5442000" />
+      <workItem from="1753251576201" duration="6584000" />
+      <workItem from="1753343541950" duration="11118000" />
+      <workItem from="1753424743976" duration="10795000" />
+      <workItem from="1753592450129" duration="14899000" />
+      <workItem from="1753682892412" duration="13947000" />
+      <workItem from="1753951595649" duration="389000" />
+      <workItem from="1753952245932" duration="1459000" />
+      <workItem from="1753954385559" duration="6700000" />
+      <workItem from="1754036854217" duration="12421000" />
+      <workItem from="1754209833837" duration="11893000" />
+      <workItem from="1754295738275" duration="10510000" />
+      <workItem from="1754469382565" duration="11199000" />
+      <workItem from="1754553633373" duration="12739000" />
+      <workItem from="1754728770489" duration="7646000" />
+    </task>
+    <task id="LOCAL-00001" summary="Create the project">
+      <option name="closed" value="true" />
+      <created>1753081525462</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1753081525462</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Create the project" />
+    <option name="LAST_COMMIT_MESSAGE" value="Create the project" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/FE/src/pages/UserPage.jsx</url>
+          <line>22</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/FE/src/Layout.jsx</url>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/FE/src/componets/movie/MovieList.jsx</url>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/FE/src/componets/auth/Register.jsx</url>
+          <line>1</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

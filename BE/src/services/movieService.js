@@ -123,7 +123,10 @@ const getMoviesService = async (query) => {
         limit = 20,
         minRating = 0,
         minVotes = 0,
-        hasNewEpisode // số ngày
+        hasNewEpisode, // số ngày
+        country,       // tên quốc gia
+        genre,         // tên thể loại
+        year           // năm phát hành
     } = query;
 
     const sortStage = {};
@@ -154,6 +157,26 @@ const getMoviesService = async (query) => {
         const daysAgo = new Date();
         daysAgo.setDate(daysAgo.getDate() - Number(hasNewEpisode));
         matchConditions.push({ latestEpisodeDate: { $gte: daysAgo } });
+    }
+    if (country && country.trim() !== "" && country !== "Tất cả") {
+        matchConditions.push({ country });
+    }
+
+    if (genre && genre.trim() !== "") {
+        matchConditions.push({ genres: { $in: [genre] } });
+    }
+    if (query.name && query.name.trim() !== "") {
+        matchConditions.push({
+            $or: [
+                { title: { $regex: query.name.trim(), $options: "i" } },
+                { originalTitle: { $regex: query.name.trim(), $options: "i" } }
+            ]
+        });
+    }
+    if (year) {
+        const start = new Date(`${year}-01-01`);
+        const end = new Date(`${year}-12-31`);
+        matchConditions.push({ releaseDate: { $gte: start, $lte: end } });
     }
 
     const result = await Movie.aggregate([

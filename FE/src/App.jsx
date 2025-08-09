@@ -11,6 +11,7 @@ import CreateMovieForm from "./componets/Admin/MovieManagement/CreateMovieForm.j
 import AdminLayout from "./AdminLayout.jsx";
 import MovieList from "./componets/Admin/MovieManagement/MovieList.jsx";
 import EpisodeList from "./componets/Admin/MovieManagement/EpisodeList.jsx";
+import FilterPage from './pages/FilterPage.jsx'
 const AnimatedRoute = ({ children }) => {
     const location = useLocation();
 
@@ -53,6 +54,13 @@ export default function App() {
                                 <MovieDetail />
                             </AnimatedRoute>
                         }
+                    />
+                    <Route path="/filter"
+                           element={
+                             <AnimatedRoute>
+                               <FilterPage />
+                             </AnimatedRoute>
+                    }
                     />
 
                 </Route>
