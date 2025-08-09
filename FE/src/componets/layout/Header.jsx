@@ -13,6 +13,7 @@ import Logo from '../common/Logo.jsx';
 import styles from './Header.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import FilterBar from '../common/FilterBar.jsx'
 
 const NAVIGATION_PATHS = {
     home: '/',
@@ -49,8 +50,7 @@ const Header = () => {
     };
 
     const handleSearch = (value) => {
-        console.log('Search:', value);
-        setSearchValue(''); // Reset input after search
+        navigate(`/filter?name=${encodeURIComponent(value)}`);
     };
 
     const handleInputChange = (e) => {
@@ -76,8 +76,9 @@ const Header = () => {
     return (
         <div className="flex fixed  w-full items-center justify-between px-6 py-3 gap-6 bg-black shadow h-[80px] z-[1000]">
             {/* Logo */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-6">
                 <Logo width={50} height={50}/>
+                <FilterBar onFilterChange={(filters) => console.log('Bộ lọc:', filters)} />
             </div>
 
             {/* Search Box */}
@@ -87,7 +88,8 @@ const Header = () => {
                         type="text"
                         value={searchValue}
                         onChange={handleInputChange}
-                        placeholder="  Tìm kiếm sản phẩm..."
+                        onKeyDown={handleKeyPress}
+                        placeholder="  Tìm kiếm theo tên..."
                         className="w-full h-[48px] px-4 border border-gray-400 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-orange-400 bg-white"
                     />
                     <button

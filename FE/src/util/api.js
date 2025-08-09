@@ -44,8 +44,8 @@ const getEpisodeByMovieId=(movieId)=>{
     return axios.get(URL_API)
 }
 const getMoviesApi = (params = {}) => {
-    const URL_API = '/api/movie/filter'; // bỏ dấu "//"
-    return axios.get(URL_API, { params }); // đúng cú pháp
+    const URL_API = '/api/movie/filter';
+    return axios.get(URL_API, { params });
 };
 const increaseEpisodeViewsApi = async (episodeId) => {
     try {
