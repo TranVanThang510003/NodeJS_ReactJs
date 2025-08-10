@@ -1,64 +1,38 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { getMoviesApi } from '../util/api.js';
+import { getFavoritesApi} from '../util/api.js';
 import MovieCategory from '../componets/movie/MovieCategory.jsx';
-import TopRankings from '../componets/movie/TopRanking.jsx';
+import {useFavorites} from '../Context/FavoriteProvider.jsx'
 
-const FilterPage = () => {
+const FavoritePage = () => {
   const [searchParams] = useSearchParams();
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const itemsPerPage = 15;
+  const { favorites, toggleFavorite } = useFavorites();
 
-  const filters = {
-    genre: searchParams.get("genre") || undefined,
-    country: searchParams.get("country") || undefined,
-    year: searchParams.get("year") || undefined,
-    sortBy: searchParams.get("sortBy") || undefined,
-    sortOrder: searchParams.get("sortOrder") || undefined,
-    name: searchParams.get("name") || undefined,
-  };
 
-  const filterDescription = () => {
-    let parts = [];
-    if (filters.name) {
-      parts.push(`Tìm kiếm: "${filters.name}"`);
-    }
-    if (filters.genre) parts.push(`Thể loại: ${filters.genre}`);
-    if (filters.country) parts.push(`Quốc gia: ${filters.country}`);
-    if (filters.year) parts.push(`Năm: ${filters.year}`);
-    if (filters.sortBy) {
-      const sortMap = {
-        totalViews: 'Lượt xem',
-        releaseDate: 'Ngày phát hành',
-        rating: 'Đánh giá',
-        latestEpisodeDate: 'Mới nhất',
-
-      };
-      let sortText = sortMap[filters.sortBy] || filters.sortBy;
-      sortText += filters.sortOrder === 'desc' ? ' ↓' : ' ↑';
-      parts.push(`Sắp xếp theo: ${sortText}`);
-    }
-    return parts.length ? parts.join(' | ') : 'Tất cả phim';
-  };
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const res = await getMoviesApi(filters);
-        setMovies(res);
-        setTotalPages(res && res.length ? Math.ceil(res.length / itemsPerPage) : 1);
+        const res = await getFavoritesApi();
+        const data = Array.isArray(res) ? res : res?.data || []; // Đảm bảo là array
+        setMovies(data);
+        setTotalPages(data.length ? Math.ceil(data.length / itemsPerPage) : 1);
       } catch (err) {
         console.error("Lỗi khi gọi API:", err);
+        setMovies([]);
       } finally {
         setLoading(false);
       }
     };
     fetchData();
   }, [searchParams]);
+
 
   const paginatedMovies = movies.slice(
     (page - 1) * itemsPerPage,
@@ -97,14 +71,14 @@ const FilterPage = () => {
 
   return (
     <div className="p-6 text-white">
-      <div className="flex space-x-2">
-        <div className="w-5/7">
+      <div className=" space-x-2">
+
           <h2
             className="inline-flex items-center px-4 py-2 mt-4 rounded-md bg-gradient-to-r from-orange-500 to-orange-600 text-white font-bold text-lg"
           >
-            <span className="mr-2">Kết quả lọc — {filterDescription()}</span>
+            <span className="mr-2">Danh Sách Phim Yêu Thích</span>
           </h2>
-          <MovieCategory title="" movies={paginatedMovies} loading={loading} />
+          <MovieCategory title="" movies={paginatedMovies} loading={loading} favorites={favorites} toggleFavorite={toggleFavorite}  />
 
           {/* Pagination */}
           <div className="flex justify-center space-x-2 mt-6">
@@ -154,14 +128,10 @@ const FilterPage = () => {
               Trang cuối
             </button>
           </div>
-        </div>
 
-        <div className="w-2/7">
-          <TopRankings />
-        </div>
       </div>
     </div>
   );
 };
 
-export default FilterPage;
+export default FavoritePage;

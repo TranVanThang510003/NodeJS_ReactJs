@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import MovieCard from './MovieCard';
 import '../../style/global.css'
 
-const MovieList = ({  movies }) => {
+const MovieList = ({  movies ,favorites, toggleFavorite}) => {
 
     return (
         <div className="flex  overflow-x-auto p-2 scrollbar-hide scrollbar-custom ">
@@ -15,6 +15,8 @@ const MovieList = ({  movies }) => {
                       title={movie.title}
                       stats={movie.stats}
                       movieId={movie._id}
+                      favorites={favorites}
+                      toggleFavorite={toggleFavorite}
                     />
                 ))}
             </div>

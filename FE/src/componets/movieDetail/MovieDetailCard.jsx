@@ -3,6 +3,8 @@ import { Flex, message, Rate } from 'antd'
 import "../../style/global.css";
 import { getMovieByIdApi, rating } from '../../util/api.js'
 import {useParams} from "react-router-dom";
+import {useFavorites} from '../../Context/FavoriteProvider.jsx'
+import FavoriteButton from '../common/FavoriteButton.jsx'
 
 const desc = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
 
@@ -10,6 +12,7 @@ const MovieDetailCard = ( { title, setSelectedEpisode}) => {
     const [movie,setMovie] = useState({});
     const {movieId} = useParams()
     const [value, setValue] = useState(0);
+    const {favorites, toggleFavorite} = useFavorites();
     useEffect(()=>{
         const fetchData = async () => {
             const response= await getMovieByIdApi(movieId)
@@ -66,17 +69,24 @@ const MovieDetailCard = ( { title, setSelectedEpisode}) => {
                     </p>
 
                     <Flex gap="middle" align="center">
-                        <Rate
-                            className="custom-rate"
-                            allowHalf
-                            tooltips={desc}
-                            onChange={handleRatingChange}
-                            value={value}
-                        />
-                        <div className='text-yellow-500 font-semibold text-lg'>
-                            {movie.averageRating} / 5 ({movie.ratingCount} đánh giá)
+                        <div className="flex justify-between">
+
+                            <Rate
+                                className="custom-rate"
+                                allowHalf
+                                tooltips={desc}
+                                onChange={handleRatingChange}
+                                value={value}
+                            />
+                            <div className='text-yellow-500 font-semibold text-lg'>
+                                {movie.averageRating} / 5 ({movie.ratingCount} đánh giá)
+                            </div>
+                        </div>
+                        <div className="ml-40">
+                            <FavoriteButton  movieId={movieId} favorites={favorites} toggleFavorite={toggleFavorite} />
                         </div>
                     </Flex>
+
                 </div>
             </div>
         </div>

@@ -5,11 +5,12 @@ import TopRankings from "../movie/TopRanking.jsx";
 import EpisodeList from "./EpisodesList.jsx";
 import { getEpisodeByMovieId } from "../../util/api.js";
 import CommentSection from './CommentSection.jsx'
-
+import {useFavorites} from '../../Context/FavoriteProvider.jsx'
 
 const MovieDetail = () => {
     const [selectedEpisode, setSelectedEpisode] = useState(null);
     const [episodes, setEpisodes] = useState([]);
+    const {favorites,  toggleFavorite} = useFavorites();
     const { movieId } = useParams();
 
     // Gọi API để lấy danh sách tập phim theo movieId
@@ -45,7 +46,7 @@ const MovieDetail = () => {
 
                 {/* Cột phải: BXH */}
                 <div className="w-2/7">
-                    <TopRankings />
+                    <TopRankings  />
                 </div>
             </div>
         </div>

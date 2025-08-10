@@ -73,6 +73,19 @@ const addCommentApi = ({ movieId, content }) =>{
     const URL_API=`/api/comments`;
     return axios.post(URL_API, { movieId,content });
 }
+const addFavoriteApi=({movieId }) =>{
+    const URL_API=`/api/favorites/${movieId}`;
+    return axios.post(URL_API);
+}
+const deleteFavoriteApi=({movieId }) =>{
+    const URL_API=`/api/favorites/${movieId}`;
+    return axios.delete(URL_API);
+}
+const getFavoritesApi=() =>{
+    const URL_API=`/api/favorites`;
+    return axios.get(URL_API);
+}
+
 export {
     createUserApi,
     loginApi,
@@ -85,8 +98,11 @@ export {
     getMoviesApi,
     increaseEpisodeViewsApi,
     updateAccountTypeApi,
-   rating,
+    rating,
     addCommentApi,
-    getCommentsByMovie
+    getCommentsByMovie,
+    addFavoriteApi,
+    deleteFavoriteApi,
+    getFavoritesApi
 };
 

@@ -1,4 +1,4 @@
-import ReactDOM from "react-dom/client";
+
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Layout from "./Layout.jsx";
 import Register from "./componets/auth/Register.jsx";
@@ -12,6 +12,8 @@ import AdminLayout from "./AdminLayout.jsx";
 import MovieList from "./componets/Admin/MovieManagement/MovieList.jsx";
 import EpisodeList from "./componets/Admin/MovieManagement/EpisodeList.jsx";
 import FilterPage from './pages/FilterPage.jsx'
+import FavoritePage from './pages/FavoritePage.jsx'
+import { FavoritesProvider } from "./context/FavoriteProvider.jsx";
 const AnimatedRoute = ({ children }) => {
     const location = useLocation();
 
@@ -29,41 +31,49 @@ const AnimatedRoute = ({ children }) => {
 export default function App() {
     return (
         <BrowserRouter>
+          <FavoritesProvider>
             <Routes>
-                <Route path="/" element={<Layout />}>
-                    <Route
-                        index
-                        element={
-                            <AnimatedRoute>
-                                <HomePage />
-                            </AnimatedRoute>
-                        }
-                    />
-                    <Route
-                        path="/user"
-                        element={
-                            <AnimatedRoute>
-                                <UserPage />
-                            </AnimatedRoute>
-                        }
-                    />
-                    <Route
-                        path="/phim/:movieId"
-                        element={
-                            <AnimatedRoute>
-                                <MovieDetail />
-                            </AnimatedRoute>
-                        }
-                    />
-                    <Route path="/filter"
+                  <Route path="/" element={<Layout />}>
+                      <Route
+                          index
+                          element={
+                              <AnimatedRoute>
+                                  <HomePage />
+                              </AnimatedRoute>
+                          }
+                      />
+                      <Route
+                          path="/user"
+                          element={
+                              <AnimatedRoute>
+                                  <UserPage />
+                              </AnimatedRoute>
+                          }
+                      />
+                      <Route
+                          path="/phim/:movieId"
+                          element={
+                              <AnimatedRoute>
+                                  <MovieDetail />
+                              </AnimatedRoute>
+                          }
+                      />
+                      <Route path="/filter"
+                             element={
+                               <AnimatedRoute>
+                                 <FilterPage />
+                               </AnimatedRoute>
+                      }
+                      />
+                    <Route path="/favorite-list"
                            element={
                              <AnimatedRoute>
-                               <FilterPage />
+                               <FavoritePage />
                              </AnimatedRoute>
-                    }
+                           }
                     />
 
-                </Route>
+                  </Route>
                 <Route
                     path="/register"
                     element={
@@ -110,6 +120,7 @@ export default function App() {
                 </Route>
 
             </Routes>
+          </FavoritesProvider>
 
         </BrowserRouter>
     );
