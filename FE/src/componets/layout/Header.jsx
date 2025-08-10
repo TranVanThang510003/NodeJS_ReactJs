@@ -14,6 +14,7 @@ import styles from './Header.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import FilterBar from '../common/FilterBar.jsx'
+import { FaHeart } from 'react-icons/fa'
 
 const NAVIGATION_PATHS = {
     home: '/',
@@ -22,7 +23,7 @@ const NAVIGATION_PATHS = {
     register: '/register',
     logout: '/login',
     cart: '/cart',
-    wishlist: '/wishlist',
+    favoritList: '/favorite-list',
 };
 
 const Header = () => {
@@ -108,12 +109,20 @@ const Header = () => {
 
                 {/* Avatar hoặc Auth */}
                 {isLoggedIn ? (
+                  <div className="flex items-center ">
+                      <FaHeart
+                        size={25}
+                        className="text-red-500 transition-transform duration-300 transform hover:scale-125"
+                        onClick={() => navigate(NAVIGATION_PATHS.favoritList)}
+                      />
+
                     <Dropdown menu={{items: userMenu, onClick: handleMenuClick}} placement="bottomRight" arrow>
                         <Space className="cursor-pointer">
                             <span>{user.name}</span>
                             <Avatar style={{backgroundColor: '#87d068', width:"40px" ,height:"40px",  fontSize:"25px"}} icon={<UserOutlined/>}/>
                         </Space>
                     </Dropdown>
+                  </div>
                 ) : (
                     <div className="flex items-center ">
                     <span

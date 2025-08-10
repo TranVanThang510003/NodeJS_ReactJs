@@ -5,10 +5,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { useLocation, useNavigate } from 'react-router-dom'
 
-const MovieCategory = ({ title, movies }) => {
+const MovieCategory = ({ title, movies, favorites,toggleFavorite }) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const isFilterPage = location.pathname === "/filter"; // trang lọc
+  const isFilterPage = location.pathname === "/filter";
+  const isFavoritePage = location.pathname === "/favorite-list";
 // Map title sang query filter
   const getFilterParams = () => {
     switch (title) {
@@ -30,16 +31,18 @@ const MovieCategory = ({ title, movies }) => {
             <div className="flex flex-wrap space-x-2 overflow-x-auto scrollbar-hide">
                 {movies.map((movie, index) => (
                     <MovieCard
-                        key={index}
-                        image={movie.poster}
-                        rating={movie.averageRating}
-                        title={movie.title}
-                        stats={movie.stats}
-                        movieId={movie._id}
+                      key={movie._id}
+                      image={movie.poster}
+                      rating={movie.averageRating}
+                      title={movie.title}
+                      stats={movie.stats}
+                      movieId={movie._id}
+                      favorites={favorites}
+                      toggleFavorite={toggleFavorite}
                     />
                 ))}
             </div>
-          {!isFilterPage && (
+          {!isFilterPage && !isFavoritePage &&(
             <div className="w-full mt-2 flex justify-end">
               <div className="text-orange-500 flex px-4 py-2 cursor-pointer items-center space-x-1 mr-8 hover:text-orange-700 transition duration-300 " onClick={handleSeeMore}>
                 <FontAwesomeIcon icon={faArrowRight} />
