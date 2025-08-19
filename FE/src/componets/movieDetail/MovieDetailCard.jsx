@@ -3,16 +3,22 @@ import { Flex, message, Rate } from 'antd'
 import "../../style/global.css";
 import { getMovieByIdApi, rating } from '../../util/api.js'
 import {useParams} from "react-router-dom";
-import {useFavorites} from '../../Context/FavoriteProvider.jsx'
-import FavoriteButton from '../common/FavoriteButton.jsx'
 
+import FavoriteButton from '../common/FavoriteButton.jsx'
+import { useDispatch, useSelector } from "react-redux";
+import { fetchFavorites, toggleFavorite } from "../../features/favoriteSlice";
 const desc = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
 
 const MovieDetailCard = ( { title, setSelectedEpisode}) => {
+    const dispatch = useDispatch();
+    const { items: favorites } = useSelector((state) => state.favorite);
+    useEffect(() => {
+        dispatch(fetchFavorites()); // load favorites khi vào
+    }, [dispatch]);
+
     const [movie,setMovie] = useState({});
     const {movieId} = useParams()
     const [value, setValue] = useState(0);
-    const {favorites, toggleFavorite} = useFavorites();
     useEffect(()=>{
         const fetchData = async () => {
             const response= await getMovieByIdApi(movieId)
@@ -83,7 +89,7 @@ const MovieDetailCard = ( { title, setSelectedEpisode}) => {
                             </div>
                         </div>
                         <div className="ml-40">
-                            <FavoriteButton  movieId={movieId} favorites={favorites} toggleFavorite={toggleFavorite} />
+                            <FavoriteButton  movieId={movieId} favorites={favorites}  toggleFavorite={(id) => dispatch(toggleFavorite(id))} />
                         </div>
                     </Flex>
 

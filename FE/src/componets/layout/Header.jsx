@@ -1,52 +1,57 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
     UserOutlined,
     LogoutOutlined,
-    ShoppingCartOutlined,
-    HeartOutlined,
-    AppstoreOutlined,
-    GlobalOutlined,
-} from '@ant-design/icons';
-import { Avatar, Badge, Dropdown, Menu, Select, Space } from 'antd';
-import Logo from '../common/Logo.jsx';
-import styles from './Header.module.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import FilterBar from '../common/FilterBar.jsx'
-import { FaHeart } from 'react-icons/fa'
+} from "@ant-design/icons";
+import { Avatar, Dropdown, Space } from "antd";
+import Logo from "../common/Logo.jsx";
+import styles from "./Header.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import FilterBar from "../common/FilterBar.jsx";
+import { FaHeart } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../features/authSlice"; // <-- slice auth bạn đã viết
+import { fetchFavorites } from "../../features/favoriteSlice"; // <-- slice favorite bạn đã viết
 
 const NAVIGATION_PATHS = {
-    home: '/',
-    user: '/user',
-    login: '/login',
-    register: '/register',
-    logout: '/login',
-    cart: '/cart',
-    favoritList: '/favorite-list',
+    home: "/",
+    user: "/user",
+    login: "/login",
+    register: "/register",
+    logout: "/login",
+    cart: "/cart",
+    favoritList: "/favorite-list",
 };
 
 const Header = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('accessToken'));
-    const [user, setUser] = useState({ name: 'User' });
-    const [cartCount, setCartCount] = useState(2);
-    const [searchValue, setSearchValue] = useState('');
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
+    // lấy dữ liệu từ Redux store
+    const { user, isLoggedIn } = useSelector((state) => state.auth);
+    const { items: favorites } = useSelector((state) => state.favorite);
+
+    const [searchValue, setSearchValue] = useState("");
+
+    // khi login thì fetch favorites
     useEffect(() => {
-        setIsLoggedIn(!!localStorage.getItem('accessToken'));
-    }, []);
+        if (isLoggedIn) {
+            dispatch(fetchFavorites());
+        }
+    }, [isLoggedIn, dispatch]);
 
     const handleLogout = () => {
-        localStorage.clear();
-        setIsLoggedIn(false);
+        dispatch(logout()); // clear Redux + localStorage
         navigate(NAVIGATION_PATHS.logout);
     };
+
     const handleMenuClick = ({ key }) => {
-        if (key === 'logout') {
+        if (key === "logout") {
             handleLogout();
         } else {
-            navigate(NAVIGATION_PATHS[key] || '/');
+            navigate(NAVIGATION_PATHS[key] || "/");
         }
     };
 
@@ -59,7 +64,7 @@ const Header = () => {
     };
 
     const handleKeyPress = (e) => {
-        if (e.key === 'Enter') {
+        if (e.key === "Enter") {
             handleSearch(searchValue);
         }
     };
@@ -68,81 +73,93 @@ const Header = () => {
         handleSearch(searchValue);
     };
 
-
-
     const userMenu = [
-        { label: 'Đăng xuất', key: 'logout', icon: <LogoutOutlined /> },
+        { label: "Đăng xuất", key: "logout", icon: <LogoutOutlined /> },
     ];
 
     return (
-        <div className="flex fixed  w-full items-center justify-between px-6 py-3 gap-6 bg-black shadow h-[80px] z-[1000]">
-            {/* Logo */}
-            <div className="flex items-center gap-6">
-                <Logo width={50} height={50}/>
-                <FilterBar onFilterChange={(filters) => console.log('Bộ lọc:', filters)} />
-            </div>
+      <div className="flex fixed  w-full items-center justify-between px-6 py-3 gap-6 bg-black shadow h-[80px] z-[1000]">
+          {/* Logo + Filter */}
+          <div className="flex items-center gap-6">
+              <Logo width={50} height={50} />
+              <FilterBar onFilterChange={(filters) => console.log("Bộ lọc:", filters)} />
+          </div>
 
-            {/* Search Box */}
-            <div className="w-[30%]">
-                <div className="relative">
-                    <input
-                        type="text"
-                        value={searchValue}
-                        onChange={handleInputChange}
-                        onKeyDown={handleKeyPress}
-                        placeholder="  Tìm kiếm theo tên..."
-                        className="w-full h-[48px] px-4 border border-gray-400 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-orange-400 bg-white"
-                    />
-                    <button
-                        onClick={handleButtonClick}
-                        className="absolute right-0 top-0 h-[48px] w-[60px] bg-[#febd69] text-black rounded-r-md hover:bg-orange-400 active:bg-orange-500 transition-colors flex items-center justify-center"
+          {/* Search Box */}
+          <div className="w-[30%]">
+              <div className="relative">
+                  <input
+                    type="text"
+                    value={searchValue}
+                    onChange={handleInputChange}
+                    onKeyDown={handleKeyPress}
+                    placeholder="  Tìm kiếm theo tên..."
+                    className="w-full h-[48px] px-4 border border-gray-400 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-orange-400 bg-white"
+                  />
+                  <button
+                    onClick={handleButtonClick}
+                    className="absolute right-0 top-0 h-[48px] w-[60px] bg-[#febd69] text-black rounded-r-md hover:bg-orange-400 active:bg-orange-500 transition-colors flex items-center justify-center"
+                  >
+                      <FontAwesomeIcon icon={faSearch} />
+                  </button>
+              </div>
+          </div>
+
+          <div className="flex items-center gap-6">
+              {/* Avatar hoặc Auth */}
+              {isLoggedIn ? (
+                <div className="flex items-center gap-4">
+                    {/* icon Favorite có badge */}
+                    <div className="relative cursor-pointer" onClick={() => navigate(NAVIGATION_PATHS.favoritList)}>
+                        <FaHeart
+                          size={25}
+                          className="text-orange-500 transition-transform duration-300 transform hover:scale-125"
+                        />
+                        {favorites.length > 0 && (
+                          <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                  {favorites.length}
+                </span>
+                        )}
+                    </div>
+
+                    <Dropdown
+                      menu={{ items: userMenu, onClick: handleMenuClick }}
+                      placement="bottomRight"
+                      arrow
                     >
-                        <FontAwesomeIcon icon={faSearch}/>
-                    </button>
-                </div>
-            </div>
-
-
-
-            <div className="flex items-center gap-6">
-
-
-                {/* Avatar hoặc Auth */}
-                {isLoggedIn ? (
-                  <div className="flex items-center ">
-                      <FaHeart
-                        size={25}
-                        className="text-red-500 transition-transform duration-300 transform hover:scale-125"
-                        onClick={() => navigate(NAVIGATION_PATHS.favoritList)}
-                      />
-
-                    <Dropdown menu={{items: userMenu, onClick: handleMenuClick}} placement="bottomRight" arrow>
                         <Space className="cursor-pointer">
-                            <span>{user.name}</span>
-                            <Avatar style={{backgroundColor: '#87d068', width:"40px" ,height:"40px",  fontSize:"25px"}} icon={<UserOutlined/>}/>
+                            <span>{user?.name || "User"}</span>
+                            <Avatar
+                              style={{
+                                  backgroundColor: "#87d068",
+                                  width: "40px",
+                                  height: "40px",
+                                  fontSize: "20px",
+                              }}
+                              icon={<UserOutlined />}
+                            />
                         </Space>
                     </Dropdown>
-                  </div>
-                ) : (
-                    <div className="flex items-center ">
+                </div>
+              ) : (
+                <div className="flex items-center ">
+            <span
+              className={`${styles.authButton} ${styles.register}`}
+              onClick={() => navigate(NAVIGATION_PATHS.register)}
+            >
+              Đăng ký
+            </span>
                     <span
-                        className={`${styles.authButton} ${styles.register}`}
-                        onClick={() => navigate(NAVIGATION_PATHS.register)}
+                      className={`${styles.authButton} ${styles.login}`}
+                      onClick={() => navigate(NAVIGATION_PATHS.login)}
                     >
-                        Đăng ký
-                    </span>
-                        <span
-                            className={`${styles.authButton} ${styles.login}`}
-                            onClick={() => navigate(NAVIGATION_PATHS.login)}
-                        >
-                        Đăng nhập
-                    </span>
-                    </div>
-                )}
-            </div>
-        </div>
+              Đăng nhập
+            </span>
+                </div>
+              )}
+          </div>
+      </div>
     );
-
 };
 
 export default Header;

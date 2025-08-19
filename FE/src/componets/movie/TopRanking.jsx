@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getMoviesApi } from '../../util/api.js';
-import { useFavorites } from '../../context/FavoriteProvider.jsx';
 import FavoriteButton from '../common/FavoriteButton.jsx';
+import { useDispatch, useSelector } from "react-redux";
+import { fetchFavorites, toggleFavorite } from "../../features/favoriteSlice";
 
 const TopRankings = () => {
   const [topRanked, setTopRanked] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { favorites, toggleFavorite } = useFavorites();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { items: favorites } = useSelector((state) => state.favorite);
+  useEffect(() => {
+    dispatch(fetchFavorites()); // load favorites khi vào
+  }, [dispatch]);
 
   useEffect(() => {
     const fetchTopRankedMovies = async () => {
@@ -57,7 +62,7 @@ const TopRankings = () => {
           <FavoriteButton
             movieId={movie._id}
             favorites={favorites}
-            toggleFavorite={toggleFavorite}
+            toggleFavorite={(id) => dispatch(toggleFavorite(id))}
           />
         </div>
       ))}
