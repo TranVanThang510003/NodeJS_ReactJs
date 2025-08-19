@@ -13,7 +13,6 @@ import MovieList from "./componets/Admin/MovieManagement/MovieList.jsx";
 import EpisodeList from "./componets/Admin/MovieManagement/EpisodeList.jsx";
 import FilterPage from './pages/FilterPage.jsx'
 import FavoritePage from './pages/FavoritePage.jsx'
-import { FavoritesProvider } from "./context/FavoriteProvider.jsx";
 const AnimatedRoute = ({ children }) => {
     const location = useLocation();
 
@@ -31,7 +30,6 @@ const AnimatedRoute = ({ children }) => {
 export default function App() {
     return (
         <BrowserRouter>
-          <FavoritesProvider>
             <Routes>
                   <Route path="/" element={<Layout />}>
                       <Route
@@ -120,7 +118,6 @@ export default function App() {
                 </Route>
 
             </Routes>
-          </FavoritesProvider>
 
         </BrowserRouter>
     );

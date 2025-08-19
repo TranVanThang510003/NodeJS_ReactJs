@@ -1,6 +1,5 @@
 import {useNavigate} from "react-router-dom";
 import FavoriteButton from "../common/FavoriteButton.jsx";
-
 const MovieCard = ({ image, rating,ratingCount, title, stats, movieId, favorites, toggleFavorite }) => {
 
     const navigate= useNavigate();

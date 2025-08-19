@@ -17,7 +17,7 @@ const FavoriteButton = ({ movieId, favorites, toggleFavorite  }) => {
       {isFavorite ? (
         <FaHeart
           size={25}
-          className="text-red-500 transition-transform duration-300 transform hover:scale-125 drop-shadow-md"
+          className="text-orange-500 transition-transform duration-300 transform hover:scale-125 drop-shadow-md"
         />
       ) : (
         <FaRegHeart
