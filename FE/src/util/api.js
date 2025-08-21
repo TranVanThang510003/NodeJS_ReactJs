@@ -56,6 +56,10 @@ const increaseEpisodeViewsApi = async (episodeId) => {
         throw err;
     }
 };
+const userInformationApi = () => {
+    const URL_API = '/api/me';
+    return axios.get(URL_API,);
+};
 const updateAccountTypeApi = (accountType) => {
     const URL_API = '/api/user/update-account-type';
     return axios.put(URL_API, { accountType });
@@ -103,6 +107,7 @@ export {
     getCommentsByMovie,
     addFavoriteApi,
     deleteFavoriteApi,
-    getFavoritesApi
+    getFavoritesApi,
+    userInformationApi,
 };
 
