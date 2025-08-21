@@ -11,27 +11,30 @@ const TopRankings = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { items: favorites } = useSelector((state) => state.favorite);
+  const token = localStorage.getItem("accessToken");
   useEffect(() => {
-    dispatch(fetchFavorites()); // load favorites khi vào
+    if(token) {
+      dispatch(fetchFavorites());
+    }
   }, [dispatch]);
-
   useEffect(() => {
-    const fetchTopRankedMovies = async () => {
-      try {
-        const movies = await getMoviesApi({
-          sortBy: 'totalViews',
-          sortOrder: 'desc',
-          limit: 5
-        });
-        setTopRanked(movies);
-      } catch (error) {
-        console.error('Failed to fetch top ranked movies:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
 
-    fetchTopRankedMovies();
+      const fetchTopRankedMovies = async () => {
+        try {
+          const movies = await getMoviesApi({
+            sortBy: 'totalViews',
+            sortOrder: 'desc',
+            limit: 10
+          });
+          setTopRanked(movies);
+        } catch (error) {
+          console.error('Failed to fetch top ranked movies:', error);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchTopRankedMovies();
   }, []);
 
   if (loading) return <div className="text-white">Đang tải...</div>;

@@ -89,7 +89,7 @@ const loginService = async ( email,password) => {
     }
 }
 
-const getUserService = async () => {
+const getAllUserService = async () => {
     try {
 
         let result = await User.find ({}).select("-password")
@@ -100,6 +100,32 @@ const getUserService = async () => {
         return null;
     }
 }
+const getUserService = async (email) => {
+    try {
+        const user = await User.findOne({ email }).select("-password"); // bỏ password đi
+        if (!user) {
+            return {
+                success: false,
+                statusCode: 404,
+                message: "Người dùng không tồn tại!",
+            };
+        }
+        return {
+            success: true,
+            statusCode: 200,
+            message: "Lấy thông tin người dùng thành công!",
+            data: user,
+        };
+    } catch (error) {
+        console.log(error);
+        return {
+            success: false,
+            statusCode: 500,
+            message: "Lỗi server khi lấy thông tin người dùng.",
+        };
+    }
+};
+
 
 const updateAccountTypeService = async (email, accountType) => {
     try {
@@ -141,6 +167,7 @@ module.exports = {
     createUserService,
     loginService,
     getUserService,
+    getAllUserService,
     updateAccountTypeService,
 }
 

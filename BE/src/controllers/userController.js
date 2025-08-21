@@ -1,4 +1,4 @@
-const {createUserService, loginService, getUserService, updateAccountTypeService} = require("../services/userService");
+const {createUserService, loginService, getUserService,getAllUserService, updateAccountTypeService} = require("../services/userService");
 
 const createUser = async(req,res)=>{
     console.log(req.body);
@@ -13,15 +13,15 @@ const handleLogin = async(req,res)=>{
     const data = await loginService(email, password)
     return res.status(201).json(data)
 }
-const getUser = async(req,res)=>{
-    const data = await getUserService(req,res)
+const getAllUser = async(req,res)=>{
+    const data = await getAllUserService(req,res)
     return res.status(201).json(data)
 }
 
 
 const updateAccountType = async (req, res) => {
     try {
-        const email = req.user.email; // Lấy từ middleware verifyToken
+        const email = req.user.email;
         const { accountType } = req.body;
 
         if (!['free', 'premium'].includes(accountType)) {
@@ -36,9 +36,16 @@ const updateAccountType = async (req, res) => {
     }
 };
 
+const getUser = async (req, res) => {
+    const email = req.user.email;  // từ token decode ra
+    const data = await getUserService(email);
+    return res.status(data.statusCode).json(data);
+};
+
 
 module.exports = {
     createUser,
     handleLogin,
-    getUser, updateAccountType,
+    getAllUser, updateAccountType,
+    getUser
 };

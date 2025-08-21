@@ -3,43 +3,27 @@ import { useDispatch, useSelector } from "react-redux";
 import MovieList from "../componets/movie/MovieList.jsx";
 import MovieCategory from "../componets/movie/MovieCategory.jsx";
 import TopRankings from "../componets/movie/TopRanking.jsx";
-import { getMoviesApi } from '../util/api.js';
+import {
+    fetchNewMovies,
+    fetchPopularMovies,
+    fetchTopRatedMovies
+} from "../features/movieSlice.js";
 import { fetchFavorites, toggleFavorite } from "../features/favoriteSlice.js";
 
 const HomePage = () => {
     const dispatch = useDispatch();
 
-    const [newMovies, setNewMovies] = React.useState([]);
-    const [popularMovies, setPopularMovies] = React.useState([]);
-    const [topRatedMovies, setTopRatedMovies] = React.useState([]);
-    const [loading, setLoading] = React.useState(true);
-
+    const { new: newMovies, popular: popularMovies, topRated: topRatedMovies, loading, error } = useSelector((state) => state.movie);
     const { items: favorites } = useSelector((state) => state.favorite);
 
     const token = localStorage.getItem("accessToken");
 
-    // fetch movies
+    // fetch movies từ redux
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const [latest, popular, rated] = await Promise.all([
-                    getMoviesApi({ sortBy: 'latestEpisodeDate', sortOrder: 'desc', limit: 10 }),
-                    getMoviesApi({ sortBy: 'totalViews', sortOrder: 'desc', limit: 10 }),
-                    getMoviesApi({ sortBy: 'averageRating', sortOrder: 'desc', limit: 10 }),
-                ]);
-
-                setNewMovies(latest);
-                setPopularMovies(popular);
-                setTopRatedMovies(rated);
-            } catch (error) {
-                console.error('Failed to fetch movies:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchData();
-    }, [token]);
+        dispatch(fetchNewMovies());
+        dispatch(fetchPopularMovies());
+        dispatch(fetchTopRatedMovies());
+    }, [dispatch]);
 
     // fetch favorites nếu có token
     useEffect(() => {
@@ -47,6 +31,9 @@ const HomePage = () => {
             dispatch(fetchFavorites());
         }
     }, [token, dispatch]);
+
+    if (loading) return <p>Đang tải phim...</p>;
+    if (error) return <p>Lỗi: {error}</p>;
 
     return (
       <div className="p-6 bg-[#131314] text-white">

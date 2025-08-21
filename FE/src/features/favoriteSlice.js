@@ -1,4 +1,4 @@
-// favoriteSlice.js
+
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getFavoritesApi, addFavoriteApi, deleteFavoriteApi } from "../util/api";
 
@@ -10,7 +10,10 @@ export const fetchFavorites = createAsyncThunk(
       const res = await getFavoritesApi();
       return res.data || [];
     } catch (err) {
-      return rejectWithValue(err.response?.data || "Lỗi fetch favorites");
+      return rejectWithValue({
+        status: err.response?.status,
+        message: err.response?.data || "Lỗi fetch favorites",
+      });
     }
   }
 );
@@ -32,7 +35,10 @@ export const toggleFavorite = createAsyncThunk(
         if (res.success) return { type: "add", movieId };
       }
     } catch (err) {
-      return rejectWithValue(err.response?.data || "Lỗi toggle favorite");
+      return rejectWithValue({
+        status: err.response?.status,
+        message: err.response?.data || "Lỗi toggle favorite",
+      });
     }
   }
 );
@@ -58,6 +64,11 @@ const favoriteSlice = createSlice({
       .addCase(fetchFavorites.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+        if (action.payload?.status === 401) {
+          // logout user
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("user");
+        }
       })
 
       // toggle favorite

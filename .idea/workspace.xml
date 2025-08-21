@@ -5,27 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5860cf09-a1cb-4eac-87e7-59eabfefcb1c" name="Changes" comment="create user">
-      <change afterPath="$PROJECT_DIR$/BE/src/controllers/favoriteController.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BE/src/models/favorite.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BE/src/services/favoriteService.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FE/src/Context/FavoriteProvider.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FE/src/componets/common/FavoriteButton.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FE/src/pages/FavoritePage.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/features/movieSlice.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/pages/UserProfile.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/controllers/userController.js" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/controllers/userController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BE/src/routes/apiRoute.js" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/routes/apiRoute.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/services/userService.js" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/services/userService.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FE/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/FE/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FE/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/FE/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/src/Layout.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/Layout.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/src/componets/layout/Header.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/componets/layout/Header.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/src/componets/movie/MovieCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/componets/movie/MovieCard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/src/componets/movie/MovieCategory.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/componets/movie/MovieCategory.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/src/componets/movie/MovieList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/componets/movie/MovieList.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FE/src/componets/movie/TopRanking.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/componets/movie/TopRanking.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/src/componets/movieDetail/MovieDetail.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/componets/movieDetail/MovieDetail.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/src/componets/movieDetail/MovieDetailCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/componets/movieDetail/MovieDetailCard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/src/pages/FilterPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/pages/FilterPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/features/favoriteSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/features/favoriteSlice.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FE/src/pages/HomePage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/pages/HomePage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/redux/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/redux/store.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FE/src/util/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/util/api.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -114,7 +105,10 @@
       <workItem from="1754469382565" duration="11199000" />
       <workItem from="1754553633373" duration="12739000" />
       <workItem from="1754728770489" duration="7744000" />
-      <workItem from="1754816741936" duration="11055000" />
+      <workItem from="1754816741936" duration="11344000" />
+      <workItem from="1755593195000" duration="9104000" />
+      <workItem from="1755676286362" duration="3958000" />
+      <workItem from="1755765626298" duration="6267000" />
     </task>
     <task id="LOCAL-00001" summary="Create the project">
       <option name="closed" value="true" />
