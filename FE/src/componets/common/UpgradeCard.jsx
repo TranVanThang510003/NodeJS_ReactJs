@@ -1,15 +1,21 @@
 import React from "react";
 import { Button, message } from 'antd';
+import { useDispatch } from "react-redux";
+import { updateAccountType } from "../../features/authSlice";
 import { updateAccountTypeApi } from '../../util/api.js';
 
 const UpgradeCard = ({ onClose }) => {
+  const dispatch = useDispatch();
+
   const handleUpgrade = async () => {
     try {
       const res = await updateAccountTypeApi("premium");
       if (res && res.success) {
-        message.success("Nâng cấp tài khoản thành công. Vui lòng đăng nhập lại để sử dụng ");
-        onClose?.(); // đóng UI nâng cấp nếu cần
+        // cập nhật Redux store
+        dispatch(updateAccountType("premium"));
 
+        message.success("Nâng cấp thành công! Bạn đã trở thành Premium 🎉");
+        onClose?.();
       } else {
         message.error("Nâng cấp thất bại. Vui lòng thử lại.");
       }

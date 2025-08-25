@@ -13,6 +13,7 @@ import MovieList from "./componets/Admin/MovieManagement/MovieList.jsx";
 import EpisodeList from "./componets/Admin/MovieManagement/EpisodeList.jsx";
 import FilterPage from './pages/FilterPage.jsx'
 import FavoritePage from './pages/FavoritePage.jsx'
+import UserProfile from './pages/UserProfile.jsx'
 const AnimatedRoute = ({ children }) => {
     const location = useLocation();
 
@@ -69,6 +70,14 @@ export default function App() {
                                <FavoritePage />
                              </AnimatedRoute>
                            }
+                    />
+                    <Route
+                      path="/user/me"
+                      element={
+                        <AnimatedRoute>
+                          <UserProfile />
+                        </AnimatedRoute>
+                      }
                     />
 
                   </Route>

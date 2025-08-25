@@ -5,18 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5860cf09-a1cb-4eac-87e7-59eabfefcb1c" name="Changes" comment="create user">
-      <change afterPath="$PROJECT_DIR$/FE/src/features/movieSlice.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FE/src/pages/UserProfile.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BE/src/controllers/userController.js" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/controllers/userController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BE/src/routes/apiRoute.js" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/routes/apiRoute.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BE/src/services/userService.js" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/services/userService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/FE/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/FE/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/src/componets/movie/TopRanking.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/componets/movie/TopRanking.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/src/features/favoriteSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/features/favoriteSlice.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/src/pages/HomePage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/pages/HomePage.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/src/redux/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/redux/store.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/componets/auth/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/componets/auth/Login.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/componets/common/UpgradeCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/componets/common/UpgradeCard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/componets/layout/Header.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/componets/layout/Header.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/features/authSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/features/authSlice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/pages/UserProfile.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/pages/UserProfile.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FE/src/util/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/util/api.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -108,7 +104,8 @@
       <workItem from="1754816741936" duration="11344000" />
       <workItem from="1755593195000" duration="9104000" />
       <workItem from="1755676286362" duration="3958000" />
-      <workItem from="1755765626298" duration="6267000" />
+      <workItem from="1755765626298" duration="6461000" />
+      <workItem from="1756109884648" duration="7979000" />
     </task>
     <task id="LOCAL-00001" summary="Create the project">
       <option name="closed" value="true" />
@@ -159,6 +156,11 @@
           <url>file://$PROJECT_DIR$/FE/src/componets/auth/Register.jsx</url>
           <line>1</line>
           <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/FE/src/componets/layout/Header.jsx</url>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

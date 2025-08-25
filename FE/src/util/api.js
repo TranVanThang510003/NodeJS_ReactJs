@@ -58,7 +58,7 @@ const increaseEpisodeViewsApi = async (episodeId) => {
 };
 const userInformationApi = () => {
     const URL_API = '/api/me';
-    return axios.get(URL_API,);
+    return axios.get(URL_API);
 };
 const updateAccountTypeApi = (accountType) => {
     const URL_API = '/api/user/update-account-type';

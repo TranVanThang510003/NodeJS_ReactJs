@@ -1,39 +1,27 @@
 // src/redux/authSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { loginApi, } from "../util/api";
+import { loginApi } from "../util/api";
 
-// --- thunk login ---
 export const login = createAsyncThunk(
   "auth/login",
-  async (credentials, { rejectWithValue }) => {
+  async ({ email, password }, { rejectWithValue }) => {
     try {
-      const res = await loginApi(credentials);
-      // backend trả về token + user
-      const { token, user } = res.data;
+      const res = await loginApi(email, password);
+      if (res && res.EC === 0 && res.accessToken) {
+        const { accessToken, user } = res;
 
-      // lưu vào localStorage
-      localStorage.setItem("accessToken", token);
-      localStorage.setItem("user", JSON.stringify(user));
+        // lưu localStorage
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("user", JSON.stringify(user));
 
-      return { token, user };
+        return { token: accessToken, user };
+      }
+      return rejectWithValue(res.EM || "Login error");
     } catch (err) {
-      return rejectWithValue(err.response?.data || "Đăng nhập thất bại");
+      return rejectWithValue("Server error");
     }
   }
 );
-
-// // --- thunk getProfile (nếu cần load từ token) ---
-// export const fetchProfile = createAsyncThunk(
-//   "auth/fetchProfile",
-//   async (_, { rejectWithValue }) => {
-//     try {
-//       const res = await getProfileApi();
-//       return res.data; // trả về user info
-//     } catch (err) {
-//       return rejectWithValue(err.response?.data || "Không lấy được profile");
-//     }
-//   }
-// );
 
 const initialState = {
   token: localStorage.getItem("accessToken") || null,
@@ -53,11 +41,15 @@ const authSlice = createSlice({
       localStorage.removeItem("accessToken");
       localStorage.removeItem("user");
     },
-    // Trường hợp cần load lại state từ localStorage (khi F5)
     loadUserFromStorage: (state) => {
       state.token = localStorage.getItem("accessToken");
       state.user = JSON.parse(localStorage.getItem("user"));
     },
+    updateAccountType: (state, action) => {
+      if (state.user) {
+        state.user.accountType = action.payload;
+      }
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -69,21 +61,14 @@ const authSlice = createSlice({
         state.loading = false;
         state.token = action.payload.token;
         state.user = action.payload.user;
+        state.isLoggedIn = true;
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-      })
-
-      // .addCase(fetchProfile.fulfilled, (state, action) => {
-      //   state.user = action.payload;
-      //   localStorage.setItem("user", JSON.stringify(action.payload));
-      // })
-      // .addCase(fetchProfile.rejected, (state, action) => {
-      //   state.error = action.payload;
-      // });
+      });
   },
 });
 
-export const { logout, loadUserFromStorage } = authSlice.actions;
+export const { logout, loadUserFromStorage,updateAccountType } = authSlice.actions;
 export default authSlice.reducer;

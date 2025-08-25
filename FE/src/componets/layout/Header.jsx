@@ -50,6 +50,8 @@ const Header = () => {
     const handleMenuClick = ({ key }) => {
         if (key === "logout") {
             handleLogout();
+        } else if (key === "profile") {
+            navigate("/user/me");
         } else {
             navigate(NAVIGATION_PATHS[key] || "/");
         }
@@ -74,7 +76,10 @@ const Header = () => {
     };
 
     const userMenu = [
+        { label: "Hồ sơ cá nhân", key: "profile", icon: <UserOutlined /> },
+        { type: "divider" },
         { label: "Đăng xuất", key: "logout", icon: <LogoutOutlined /> },
+
     ];
 
     return (
@@ -128,18 +133,14 @@ const Header = () => {
                       arrow
                     >
                         <Space className="cursor-pointer">
-                            <span>{user?.name || "User"}</span>
-                            <Avatar
-                              style={{
-                                  backgroundColor: "#87d068",
-                                  width: "40px",
-                                  height: "40px",
-                                  fontSize: "20px",
-                              }}
-                              icon={<UserOutlined />}
-                            />
+                            <span>{user?.name || 'User'}</span>
+                            <div
+                              className="w-12 h-12 rounded-full bg-gradient-to-r from-orange-400 to-blue-500 flex items-center justify-center text-white text-xl font-bold shadow-md">
+                                {user.name.charAt(0)}
+                            </div>
                         </Space>
                     </Dropdown>
+
                 </div>
               ) : (
                 <div className="flex items-center ">
