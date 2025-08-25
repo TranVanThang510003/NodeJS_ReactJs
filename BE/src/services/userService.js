@@ -72,6 +72,8 @@ const loginService = async ( email,password) => {
                      user:{
                          email:user.email,
                          name:user.name,
+                         accountType: user.accountType,
+                         role:user.role,
                      }
                  }
 
