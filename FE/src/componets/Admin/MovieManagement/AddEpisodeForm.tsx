@@ -1,20 +1,29 @@
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { createEpisodeApi } from '../../../util/api.js'
+import { createEpisodeApi } from '../../../util/api.ts'
 
+interface RouteParams {
+    movieId: string;
+    [key: string]: string | undefined;
+}
 export default function AddEpisodeForm () {
-  const { movieId } = useParams()
-  const [title, setTitle] = useState('')
-  const [episodeNumber, setEpisodeNumber] = useState('')
-  const [linkVideo, setLinkVideo] = useState('')
-  const [releaseOption, setReleaseOption] = useState('now')
-  const [releaseTime, setReleaseTime] = useState('')
-  const [isPremium, setIsPremium] = useState(false)
-  const [message, setMessage] = useState('')
-  const [messageType, setMessageType] = useState('') // success | error
+  const { movieId } = useParams<RouteParams>()
+  const [title, setTitle] = useState<string>('')
+  const [episodeNumber, setEpisodeNumber] = useState<string>('')
+  const [linkVideo, setLinkVideo] = useState<string>('')
+  const [releaseOption, setReleaseOption] = useState<'now' | 'schedule'>('now');
+  const [releaseTime, setReleaseTime] = useState<string>('')
+  const [isPremium, setIsPremium] = useState<boolean>(false)
+  const [message, setMessage] = useState<string>('')
+  const [messageType, setMessageType] = useState<'success'|'error'| ''>('') // success | error
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+      if (!movieId) {
+          setMessage('❌ Movie ID không hợp lệ!');
+          setMessageType('error');
+          return;
+      }
     const payload = {
       movieId,
       title,
@@ -38,7 +47,7 @@ export default function AddEpisodeForm () {
       setReleaseOption('now')
       setReleaseTime('')
       setIsPremium(false)
-    } catch (err) {
+    } catch (err: any) {
       console.error('Lỗi khi tạo tập:', err.response || err)
       setMessage('❌ Tạo tập phim thất bại. Vui lòng thử lại!')
       setMessageType('error')
@@ -69,7 +78,7 @@ export default function AddEpisodeForm () {
       <input
         type="text"
         value={title}
-        onChange={(e) => setTitle(e.target.value)}
+        onChange={(e:any) => setTitle(e.target.value)}
         className="w-full border p-2 rounded mb-4"
         placeholder="..."
         required
@@ -79,7 +88,7 @@ export default function AddEpisodeForm () {
       <input
         type="number"
         value={episodeNumber}
-        onChange={(e) => setEpisodeNumber(e.target.value)}
+        onChange={(e:any) => setEpisodeNumber(e.target.value)}
         className="w-full border p-2 rounded mb-4"
         placeholder="1"
         required
@@ -89,7 +98,7 @@ export default function AddEpisodeForm () {
       <input
         type="text"
         value={linkVideo}
-        onChange={(e) => setLinkVideo(e.target.value)}
+        onChange={(e:any) => setLinkVideo(e.target.value)}
         className="w-full border p-2 rounded mb-4"
         placeholder="https://"
         required
@@ -121,7 +130,7 @@ export default function AddEpisodeForm () {
         <input
           type="datetime-local"
           value={releaseTime}
-          onChange={(e) => setReleaseTime(e.target.value)}
+          onChange={(e:any) => setReleaseTime(e.target.value)}
           className="w-full border p-2 rounded mb-4"
           required
         />

@@ -2,7 +2,7 @@ import React from "react";
 import { Button, message } from 'antd';
 import { useDispatch } from "react-redux";
 import { updateAccountType } from "../../features/authSlice";
-import { updateAccountTypeApi } from '../../util/api.js';
+import { updateAccountTypeApi } from '../../util/api.ts';
 
 const UpgradeCard = ({ onClose }) => {
   const dispatch = useDispatch();

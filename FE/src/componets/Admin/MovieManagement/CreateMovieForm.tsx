@@ -9,11 +9,27 @@ import {
     message,
 } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
+import type { UploadFile } from 'antd';
 import { uploadToCloudinary } from '../../../util/uploadToCloudinary.js';
-import { createMovieApi } from '../../../util/api.js';
+import { createMovieApi } from '../../../util/api.ts';
+import { Dayjs } from 'dayjs';
 
 const { TextArea } = Input;
 const { Option } = Select;
+
+interface CreateMovieFormProps {
+    onSubmit?: (data: any) => void;
+}
+
+interface FormValues {
+    title: string;
+    originalTitle: string;
+    country: string;
+    releaseDate: Dayjs;
+    genres: string[];
+    description: string;
+    poster?: UploadFile[];
+}
 
 const genres = [
     { label: '🐉 Tu Tiên', value: 'Tu Tiên' },
@@ -29,36 +45,31 @@ const genres = [
     { label: '🐷 Harem', value: 'Harem' },
 ];
 
-const CreateMovieForm = ({ onSubmit }) => {
-    const [form] = Form.useForm();
+const CreateMovieForm: React.FC<CreateMovieFormProps> = ({ onSubmit }) => {
+    const [form] = Form.useForm<FormValues>();
 
-    const onFinish = async (values) => {
+    const onFinish = async (values: FormValues) => {
         try {
             let posterUrl = '';
 
-            // Upload ảnh nếu có
-            console.log("Values từ form:", values); // Kiểm tra toàn bộ values
-            if (values.poster?.fileList && values.poster.fileList.length > 0) {
-                const file = values.poster.fileList[0].originFileObj || values.poster.fileList[0];
-                console.log("File được chọn:", file);
-                if (file) {
-                    posterUrl = await uploadToCloudinary(file);
+            console.log("Values từ form:", values);
+
+            if (values.poster && values.poster.length > 0) {
+                const fileObj = values.poster?.[0]?.originFileObj as File | undefined;
+                if (fileObj) {
+                    posterUrl = await uploadToCloudinary(fileObj);
                     console.log("Poster URL:", posterUrl);
-                } else {
-                    console.log("File không hợp lệ hoặc không có originFileObj");
                 }
-            } else {
-                console.log("Không có file trong fileList");
             }
 
             const formatted = {
                 title: values.title,
                 originalTitle: values.originalTitle,
                 country: values.country,
-                releaseDate: values.releaseDate.toDate(), // kiểu Date
-                genres: values.genres, // array
+                releaseDate: values.releaseDate.toDate(),
+                genres: values.genres,
                 description: values.description,
-                poster: posterUrl, // link ảnh đã upload
+                poster: posterUrl,
             };
 
             const res = await createMovieApi(formatted);
@@ -66,6 +77,7 @@ const CreateMovieForm = ({ onSubmit }) => {
 
             message.success('Tạo phim thành công!');
             form.resetFields();
+            onSubmit?.(formatted);
         } catch (error) {
             console.error('Lỗi khi tạo phim:', error);
             message.error('Tạo phim thất bại!');
@@ -73,7 +85,7 @@ const CreateMovieForm = ({ onSubmit }) => {
     };
 
     return (
-        <Form
+        <Form<FormValues>
             layout="vertical"
             form={form}
             onFinish={onFinish}
@@ -108,7 +120,7 @@ const CreateMovieForm = ({ onSubmit }) => {
                     optionLabelProp="label"
                     placeholder="Chọn thể loại"
                     filterOption={(input, option) =>
-                        option.label.toLowerCase().includes(input.toLowerCase())
+                        (option?.label as string).toLowerCase().includes(input.toLowerCase())
                     }
                 >
                     {genres.map((genre) => (
@@ -123,22 +135,24 @@ const CreateMovieForm = ({ onSubmit }) => {
                 <TextArea rows={4} />
             </Form.Item>
 
-            <Form.Item name="poster" label="Ảnh poster" valuePropName="file">
+            <Form.Item
+                name="poster"
+                label="Ảnh poster"
+                valuePropName="fileList"
+                getValueFromEvent={(e) => {
+                    if (Array.isArray(e)) return e;
+                    return e?.fileList;
+                }}
+            >
                 <Upload
                     name="poster"
                     listType="picture"
                     maxCount={1}
                     beforeUpload={() => false} // Ngăn upload tự động
-                    customRequest={({ file, onSuccess }) => {
+                    customRequest={({ onSuccess }) => {
                         setTimeout(() => {
-                            onSuccess("ok"); // Giả lập upload thành công
+                            onSuccess && onSuccess("ok"); // Giả lập upload thành công
                         }, 0);
-                    }}
-                    onChange={(info) => {
-                        console.log("File thay đổi:", info.file);
-                        if (info.file.status === 'removed') {
-                            console.log("File đã bị xóa");
-                        }
                     }}
                 >
                     <Button icon={<UploadOutlined />}>Chọn ảnh</Button>

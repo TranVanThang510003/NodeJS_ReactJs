@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import {useNavigate, useParams} from "react-router-dom";
-import { getMovieApi } from "../../../util/api.js";
+import { getMovieApi } from "../../../util/api.ts";
 
 const MovieList = () => {
     const [movies, setMovies] = useState([]);

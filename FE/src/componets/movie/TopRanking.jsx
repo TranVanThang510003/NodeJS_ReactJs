@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getMoviesApi } from '../../util/api.js';
+import { getMoviesApi } from '../../util/api.ts';
 import FavoriteButton from '../common/FavoriteButton.jsx';
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFavorites, toggleFavorite } from "../../features/favoriteSlice";

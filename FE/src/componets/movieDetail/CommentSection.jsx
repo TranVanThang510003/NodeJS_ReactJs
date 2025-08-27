@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Input, Button, message, List, Avatar } from 'antd';
-import { getCommentsByMovie, addCommentApi } from '../../util/api';
+import { getCommentsByMovie, addCommentApi } from '../../util/api.js';
 import { useParams } from 'react-router-dom';
 
 const { TextArea } = Input;

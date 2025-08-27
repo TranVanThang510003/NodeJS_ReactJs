@@ -7,7 +7,7 @@ import UserPage from "./pages/UserPage.jsx";
 import Login from "./componets/auth/Login.jsx";
 import './index.css';
 import MovieDetail from "./componets/movieDetail/MovieDetail.jsx";
-import CreateMovieForm from "./componets/Admin/MovieManagement/CreateMovieForm.jsx";
+import CreateMovieForm from "./componets/Admin/MovieManagement/CreateMovieForm.tsx";
 import AdminLayout from "./AdminLayout.jsx";
 import MovieList from "./componets/Admin/MovieManagement/MovieList.jsx";
 import EpisodeList from "./componets/Admin/MovieManagement/EpisodeList.jsx";

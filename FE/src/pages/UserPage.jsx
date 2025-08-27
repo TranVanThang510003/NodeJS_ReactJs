@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {notification, Space, Table, Tag} from 'antd';
-import {getUserApi} from "../util/api.js";
+import {getUserApi} from "../util/api.ts";
 
 const UserPage = () =>{
 const [userData, setUserData] = useState([]);
