@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { Flex, message, Rate } from 'antd'
 import "../../style/global.css";
-import { getMovieByIdApi, rating } from '../../util/api.js'
+import { getMovieByIdApi, rating } from '../../util/api.ts'
 import {useParams} from "react-router-dom";
 
 import FavoriteButton from '../common/FavoriteButton.jsx'

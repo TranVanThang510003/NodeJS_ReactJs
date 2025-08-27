@@ -1,6 +1,6 @@
 import axios from "./axios.customize.js";
 
-const createUserApi =( name,email,password,accountType)=>{
+const createUserApi =( name: string,email: string,password: string,accountType: string)=>{
 
     const URL_API='/api/register'
     const  data={
@@ -8,7 +8,7 @@ const createUserApi =( name,email,password,accountType)=>{
     }
     return axios.post(URL_API,data)
 }
-const loginApi =( email,password)=>{
+const loginApi =( email: string,password: string)=>{
 
     const URL_API='/api/login'
     const  data={
@@ -28,26 +28,27 @@ const getMovieApi =()=>{
     const URL_API='/api/movies'
     return axios.get(URL_API)
 }
-const getMovieByIdApi =(movieId)=>{
+const getMovieByIdApi =(movieId: string)=>{
 
     const URL_API=`/api/movies/${movieId}`
     return axios.get(URL_API)
 }
-const createMovieApi = (data) => {
+const createMovieApi = (data: any) => {
     return axios.post('/api/movies', data);
 };
-const createEpisodeApi = (movieId, data) => {
+const createEpisodeApi = (movieId: string, data: any) => {
     return axios.post(`/api/movies/${movieId}/episodes`, data);
 };
-const getEpisodeByMovieId=(movieId)=>{
+const getEpisodeByMovieId=(movieId: string)=>{
     const URL_API=`/api/movies/${movieId}`
     return axios.get(URL_API)
 }
-const getMoviesApi = (params = {}) => {
+const getMoviesApi = (params: Record<string, any> = {}) => {
     const URL_API = '/api/movie/filter';
     return axios.get(URL_API, { params });
 };
-const increaseEpisodeViewsApi = async (episodeId) => {
+
+const increaseEpisodeViewsApi = async (episodeId: string) => {
     try {
         const URL_API = `/api/episodes/${episodeId}/increase-views`;
         return await axios.post(URL_API);
@@ -56,40 +57,45 @@ const increaseEpisodeViewsApi = async (episodeId) => {
         throw err;
     }
 };
+
 const userInformationApi = () => {
     const URL_API = '/api/me';
     return axios.get(URL_API);
 };
-const updateAccountTypeApi = (accountType) => {
+
+const updateAccountTypeApi = (accountType: string) => {
     const URL_API = '/api/user/update-account-type';
     return axios.put(URL_API, { accountType });
 };
-const rating=(movieId, stars)=>{
-    const URL_API='/api/ratings';
-    return axios.post(URL_API, { movieId, stars});
-}
-const getCommentsByMovie = (movieId) =>{
-    const URL_API=`/api/comments/${movieId}`;
-    return axios.post(URL_API);
-}
 
-const addCommentApi = ({ movieId, content }) =>{
-    const URL_API=`/api/comments`;
-    return axios.post(URL_API, { movieId,content });
-}
-const addFavoriteApi=({movieId }) =>{
-    const URL_API=`/api/favorites/${movieId}`;
+const rating = (movieId: string, stars: number) => {
+    const URL_API = '/api/ratings';
+    return axios.post(URL_API, { movieId, stars });
+};
+
+ const getCommentsByMovie = (movieId: string) => {
+    const URL_API = `/api/comments/${movieId}`;
     return axios.post(URL_API);
-}
-const deleteFavoriteApi=({movieId }) =>{
-    const URL_API=`/api/favorites/${movieId}`;
+};
+
+const addCommentApi = (payload: { movieId: string; content: string }) => {
+    const URL_API = `/api/comments`;
+    return axios.post(URL_API, payload);
+};
+
+const addFavoriteApi = (payload: { movieId: string }) => {
+    const URL_API = `/api/favorites/${payload.movieId}`;
+    return axios.post(URL_API);
+};
+const deleteFavoriteApi = (payload: { movieId: string }) => {
+    const URL_API = `/api/favorites/${payload.movieId}`;
     return axios.delete(URL_API);
-}
-const getFavoritesApi=() =>{
-    const URL_API=`/api/favorites`;
-    return axios.get(URL_API);
-}
+};
 
+ const getFavoritesApi = () => {
+    const URL_API = `/api/favorites`;
+    return axios.get(URL_API);
+};
 export {
     createUserApi,
     loginApi,

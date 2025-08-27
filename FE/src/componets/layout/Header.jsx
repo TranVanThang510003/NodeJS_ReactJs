@@ -136,7 +136,7 @@ const Header = () => {
                             <span>{user?.name || 'User'}</span>
                             <div
                               className="w-12 h-12 rounded-full bg-gradient-to-r from-orange-400 to-blue-500 flex items-center justify-center text-white text-xl font-bold shadow-md">
-                                {user.name.charAt(0)}
+                                {user?.name.charAt(0)}
                             </div>
                         </Space>
                     </Dropdown>

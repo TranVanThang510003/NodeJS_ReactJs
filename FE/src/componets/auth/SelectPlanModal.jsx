@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal, Button, Row, Col, message } from 'antd';
-import { createUserApi } from '../../util/api.js'; // Bạn cần viết hàm này
+import { createUserApi } from '../../util/api.ts'; // Bạn cần viết hàm này
 
 const SelectPlanModal = ({ registerData, onClose }) => {
 

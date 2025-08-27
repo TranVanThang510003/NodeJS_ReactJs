@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react'
-import { increaseEpisodeViewsApi } from '../../util/api.js';
+import { increaseEpisodeViewsApi } from '../../util/api.ts';
 import { getUserInfoFromToken } from '../../util/auth.js';
 import { message } from 'antd';
 import UpgradeCard from '../common/UpgradeCard.jsx';
@@ -27,12 +27,17 @@ const EpisodeList = ({ episodes = [], selectedEpisode, setSelectedEpisode }) => 
 
   const handleEpisodeClick = (ep) => {
     const isLocked = ep.isPremium && !isPremium;
-
+    const now = new Date();
+    const releaseDate = new Date(ep.releaseTime);
+    const notReleased = releaseDate > now;
     if (!user) {
       message.warning('Vui lòng đăng nhập để xem nội dung.');
       return;
     }
-
+    if (notReleased) {
+      message.info('Tập này chưa được phát hành!');
+      return;
+    }
     if (isLocked) {
       setUpgradeEpisode(ep.episodeNumber); // 🆕 hiện UI nâng cấp
       return;
@@ -73,20 +78,34 @@ const EpisodeList = ({ episodes = [], selectedEpisode, setSelectedEpisode }) => 
 
       <div className="grid grid-cols-10 gap-2 mb-6">
         {episodes.map((ep) => {
+          const now = new Date();
+          const releaseDate = new Date(ep.releaseTime);
           const isLocked = ep.isPremium && !isPremium;
+          const notReleased = releaseDate > now;
           const isSelected = selectedEpisode === ep.episodeNumber;
+
+          const baseClass = `py-2 rounded text-center cursor-pointer transition-colors select-none`;
+
+          let className = '';
+          if (notReleased) {
+            className = `${baseClass} bg-gray-600 text-gray-400 cursor-not-allowed`;
+          } else if (isSelected) {
+            className = `${baseClass} bg-orange-500 text-white`;
+          } else if (isLocked) {
+            className = `${baseClass} bg-gray-700 text-gray-400`;
+          } else {
+            className = `${baseClass} bg-gray-800 text-white hover:bg-orange-400`;
+          }
 
           return (
             <div
               key={ep._id}
-              onClick={() => handleEpisodeClick(ep)}
-              className={`py-2 rounded text-center cursor-pointer transition-colors select-none 
-                ${isSelected ? 'bg-orange-500 text-white' :
-                isLocked ? 'bg-gray-700 text-gray-400' :
-                  'bg-gray-800 text-white hover:bg-orange-400'}
-              `}
+              onClick={() => !notReleased && handleEpisodeClick(ep)} // ❌ Không cho click nếu chưa phát hành
+              className={className}
             >
-              {isLocked ? (
+              {notReleased ? (
+                <span>⏳ Tập {ep.episodeNumber}</span>
+              ) : isLocked ? (
                 <span>🔒 Tập {ep.episodeNumber}</span>
               ) : (
                 `Tập ${ep.episodeNumber}`
@@ -99,7 +118,7 @@ const EpisodeList = ({ episodes = [], selectedEpisode, setSelectedEpisode }) => 
       {/* Upgrade Card */}
       {upgradeEpisode && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50">
-          <UpgradeCard onClose={() => setUpgradeEpisode(null)}  />
+          <UpgradeCard onClose={() => setUpgradeEpisode(null)}/>
         </div>
       )}
 

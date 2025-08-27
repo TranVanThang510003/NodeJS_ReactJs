@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import CreateEpisode from './AddEpisodeForm.jsx'
-import { getEpisodeByMovieId } from '../../../util/api.js'
+import CreateEpisode from './AddEpisodeForm.tsx'
+import { getEpisodeByMovieId } from '../../../util/api.ts'
 
 const EpisodeList = () => {
   const { movieId } = useParams()

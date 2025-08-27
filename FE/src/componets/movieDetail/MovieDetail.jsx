@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchFavorites, toggleFavorite } from "../../features/favoriteSlice";
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { getEpisodeByMovieId } from '../../util/api.js'
+import { getEpisodeByMovieId } from '../../util/api.ts'
 import MovieDetailCard from './MovieDetailCard.jsx'
 import EpisodeList from './EpisodesList.jsx'
 import CommentSection from './CommentSection.jsx'

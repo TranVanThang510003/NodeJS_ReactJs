@@ -1,6 +1,6 @@
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getFavoritesApi, addFavoriteApi, deleteFavoriteApi } from "../util/api";
+import { getFavoritesApi, addFavoriteApi, deleteFavoriteApi } from "../util/api.js";
 
 // thunk để load danh sách favorites
 export const fetchFavorites = createAsyncThunk(

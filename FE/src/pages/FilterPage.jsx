@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { getMoviesApi } from '../util/api.js';
+import { getMoviesApi } from '../util/api.ts';
 import MovieCategory from '../componets/movie/MovieCategory.jsx';
 import TopRankings from '../componets/movie/TopRanking.jsx';
 
