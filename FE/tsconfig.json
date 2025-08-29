@@ -1,46 +1,40 @@
 {
   // Visit https://aka.ms/tsconfig to read more about this file
   "compilerOptions": {
-    // File Layout
-     "rootDir": "./src",
-      "outDir": "./dist",
+    /* File Layout */
+    "rootDir": "./src",
+    "outDir": "./dist",
 
-    // Environment Settings
-    // See also https://aka.ms/tsconfig/module
-    "module": "nodenext",
+    /* Environment Settings */
+    "module": "esnext",
+    "moduleResolution": "node",
     "target": "esnext",
-    "types": [],
-    // For nodejs:
-     "lib": ["esnext"],
-    // "types": ["node"],
-    // and npm install -D @types/nod
-    "allowImportingTsExtensions": true,
-    "allowJs": true,
+    "lib": ["esnext", "dom"],
+
+    /* React */
+    "jsx": "react-jsx",
+
+    /* Type Imports */
     "esModuleInterop": true,
-    // Other Outputs
+    "allowJs": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+
+    /* Declaration + SourceMap */
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
 
-    // Stricter Typechecking Options
+    /* Strict Type Checking */
+    "strict": true,
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": true,
 
-    // Style Options
+    /* Optional Lint Rules */
     // "noImplicitReturns": true,
-    // "noImplicitOverride": true,
     // "noUnusedLocals": true,
-    // "noUnusedParameters": true,
-    // "noFallthroughCasesInSwitch": true,
-    // "noPropertyAccessFromIndexSignature": true,
-
-    // Recommended Options
-    "strict": true,
-    "jsx": "react-jsx",
-    "verbatimModuleSyntax": true,
-    "isolatedModules": true,
-    "noUncheckedSideEffectImports": true,
-    "moduleDetection": "force",
-    "skipLibCheck": true,
-  }
+    // "noUnusedParameters": true
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
 }

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import MovieCard from './MovieCard';
+import MovieCard from './MovieCard.js';
 import '../../style/global.css'
 
 const MovieList = ({  movies ,favorites, toggleFavorite}) => {

@@ -13,7 +13,7 @@ import FilterBar from "../common/FilterBar.jsx";
 import { FaHeart } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../features/authSlice"; // <-- slice auth bạn đã viết
-import { fetchFavorites } from "../../features/favoriteSlice"; // <-- slice favorite bạn đã viết
+import { fetchFavorites } from "../../features/favoriteSlice.js"; // <-- slice favorite bạn đã viết
 
 const NAVIGATION_PATHS = {
     home: "/",

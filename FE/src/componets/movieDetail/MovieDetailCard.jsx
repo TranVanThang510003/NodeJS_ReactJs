@@ -4,9 +4,9 @@ import "../../style/global.css";
 import { getMovieByIdApi, rating } from '../../util/api.ts'
 import {useParams} from "react-router-dom";
 
-import FavoriteButton from '../common/FavoriteButton.jsx'
+import FavoriteButton from '../common/FavoriteButton.tsx'
 import { useDispatch, useSelector } from "react-redux";
-import { fetchFavorites, toggleFavorite } from "../../features/favoriteSlice";
+import { fetchFavorites, toggleFavorite } from "../../features/favoriteSlice.js";
 const desc = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
 
 const MovieDetailCard = ( { title, setSelectedEpisode}) => {
