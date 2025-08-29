@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchFavorites, toggleFavorite } from "../features/favoriteSlice.js";
-import MovieCategory from "../componets/movie/MovieCategory.jsx";
+import { fetchFavorites, toggleFavorite } from "../features/favoriteSlice.ts";
+import MovieCategory from "../componets/movie/MovieCategory.tsx";
 
 const FavoritePage = () => {
   const [searchParams] = useSearchParams();

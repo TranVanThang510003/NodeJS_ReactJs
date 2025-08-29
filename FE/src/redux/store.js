@@ -1,7 +1,7 @@
 
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "../features/userSlice";
-import favoriteReducer from "../features/favoriteSlice";
+import favoriteReducer from "../features/favoriteSlice.js";
 import authReducer from "../features/authSlice";
 import movieReducer from "../features/movieSlice";
 export const store = configureStore({

@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { fetchFavorites, toggleFavorite } from "../../features/favoriteSlice";
+import { fetchFavorites, toggleFavorite } from "../../features/favoriteSlice.js";
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getEpisodeByMovieId } from '../../util/api.ts'
