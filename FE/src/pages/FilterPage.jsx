@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { getMoviesApi } from '../util/api.ts';
 import MovieCategory from '../componets/movie/MovieCategory.tsx';
-import TopRankings from '../componets/movie/TopRanking.jsx';
+import TopRankings from '../componets/movie/TopRanking.tsx';
 
 const FilterPage = () => {
   const [searchParams] = useSearchParams();
@@ -49,8 +49,8 @@ const FilterPage = () => {
       setLoading(true);
       try {
         const res = await getMoviesApi(filters);
-        setMovies(res);
-        setTotalPages(res && res.length ? Math.ceil(res.length / itemsPerPage) : 1);
+        setMovies(res.data);
+        setTotalPages(res.data && res.data.length ? Math.ceil(res.length / itemsPerPage) : 1);
       } catch (err) {
         console.error("Lỗi khi gọi API:", err);
       } finally {

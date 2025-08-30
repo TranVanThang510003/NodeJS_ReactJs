@@ -1,52 +1,96 @@
 // features/movieSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getMoviesApi } from "../util/api.js";
+import type {Movie} from "../types/movie"
+
+type ApiError = { status?: number; message: string };
 
 // thunk fetch new movies
-export const fetchNewMovies = createAsyncThunk(
-  "movies/fetchNew",
-  async (_, { rejectWithValue }) => {
-    try {
-      return await getMoviesApi({ sortBy: "latestEpisodeDate", sortOrder: "desc", limit: 10 });
-    } catch (err) {
-      return rejectWithValue(err.response?.data || "Lỗi fetch new movies");
+export const fetchNewMovies = createAsyncThunk<
+    Movie[],   //  fulfilled payload type: mảng phim
+    void,      // argument type: không truyền gì khi dispatch
+    { rejectValue: ApiError }
+>(
+    "movies/fetchNew",
+    async (_, { rejectWithValue }) => {
+        try {
+            const res = await getMoviesApi({
+                sortBy: "latestEpisodeDate",
+                sortOrder: "desc",
+                limit: 10
+            }) ;
+            return res.data || [];
+        } catch (err: any) {
+            return rejectWithValue(err.response?.data || { message: "Lỗi fetch new movies" });
+        }
     }
-  }
 );
 
+
 // thunk fetch popular movies
-export const fetchPopularMovies = createAsyncThunk(
+export const fetchPopularMovies = createAsyncThunk <
+    Movie[],
+    void,
+    {rejectValue: ApiError}
+    >
+(
   "movies/fetchPopular",
   async (_, { rejectWithValue }) => {
     try {
-      return await getMoviesApi({ sortBy: "totalViews", sortOrder: "desc", limit: 10 });
-    } catch (err) {
+        const res = await getMoviesApi({
+            sortBy: "totalViews",
+            sortOrder: "desc",
+            limit: 10
+        })
+      return res.data || [];
+    } catch (err: any) {
       return rejectWithValue(err.response?.data || "Lỗi fetch popular movies");
     }
   }
 );
 
 // thunk fetch top rated movies
-export const fetchTopRatedMovies = createAsyncThunk(
+export const fetchTopRatedMovies = createAsyncThunk<
+    Movie[],
+    void,
+    {rejectValue: ApiError}
+>(
   "movies/fetchTopRated",
   async (_, { rejectWithValue }) => {
     try {
-      return await getMoviesApi({ sortBy: "averageRating", sortOrder: "desc", limit: 10 });
-    } catch (err) {
+        const res = await getMoviesApi({
+            sortBy: "averageRating",
+            sortOrder: "desc",
+            limit: 10
+        })
+        console.log(res)
+      return res.data|| []
+    } catch (err: any) {
+
       return rejectWithValue(err.response?.data || "Lỗi fetch top rated movies");
     }
   }
 );
 
-const movieSlice = createSlice({
-  name: "movies",
-  initialState: {
+// ================= State type =================
+export interface MovieState {
+    new: Movie[];
+    popular: Movie[];
+    topRated: Movie[];
+    loading: boolean;
+    error: ApiError | null;
+}
+
+const initialState: MovieState = {
     new: [],
     popular: [],
     topRated: [],
     loading: false,
     error: null,
-  },
+};
+const movieSlice = createSlice({
+  name: "movies",
+  initialState,
   reducers: {},
   extraReducers: (builder) => {
     // New Movies
@@ -60,7 +104,7 @@ const movieSlice = createSlice({
       })
       .addCase(fetchNewMovies.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
+        state.error = action.payload || { message: "Unknown error" };
       });
 
     // Popular Movies
@@ -74,7 +118,7 @@ const movieSlice = createSlice({
       })
       .addCase(fetchPopularMovies.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
+        state.error = action.payload|| { message: "Unknown error" };
       });
 
     // Top Rated Movies
@@ -88,7 +132,7 @@ const movieSlice = createSlice({
       })
       .addCase(fetchTopRatedMovies.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
+        state.error = action.payload|| { message: "Unknown error" };
       });
   },
 });

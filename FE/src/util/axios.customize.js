@@ -26,7 +26,7 @@ instance.interceptors.request.use(function (config) {
 // Add a response interceptor
 instance.interceptors.response.use(
     function (response) {
-      if (response && response.status) return response.data;
+
       return response;
     },
     function (error) {

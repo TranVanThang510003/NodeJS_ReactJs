@@ -15,8 +15,8 @@ const CommentSection = () => {
     try {
       const res = await getCommentsByMovie(movieId);
       console.log(res)
-      if (res.success) {
-        setComments(res.data);
+      if (res?.data?.success) {
+        setComments(res.data.data);
       } else {
         message.error(res.message || 'Không thể lấy bình luận');
       }
@@ -43,12 +43,12 @@ const CommentSection = () => {
     setLoading(true);
     try {
       const res = await addCommentApi({ movieId, content });
-      if (res.success) {
+      if (res?.data?.success) {
         message.success('Bình luận thành công');
         setContent('');
         fetchComments();
       } else {
-        message.error(res.message || 'Không thể gửi bình luận');
+        message.error(res?.data?.message || 'Không thể gửi bình luận')
       }
     } catch (error) {
       console.error(error);
