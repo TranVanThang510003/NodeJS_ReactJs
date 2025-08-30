@@ -1,41 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getMoviesApi } from '../../util/api.ts';
-import FavoriteButton from '../common/FavoriteButton.tsx';
+import FavoriteButton from '../common/FavoriteButton';
 import { useDispatch, useSelector } from "react-redux";
-import { fetchFavorites, toggleFavorite } from "../../features/favoriteSlice.js";
+import type { RootState, AppDispatch } from "../../redux/store";
 
-const TopRankings = () => {
-  const [topRanked, setTopRanked] = useState([]);
-  const [loading, setLoading] = useState(true);
+const TopRankings: React.FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { items: favorites } = useSelector((state) => state.favorite);
-  const token = localStorage.getItem("accessToken");
-  useEffect(() => {
-    if(token) {
-      dispatch(fetchFavorites());
-    }
-  }, [dispatch]);
-  useEffect(() => {
 
-      const fetchTopRankedMovies = async () => {
-        try {
-          const movies = await getMoviesApi({
-            sortBy: 'totalViews',
-            sortOrder: 'desc',
-            limit: 10
-          });
-          setTopRanked(movies);
-        } catch (error) {
-          console.error('Failed to fetch top ranked movies:', error);
-        } finally {
-          setLoading(false);
-        }
-      };
+  // Lấy dữ liệu từ Redux
+  const { topRated, loading } = useSelector((state: RootState) => state.movie);
 
-      fetchTopRankedMovies();
-  }, []);
+
 
   if (loading) return <div className="text-white">Đang tải...</div>;
 
@@ -43,7 +18,7 @@ const TopRankings = () => {
     <div className="w-full p-6 bg-gray-800 rounded-lg">
       <h2 className="text-xl font-bold text-yellow-500 mb-4">RANKING</h2>
 
-      {topRanked.map((movie) => (
+      {topRated.map((movie) => (
         <div key={movie._id} className="flex items-center mb-4">
           {/* Ảnh phim */}
           <img
@@ -64,8 +39,6 @@ const TopRankings = () => {
           {/* Favorite button */}
           <FavoriteButton
             movieId={movie._id}
-            favorites={favorites}
-            toggleFavorite={(id) => dispatch(toggleFavorite(id))}
           />
         </div>
       ))}

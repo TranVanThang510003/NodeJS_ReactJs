@@ -22,8 +22,8 @@ const MovieDetailCard = ( { title, setSelectedEpisode}) => {
     useEffect(()=>{
         const fetchData = async () => {
             const response= await getMovieByIdApi(movieId)
-            setMovie(response)
-            console.log(response)
+            setMovie(response.data)
+
         }
             fetchData()
     },[])
@@ -45,7 +45,7 @@ const MovieDetailCard = ( { title, setSelectedEpisode}) => {
             setValue(value);
             const res = await rating(movieId, value);
             console.log(res)
-            if (res?.success) {
+            if (res?.data?.success) {
                 message.success(res.message || "Đánh giá thành công");
             } else {
                 message.error("Đánh giá thất bại");

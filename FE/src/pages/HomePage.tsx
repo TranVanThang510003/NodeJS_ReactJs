@@ -1,21 +1,19 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import MovieList from "../componets/movie/MovieList.jsx";
-import MovieCategory from "../componets/movie/MovieCategory.tsx";
-import TopRankings from "../componets/movie/TopRanking.jsx";
+import MovieList from "../componets/movie/MovieList";
+import MovieCategory from "../componets/movie/MovieCategory";
+import TopRankings from "../componets/movie/TopRanking";
+import type { RootState, AppDispatch } from "../redux/store";
 import {
     fetchNewMovies,
     fetchPopularMovies,
     fetchTopRatedMovies
-} from "../features/movieSlice.js";
+} from "../features/movieSlice";
 
 const HomePage = () => {
-    const dispatch = useDispatch();
-
-    const { new: newMovies, popular: popularMovies, topRated: topRatedMovies, loading, error } = useSelector((state) => state.movie);
-
-
-
+    const dispatch = useDispatch<AppDispatch>();
+    const { new: newMovies, popular: popularMovies, topRated: topRatedMovies, loading, error } =
+        useSelector((state: RootState) => state.movie);
 
     // fetch movies từ redux
     useEffect(() => {
@@ -27,7 +25,7 @@ const HomePage = () => {
 
 
     if (loading) return <p>Đang tải phim...</p>;
-    if (error) return <p>Lỗi: {error}</p>;
+
 
     return (
       <div className="p-6 bg-[#131314] text-white">

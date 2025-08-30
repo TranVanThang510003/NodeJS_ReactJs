@@ -3,14 +3,8 @@ import MovieCard from "./MovieCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { useLocation, useNavigate } from "react-router-dom";
+import type { Movie } from "../../types/movie";
 
-interface Movie {
-  _id: string;
-  title: string;
-  poster?: string;
-  averageRating: number;
-  stats?: string;
-}
 
 interface MovieCategoryProps {
   title: string;

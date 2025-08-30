@@ -6,7 +6,7 @@ import { getEpisodeByMovieId } from '../../util/api.ts'
 import MovieDetailCard from './MovieDetailCard.jsx'
 import EpisodeList from './EpisodesList.jsx'
 import CommentSection from './CommentSection.jsx'
-import TopRankings from '../movie/TopRanking.jsx'
+import TopRankings from '../movie/TopRanking.tsx'
 
 
 const MovieDetail = () => {
@@ -25,7 +25,7 @@ const MovieDetail = () => {
         const fetchEpisodes = async () => {
             try {
                 const res = await getEpisodeByMovieId(movieId);
-                setEpisodes(res.episodes || []);
+                setEpisodes(res?.data?.episodes || []);
             } catch (error) {
                 console.error("Lỗi khi lấy danh sách tập phim:", error);
             }

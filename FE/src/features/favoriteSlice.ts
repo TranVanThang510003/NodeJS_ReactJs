@@ -26,7 +26,7 @@ export const fetchFavorites = createAsyncThunk<Favorite[], void, { rejectValue: 
     async (_, { rejectWithValue }) => {
       try {
         const res = await getFavoritesApi();
-        return res.data || [];
+        return res.data.data || [];
       } catch (err: any) {
         return rejectWithValue({
           status: err.response?.status,
@@ -52,11 +52,11 @@ export const toggleFavorite = createAsyncThunk<
       try {
         if (isFav) {
           const res:any = await deleteFavoriteApi({ movieId }) ;
-          if (res.success) return { type: "remove", movieId };
+          if (res.data.success) return { type: "remove", movieId };
 
         } else {
           const res:any = await addFavoriteApi({ movieId });
-          if (res.success) return { type: "add", movieId };
+          if (res.data.success) return { type: "add", movieId };
         }
         throw new Error("API không trả về success");
       } catch (err: any) {
