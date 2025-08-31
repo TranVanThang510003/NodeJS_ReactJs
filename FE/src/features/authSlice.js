@@ -2,13 +2,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { loginApi } from "../util/api.js";
 
+
 export const login = createAsyncThunk(
   "auth/login",
   async ({ email, password }, { rejectWithValue }) => {
     try {
       const res = await loginApi(email, password);
-      if (res && res.EC === 0 && res.accessToken) {
-        const { accessToken, user } = res;
+      if (res.data && res.data.EC === 0 && res.data.accessToken) {
+        const { accessToken, user } = res.data;
 
         // lưu localStorage
         localStorage.setItem("accessToken", accessToken);
@@ -16,12 +17,13 @@ export const login = createAsyncThunk(
 
         return { token: accessToken, user };
       }
-      return rejectWithValue(res.EM || "Login error");
+      return rejectWithValue(res.data.EM || "Login error");
     } catch (err) {
       return rejectWithValue("Server error");
     }
   }
 );
+
 
 const initialState = {
   token: localStorage.getItem("accessToken") || null,

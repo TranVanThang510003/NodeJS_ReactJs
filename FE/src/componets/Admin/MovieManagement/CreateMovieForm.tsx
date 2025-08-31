@@ -11,7 +11,7 @@ import {
 import { UploadOutlined } from '@ant-design/icons';
 import type { UploadFile } from 'antd';
 import { uploadToCloudinary } from '../../../util/uploadToCloudinary.js';
-import { createMovieApi } from '../../../util/api.ts';
+import { createMovieApi } from '../../../util/api';
 import { Dayjs } from 'dayjs';
 
 const { TextArea } = Input;

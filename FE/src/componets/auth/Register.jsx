@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Form, Input, notification } from 'antd';
 import '@ant-design/v5-patch-for-react-19';
 import { useNavigate } from 'react-router-dom';
-import Logo from '../common/Logo.jsx';
+import Logo from '../common/Logo.tsx';
 import { createUserApi } from '../../util/api.ts';
 import SelectPlanModal from './SelectPlanModal.jsx';
 

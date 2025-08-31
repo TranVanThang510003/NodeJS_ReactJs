@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+interface Filters {
+    genre: string;
+    country: string;
+    year: string;
+}
+
 const genres = [
   { label: "🐉 Tu Tiên", value: "Tu Tiên" },
   { label: "👻 Dị Giới", value: "Dị Giới" },
@@ -17,13 +23,13 @@ const genres = [
 
 const FilterBar = () => {
   const navigate = useNavigate();
-  const [filters, setFilters] = useState({
+  const [filters, setFilters] = useState<Filters>({
     genre: "",
     country: "",
     year: "",
   });
 
-  const handleChange = (field, value) => {
+  const handleChange = (field: keyof Filters, value: string) => {
     const newFilters = { ...filters, [field]: value };
     setFilters(newFilters);
 

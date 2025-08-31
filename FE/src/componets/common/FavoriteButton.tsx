@@ -1,14 +1,14 @@
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleFavorite } from "../../features/favoriteSlice";
-
+import type { RootState, AppDispatch } from "../../redux/store";
 interface FavoriteButtonProps {
   movieId: string;
 }
 
 const FavoriteButton: React.FC<FavoriteButtonProps> = ({ movieId }) => {
-  const dispatch = useDispatch();
-  const favorites = useSelector((state: any) => state.favorite.items);
+  const dispatch = useDispatch<AppDispatch>();
+  const favorites = useSelector((state:RootState) => state.favorite.items);
 
   const isFavorite = Array.isArray(favorites)
     && favorites.some(fav => String(fav.movieId || fav._id) === String(movieId));

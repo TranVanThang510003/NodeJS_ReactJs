@@ -12,7 +12,7 @@ import {
     faCircleQuestion,
     faCalendarDays,
 } from "@fortawesome/free-solid-svg-icons";
-import Logo from "../../common/Logo.jsx";
+import Logo from "../../common/Logo.tsx";
 
 const Sidebar = () => {
     const navigate = useNavigate();

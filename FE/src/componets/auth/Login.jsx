@@ -1,9 +1,9 @@
 import React from 'react';
 import { Button, Form, Input, notification } from 'antd';
-import Logo from '../common/Logo.jsx';
+import Logo from '../common/Logo.tsx';
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../../features/authSlice";
+import { login } from "../../features/authSlice.js";
 
 const Login = () => {
   const navigate = useNavigate();

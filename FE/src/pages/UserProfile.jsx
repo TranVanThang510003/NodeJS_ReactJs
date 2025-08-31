@@ -1,6 +1,6 @@
 
 import { useSelector } from "react-redux";
-import UpgradeCard from "../componets/common/UpgradeCard.jsx";
+import UpgradeCard from "../componets/common/UpgradeCard.tsx";
 import { useState } from 'react'
 
 const UserProfile = () => {

@@ -5,22 +5,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5860cf09-a1cb-4eac-87e7-59eabfefcb1c" name="Changes" comment="create user">
-      <change afterPath="$PROJECT_DIR$/FE/src/types/movie.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/componets/movieDetail/EpisodesList.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/types/user.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BE/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/BE/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/src/componets/movie/MovieCategory.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/componets/movie/MovieCategory.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/src/componets/movie/MovieList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/componets/movie/MovieList.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/src/componets/movie/TopRanking.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/componets/movie/TopRanking.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/src/componets/movieDetail/CommentSection.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/componets/movieDetail/CommentSection.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/src/componets/movieDetail/MovieDetail.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/componets/movieDetail/MovieDetail.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/src/componets/movieDetail/MovieDetailCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/componets/movieDetail/MovieDetailCard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/src/features/favoriteSlice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/features/favoriteSlice.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/src/features/movieSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/features/movieSlice.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/src/main.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/main.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/src/pages/FilterPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/pages/FilterPage.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/src/pages/HomePage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/pages/HomePage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/src/redux/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/redux/store.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FE/src/util/axios.customize.js" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/util/axios.customize.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/componets/Admin/MovieManagement/AddEpisodeForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/componets/Admin/MovieManagement/AddEpisodeForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/componets/Admin/MovieManagement/CreateMovieForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/componets/Admin/MovieManagement/CreateMovieForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/componets/auth/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/componets/auth/Login.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/componets/auth/Register.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/componets/auth/Register.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/componets/common/FavoriteButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/componets/common/FavoriteButton.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/componets/common/FilterBar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/componets/common/FilterBar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/componets/common/Logo.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/componets/common/Logo.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/componets/common/UpgradeCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/componets/common/UpgradeCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/componets/layout/Header.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/componets/layout/Header.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/componets/layout/adminLayout/Sidebar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/componets/layout/adminLayout/Sidebar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/componets/movie/MovieCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/componets/movie/MovieCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/componets/movie/TopRanking.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/componets/movie/TopRanking.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/componets/movieDetail/CommentSection.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/componets/movieDetail/CommentSection.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/componets/movieDetail/EpisodesList.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/componets/movieDetail/MovieDetail.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/componets/movieDetail/MovieDetail.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/componets/movieDetail/MovieDetailCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/componets/movieDetail/MovieDetailCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/features/authSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/features/authSlice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/pages/UserProfile.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/pages/UserProfile.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/src/util/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/FE/src/util/auth.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,7 +127,8 @@
       <workItem from="1756453417433" duration="430000" />
       <workItem from="1756453883433" duration="12475000" />
       <workItem from="1756539888531" duration="10603000" />
-      <workItem from="1756551933131" duration="1636000" />
+      <workItem from="1756551933131" duration="2245000" />
+      <workItem from="1756627243323" duration="10338000" />
     </task>
     <task id="LOCAL-00001" summary="Create the project">
       <option name="closed" value="true" />
@@ -182,8 +190,7 @@
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/FE/src/componets/movieDetail/MovieDetailCard.jsx</url>
-          <properties lambdaOrdinal="-1" />
+          <url>file://$PROJECT_DIR$/FE/src/componets/movieDetail/MovieDetailCard.tsx</url>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>

@@ -1,23 +1,38 @@
-import React, { useRef, useEffect, useState } from 'react'
-import { increaseEpisodeViewsApi } from '../../util/api.ts';
-import { getUserInfoFromToken } from '../../util/auth.js';
+import React, { useRef, useEffect, useState } from 'react';
+import { increaseEpisodeViewsApi } from '../../util/api';
+import { isUserPremium ,getUserInfoFromToken } from '../../util/auth';
 import { message } from 'antd';
-import UpgradeCard from '../common/UpgradeCard.jsx';
+import UpgradeCard from '../common/UpgradeCard';
+import type { Episode } from '../../types/movie';
 
-const EpisodeList = ({ episodes = [], selectedEpisode, setSelectedEpisode }) => {
-  const videoRef = useRef(null);
+interface EpisodeListProps {
+  episodes: Episode[];
+  selectedEpisode: number | null;
+  setSelectedEpisode: React.Dispatch<React.SetStateAction<number | null>>;
+}
+
+const EpisodeList: React.FC<EpisodeListProps> = ({
+  episodes = [],
+  selectedEpisode,
+  setSelectedEpisode,
+}) => {
+  const videoRef = useRef<HTMLDivElement | null>(null);
   const user = getUserInfoFromToken();
-  const isPremium = user?.accountType === 'premium';
-  const [upgradeEpisode, setUpgradeEpisode] = useState(null); // 🆕 theo dõi tập cần nâng cấp
+  const isPremium = isUserPremium();
+  const [upgradeEpisode, setUpgradeEpisode] = useState<number | null>(null); //  theo dõi tập cần nâng cấp
 
-  const selectedEp = episodes.find(ep => ep.episodeNumber === Number(selectedEpisode));
+  const selectedEp = episodes.find(
+    (ep) => ep.episodeNumber === Number(selectedEpisode)
+  );
 
-  function convertToEmbedUrl(originalUrl) {
-    const match = originalUrl.match(/(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([^&]+)/);
+  function convertToEmbedUrl(originalUrl: string) {
+    const match = originalUrl.match(
+      /(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([^&]+)/
+    );
     return match ? `https://www.youtube.com/embed/${match[1]}` : originalUrl;
   }
 
-  const handleWatch = async (episodeId) => {
+  const handleWatch = async (episodeId: string) => {
     try {
       await increaseEpisodeViewsApi(episodeId);
     } catch (error) {
@@ -25,26 +40,28 @@ const EpisodeList = ({ episodes = [], selectedEpisode, setSelectedEpisode }) => 
     }
   };
 
-  const handleEpisodeClick = (ep) => {
+  const handleEpisodeClick = (ep: Episode) => {
     const isLocked = ep.isPremium && !isPremium;
     const now = new Date();
     const releaseDate = new Date(ep.releaseTime);
     const notReleased = releaseDate > now;
-    if (!user) {
-      message.warning('Vui lòng đăng nhập để xem nội dung.');
-      return;
-    }
+
+
     if (notReleased) {
       message.info('Tập này chưa được phát hành!');
       return;
     }
     if (isLocked) {
+      if (!user) {
+      message.warning('Vui lòng đăng nhập để xem nội dung.');
+      return;
+    }
       setUpgradeEpisode(ep.episodeNumber); // 🆕 hiện UI nâng cấp
       return;
     }
 
     setUpgradeEpisode(null); // 🆕 ẩn UpgradeCard nếu tập không bị khóa
-    setSelectedEpisode(Number(ep.episodeNumber));
+    setSelectedEpisode(ep.episodeNumber);
     handleWatch(ep._id);
   };
 
@@ -70,7 +87,9 @@ const EpisodeList = ({ episodes = [], selectedEpisode, setSelectedEpisode }) => 
             allow="autoplay; encrypted-media"
             allowFullScreen
           ></iframe>
-          <p className="text-white text-center mt-2">Đang xem: Tập {selectedEp.episodeNumber}</p>
+          <p className="text-white text-center mt-2">
+            Đang xem: Tập {selectedEp.episodeNumber}
+          </p>
         </div>
       )}
 
@@ -118,10 +137,9 @@ const EpisodeList = ({ episodes = [], selectedEpisode, setSelectedEpisode }) => 
       {/* Upgrade Card */}
       {upgradeEpisode && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50">
-          <UpgradeCard onClose={() => setUpgradeEpisode(null)}/>
+          <UpgradeCard onClose={() => setUpgradeEpisode(null)} />
         </div>
       )}
-
     </div>
   );
 };

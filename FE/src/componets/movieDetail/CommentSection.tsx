@@ -4,21 +4,30 @@ import { getCommentsByMovie, addCommentApi } from '../../util/api.js';
 import { useParams } from 'react-router-dom';
 
 const { TextArea } = Input;
+interface User {
+    username?: string;
+    name?: string;
+}
 
+interface Comment {
+    _id?: string;
+    content: string;
+    userId?: User;
+}
 const CommentSection = () => {
-  const { movieId } = useParams();
-  const [comments, setComments] = useState([]);
-  const [content, setContent] = useState('');
-  const [loading, setLoading] = useState(false);
+  const { movieId } = useParams<{ movieId: string }>();
+  const [comments, setComments] = useState<Comment[]>([]);
+  const [content, setContent] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
 
   const fetchComments = async () => {
     try {
-      const res = await getCommentsByMovie(movieId);
+      const res = await getCommentsByMovie(movieId as string);
       console.log(res)
       if (res?.data?.success) {
         setComments(res.data.data);
       } else {
-        message.error(res.message || 'Không thể lấy bình luận');
+        message.error(res.data.message  || 'Không thể lấy bình luận');
       }
     } catch (error) {
       console.error(error);
@@ -42,7 +51,11 @@ const CommentSection = () => {
 
     setLoading(true);
     try {
-      const res = await addCommentApi({ movieId, content });
+        if (!movieId) {
+            message.error("Không tìm thấy movieId");
+            return;
+        }
+        const res = await addCommentApi({ movieId , content });
       if (res?.data?.success) {
         message.success('Bình luận thành công');
         setContent('');

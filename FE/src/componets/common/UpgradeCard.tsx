@@ -1,16 +1,20 @@
 import React from "react";
 import { Button, message } from 'antd';
 import { useDispatch } from "react-redux";
-import { updateAccountType } from "../../features/authSlice";
-import { updateAccountTypeApi } from '../../util/api.ts';
+import { updateAccountType } from "../../features/authSlice.js";
+import { updateAccountTypeApi } from '../../util/api';
+import {AppDispatch} from "../../redux/store";
 
-const UpgradeCard = ({ onClose }) => {
-  const dispatch = useDispatch();
+interface UpgradeCardProps {
+  onClose: () => void;
+}
+const UpgradeCard:React.FC<UpgradeCardProps> = ({ onClose }) => {
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleUpgrade = async () => {
     try {
       const res = await updateAccountTypeApi("premium");
-      if (res && res.success) {
+      if (res.data && res.data.success) {
         // cập nhật Redux store
         dispatch(updateAccountType("premium"));
 

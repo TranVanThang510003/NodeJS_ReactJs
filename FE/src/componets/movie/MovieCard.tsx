@@ -1,16 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import FavoriteButton from "../common/FavoriteButton";
 
-interface Movie {
-  _id: string;
-  poster?: string;
-  title: string;
-  averageRating: number;
-  stats?: string;
-}
-
+import type {Movie} from "../../types/movie"
+type Movies = Pick<Movie, "_id" | "poster" | "title" | "averageRating">;
 interface MovieCardProps {
-  movie: Movie;
+  movie: Movies;
 }
 
 const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
@@ -42,7 +36,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
 
         <div className="absolute bottom-0 w-full bg-gray-900 bg-opacity-70 text-white p-2 text-center">
           <h3 className="text-sm font-semibold truncate">{movie.title}</h3>
-          {movie.stats && <p className="text-xs text-yellow-400">{movie.stats}</p>}
+          {/*{movie.stats && <p className="text-xs text-yellow-400">{movie.stats}</p>}*/}
         </div>
       </div>
   );

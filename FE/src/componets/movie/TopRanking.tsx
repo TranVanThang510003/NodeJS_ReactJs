@@ -7,7 +7,7 @@ import type { RootState, AppDispatch } from "../../redux/store";
 const TopRankings: React.FC = () => {
   const navigate = useNavigate();
 
-  // Lấy dữ liệu từ Redux
+
   const { topRated, loading } = useSelector((state: RootState) => state.movie);
 
 

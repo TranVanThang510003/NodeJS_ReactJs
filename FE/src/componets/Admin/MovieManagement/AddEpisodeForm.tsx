@@ -1,13 +1,10 @@
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { createEpisodeApi } from '../../../util/api.ts'
+import { createEpisodeApi } from '../../../util/api'
 
-interface RouteParams {
-    movieId: string;
-    [key: string]: string | undefined;
-}
+
 export default function AddEpisodeForm () {
-  const { movieId } = useParams<RouteParams>()
+  const { movieId } = useParams<{movieId:string}>()
   const [title, setTitle] = useState<string>('')
   const [episodeNumber, setEpisodeNumber] = useState<string>('')
   const [linkVideo, setLinkVideo] = useState<string>('')

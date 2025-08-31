@@ -1,30 +1,24 @@
-import { useDispatch, useSelector } from "react-redux";
-import { fetchFavorites, toggleFavorite } from "../../features/favoriteSlice.js";
+
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { getEpisodeByMovieId } from '../../util/api.ts'
-import MovieDetailCard from './MovieDetailCard.jsx'
-import EpisodeList from './EpisodesList.jsx'
-import CommentSection from './CommentSection.jsx'
-import TopRankings from '../movie/TopRanking.tsx'
+import { getEpisodeByMovieId } from '../../util/api'
+import MovieDetailCard from './MovieDetailCard'
+import EpisodeList from './EpisodesList.js'
+import CommentSection from './CommentSection'
+import TopRankings from '../movie/TopRanking'
+import type {Episode} from "../../types/movie"
 
 
 const MovieDetail = () => {
-    const dispatch = useDispatch();
-    const { items: favorites } = useSelector((state) => state.favorite);
+    const [selectedEpisode, setSelectedEpisode] = useState<number | null>(null);
+    const [episodes, setEpisodes] = useState<Episode[]>([]);
+    const { movieId } = useParams<{ movieId: string }>();
 
-    const [selectedEpisode, setSelectedEpisode] = useState(null);
-    const [episodes, setEpisodes] = useState([]);
-    const { movieId } = useParams();
-
-    useEffect(() => {
-        dispatch(fetchFavorites()); // load favorites khi vào
-    }, [dispatch]);
 
     useEffect(() => {
         const fetchEpisodes = async () => {
             try {
-                const res = await getEpisodeByMovieId(movieId);
+                const res = await getEpisodeByMovieId(movieId as string);
                 setEpisodes(res?.data?.episodes || []);
             } catch (error) {
                 console.error("Lỗi khi lấy danh sách tập phim:", error);
@@ -40,8 +34,7 @@ const MovieDetail = () => {
               <div className="w-5/7">
                   <MovieDetailCard
                     setSelectedEpisode={setSelectedEpisode}
-                    favorites={favorites}
-                    toggleFavorite={(id) => dispatch(toggleFavorite(id))}
+
                   />
                   <EpisodeList
                     episodes={episodes}

@@ -5,14 +5,14 @@ import {
     LogoutOutlined,
 } from "@ant-design/icons";
 import { Avatar, Dropdown, Space } from "antd";
-import Logo from "../common/Logo.jsx";
+import Logo from "../common/Logo.tsx";
 import styles from "./Header.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import FilterBar from "../common/FilterBar.jsx";
+import FilterBar from "../common/FilterBar.tsx";
 import { FaHeart } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../features/authSlice"; // <-- slice auth bạn đã viết
+import { logout } from "../../features/authSlice.js"; // <-- slice auth bạn đã viết
 import { fetchFavorites } from "../../features/favoriteSlice.js"; // <-- slice favorite bạn đã viết
 
 const NAVIGATION_PATHS = {
