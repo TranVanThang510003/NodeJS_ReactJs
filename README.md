@@ -1,10 +1,11 @@
-## 🎬 Astream – Fullstack Movie App (NodeJS + ReactJS + TypeScript)
+# 🎬 Astream – Fullstack Movie App (NodeJS + ReactJS + TypeScript)
 
-Ứng dụng web **Fullstack**  hỗ trợ quản lý phim, người dùng, đánh giá và tương tác.  
+Ứng dụng web **Fullstack** hỗ trợ quản lý phim, người dùng, đánh giá và tương tác.  
 Dự án được phát triển nhằm thực hành các công nghệ hiện đại trong **Web Development**.
+
 ---
 
-## 📂 Cấu trúc dự án  
+# 📂 Cấu trúc dự án  
 
 ```
 NodeJS_ReactJs/
