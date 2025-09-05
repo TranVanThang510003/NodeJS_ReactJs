@@ -1,6 +1,7 @@
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleFavorite } from "../../features/favoriteSlice";
+import {message} from "antd";
 import type { RootState, AppDispatch } from "../../redux/store";
 interface FavoriteButtonProps {
   movieId: string;
@@ -9,14 +10,20 @@ interface FavoriteButtonProps {
 const FavoriteButton: React.FC<FavoriteButtonProps> = ({ movieId }) => {
   const dispatch = useDispatch<AppDispatch>();
   const favorites = useSelector((state:RootState) => state.favorite.items);
-
+  const isLoggedIn = useSelector((state:RootState) => state.auth.isLoggedIn);
   const isFavorite = Array.isArray(favorites)
     && favorites.some(fav => String(fav.movieId || fav._id) === String(movieId));
 
   const handleToggle = (e: React.MouseEvent) => {
-    e.stopPropagation(); // tránh click lan sang MovieCard
+    e.stopPropagation();
+    if(isLoggedIn){
     dispatch(toggleFavorite(movieId));
+    }else{
+
+     message.warning("Vui lòng đăng nhập để sử dụng tính năng này")
+    }
   };
+
 
   return (
     <div

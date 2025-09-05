@@ -2,11 +2,10 @@ import { useNavigate } from "react-router-dom";
 import FavoriteButton from "../common/FavoriteButton";
 
 import type {Movie} from "../../types/movie"
-type Movies = Pick<Movie, "_id" | "poster" | "title" | "averageRating">;
+type Movies = Pick<Movie, "_id" | "poster" | "title" | "averageRating"|"episodes">;
 interface MovieCardProps {
   movie: Movies;
 }
-
 const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
   const navigate = useNavigate();
   if (!movie) return null;
@@ -14,6 +13,11 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
   const handleCardClick = () => {
     navigate(`/phim/${movie._id}`);
   };
+const latestEpisode = movie.episodes?.length
+    ? movie.episodes.reduce((latest, ep) =>
+        new Date(ep.releaseTime) > new Date(latest.releaseTime) ? ep : latest
+    )
+    : null;
 
   return (
       <div
@@ -36,6 +40,16 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
 
         <div className="absolute bottom-0 w-full bg-gray-900 bg-opacity-70 text-white p-2 text-center">
           <h3 className="text-sm font-semibold truncate">{movie.title}</h3>
+          {latestEpisode ? (
+              <p className="text-sm font-semibold  text-yellow-400">
+                Tập  {latestEpisode.episodeNumber}
+              </p>
+          ) : (
+              <p className="text-sm font-semibold  text-gray-400">
+                Chưa phát hành
+              </p>
+          )}
+
           {/*{movie.stats && <p className="text-xs text-yellow-400">{movie.stats}</p>}*/}
         </div>
       </div>

@@ -50,7 +50,7 @@ const FilterPage = () => {
       try {
         const res = await getMoviesApi(filters);
         setMovies(res.data);
-        setTotalPages(res.data && res.data.length ? Math.ceil(res.length / itemsPerPage) : 1);
+        setTotalPages(res.data && res.data.length ? Math.ceil(res.data.length / itemsPerPage) : 1);
       } catch (err) {
         console.error("Lỗi khi gọi API:", err);
       } finally {
