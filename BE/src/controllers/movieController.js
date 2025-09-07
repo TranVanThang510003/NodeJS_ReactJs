@@ -1,5 +1,5 @@
 
-const Movie = require('../models/Movie');
+const Movie = require('../models/movie');
 const { deleteMovieService, createMovieService,  updateMovieService,getMovieService,getMovieByIdService,getMoviesService} = require("../services/movieService");
 
 
