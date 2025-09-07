@@ -1,19 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-    UserOutlined,
-    LogoutOutlined,
-} from "@ant-design/icons";
-import { Avatar, Dropdown, Space } from "antd";
+import { UserOutlined, LogoutOutlined, MenuOutlined } from "@ant-design/icons";
+import { Dropdown, Space, Drawer } from "antd";
 import Logo from "../common/Logo.tsx";
-import styles from "./Header.module.css";
+import FilterBar from "../common/FilterBar.tsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import FilterBar from "../common/FilterBar.tsx";
 import { FaHeart } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../features/authSlice.js"; // <-- slice auth bạn đã viết
-import { fetchFavorites } from "../../features/favoriteSlice.js"; // <-- slice favorite bạn đã viết
+import { logout } from "../../features/authSlice.js";
+import { fetchFavorites } from "../../features/favoriteSlice.js";
+import styles from "./Header.module.css";
 
 const NAVIGATION_PATHS = {
     home: "/",
@@ -29,13 +26,12 @@ const Header = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    // lấy dữ liệu từ Redux store
     const { user, isLoggedIn } = useSelector((state) => state.auth);
     const { items: favorites } = useSelector((state) => state.favorite);
 
     const [searchValue, setSearchValue] = useState("");
+    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-    // khi login thì fetch favorites
     useEffect(() => {
         if (isLoggedIn) {
             dispatch(fetchFavorites());
@@ -43,7 +39,7 @@ const Header = () => {
     }, [isLoggedIn, dispatch]);
 
     const handleLogout = () => {
-        dispatch(logout()); // clear Redux + localStorage
+        dispatch(logout());
         navigate(NAVIGATION_PATHS.logout);
     };
 
@@ -61,104 +57,163 @@ const Header = () => {
         navigate(`/filter?name=${encodeURIComponent(value)}`);
     };
 
-    const handleInputChange = (e) => {
-        setSearchValue(e.target.value);
-    };
+    const handleInputChange = (e) => setSearchValue(e.target.value);
 
     const handleKeyPress = (e) => {
-        if (e.key === "Enter") {
-            handleSearch(searchValue);
-        }
+        if (e.key === "Enter") handleSearch(searchValue);
     };
 
-    const handleButtonClick = () => {
-        handleSearch(searchValue);
-    };
+    const handleButtonClick = () => handleSearch(searchValue);
 
     const userMenu = [
         { label: "Hồ sơ cá nhân", key: "profile", icon: <UserOutlined /> },
         { type: "divider" },
         { label: "Đăng xuất", key: "logout", icon: <LogoutOutlined /> },
-
     ];
 
     return (
-      <div className="flex fixed  w-full items-center justify-between px-6 py-3 gap-6 bg-black shadow h-[80px] z-[1000]">
-          {/* Logo + Filter */}
-          <div className="flex items-center gap-6">
-              <Logo width={50} height={50} />
-              <FilterBar onFilterChange={(filters) => console.log("Bộ lọc:", filters)} />
+      <div
+        className="flex fixed w-full items-center px-4 md:px-6 py-3 bg-black shadow h-[70px] z-[1000] justify-between">
+          {/* LEFT */}
+          <div className="flex items-center gap-3">
+              <Logo width={45} height={45}/>
+              {/* FilterBar chỉ hiện ở desktop */}
+              <div className="hidden lg:block">
+                  <FilterBar onFilterChange={(filters) => console.log("Bộ lọc:", filters)}/>
+              </div>
           </div>
 
-          {/* Search Box */}
-          <div className="w-[30%]">
-              <div className="relative">
+          {/* CENTER (Search box - desktop only) */}
+          <div className="hidden lg:flex flex-1 justify-center min-w-0 px-4 ">
+              <div className="w-full max-w-md relative bg-gray-100 rounded-lg">
                   <input
                     type="text"
                     value={searchValue}
                     onChange={handleInputChange}
                     onKeyDown={handleKeyPress}
-                    placeholder="  Tìm kiếm theo tên..."
-                    className="w-full h-[48px] px-4 border border-gray-400 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-orange-400 bg-white"
+                    placeholder="Tìm kiếm theo tên..."
+                    className="w-full h-[44px] px-4 rounded-lg border border-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-400"
                   />
                   <button
                     onClick={handleButtonClick}
-                    className="absolute right-0 top-0 h-[48px] w-[60px] bg-[#febd69] text-black rounded-r-md hover:bg-orange-400 active:bg-orange-500 transition-colors flex items-center justify-center"
+                    className="absolute right-0 top-0 h-[44px] w-[50px] bg-[#febd69] text-black rounded-r-md hover:bg-orange-400 active:bg-orange-500 flex items-center justify-center"
                   >
-                      <FontAwesomeIcon icon={faSearch} />
+                      <FontAwesomeIcon icon={faSearch}/>
                   </button>
               </div>
           </div>
 
-          <div className="flex items-center gap-6">
-              {/* Avatar hoặc Auth */}
-              {isLoggedIn ? (
-                <div className="flex items-center gap-4">
-                    {/* icon Favorite có badge */}
-                    <div className="relative cursor-pointer" onClick={() => navigate(NAVIGATION_PATHS.favoritList)}>
-                        <FaHeart
-                          size={25}
-                          className="text-orange-500 transition-transform duration-300 transform hover:scale-125"
-                        />
-                        {favorites.length > 0 && (
-                          <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                  {favorites.length}
-                </span>
-                        )}
-                    </div>
+          {/* RIGHT */}
+          <div className="flex items-center gap-4 flex-1 justify-end">
+              {/* Mobile Search Icon */}
+              <div className="lg:hidden cursor-pointer" onClick={() => setIsDrawerOpen(true)}>
+                  <FontAwesomeIcon icon={faSearch} size="lg" className="text-white"/>
+              </div>
 
-                    <Dropdown
-                      menu={{ items: userMenu, onClick: handleMenuClick }}
-                      placement="bottomRight"
-                      arrow
-                    >
-                        <Space className="cursor-pointer">
-                            <span>{user?.name || 'User'}</span>
-                            <div
-                              className="w-12 h-12 rounded-full bg-gradient-to-r from-orange-400 to-blue-500 flex items-center justify-center text-white text-xl font-bold shadow-md">
-                                {user?.name.charAt(0)}
-                            </div>
-                        </Space>
-                    </Dropdown>
-
-                </div>
-              ) : (
-                <div className="flex items-center ">
-            <span
-              className={`${styles.authButton} ${styles.register}`}
-              onClick={() => navigate(NAVIGATION_PATHS.register)}
-            >
-              Đăng ký
-            </span>
-                    <span
-                      className={`${styles.authButton} ${styles.login}`}
-                      onClick={() => navigate(NAVIGATION_PATHS.login)}
-                    >
-              Đăng nhập
-            </span>
+              {/* Favorite */}
+              {isLoggedIn && (
+                <div
+                  className="relative cursor-pointer"
+                  onClick={() => navigate(NAVIGATION_PATHS.favoritList)}
+                >
+                    <FaHeart
+                      size={24}
+                      className="text-orange-500 transition-transform duration-300 transform hover:scale-125"
+                    />
+                    {favorites.length > 0 && (
+                      <span
+                        className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                {favorites.length}
+              </span>
+                    )}
                 </div>
               )}
+
+              {/* User */}
+              {isLoggedIn ? (
+                <Dropdown menu={{ items: userMenu, onClick: handleMenuClick }} placement="bottomRight" arrow>
+                    <Space className="cursor-pointer">
+                        <span className="hidden sm:block text-white">{user?.name || "User"}</span>
+                        <div
+                          className="w-10 h-10 rounded-full bg-gradient-to-r from-orange-400 to-blue-500 flex items-center justify-center text-white text-lg font-bold shadow-md">
+                            {user?.name?.charAt(0)}
+                        </div>
+                    </Space>
+                </Dropdown>
+              ) : (
+                <div className="flex items-center text-white gap-1 sm:gap-2 md:gap-3 lg:gap-3">
+                    <span
+                      onClick={() => navigate(NAVIGATION_PATHS.register)}
+                      className="
+                        bg-orange-600 text-white
+                        px-3 py-1 rounded-md
+                        w-[110px] h-[34px] flex justify-center items-center
+                        font-medium text-[14px] cursor-pointer mr-2
+                        transition-colors duration-300
+                        hover:bg-orange-500
+                        sm:w-[110px] sm:h-[36px] sm:text-[15px]
+                        md:w-[130px] md:h-[40px] md:text-[16px]
+                        lg:w-[140px] lg:h-[44px] lg:text-[18px]
+                      "
+                    >
+                      Đăng ký
+                    </span>
+
+                    <span
+                      onClick={() => navigate(NAVIGATION_PATHS.login)}
+                      className="
+                       bg-orange-600 text-white
+                        px-3 py-1 rounded-md
+                        w-[110px] h-[34px] flex justify-center items-center
+                        font-medium text-[14px] cursor-pointer
+                        transition-colors duration-300
+                        hover:bg-orange-500
+                        sm:w-[110px] sm:h-[36px] sm:text-[15px]
+                        md:w-[130px] md:h-[40px] md:text-[16px]
+                        lg:w-[140px] lg:h-[44px] lg:text-[18px]
+                      "
+                    >
+                      Đăng nhập
+                    </span>
+
+
+                </div>
+              )}
+
+              {/* Mobile menu icon */}
+              <div className="lg:hidden cursor-pointer" onClick={() => setIsDrawerOpen(true)}>
+                  <MenuOutlined style={{ fontSize: '20px', color: 'white' }}/>
+              </div>
           </div>
+
+          {/* Drawer cho mobile (search + filter) */}
+          <Drawer
+            title="Menu"
+            placement="right"
+            onClose={() => setIsDrawerOpen(false)}
+            open={isDrawerOpen}
+          >
+              {/* Search box */}
+              <div className="mb-4">
+                  <input
+                    type="text"
+                    value={searchValue}
+                    onChange={handleInputChange}
+                    onKeyDown={handleKeyPress}
+                    placeholder="Tìm kiếm..."
+                    className="w-full h-[40px] px-3 rounded-lg border border-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-400"
+                  />
+                  <button
+                    onClick={handleButtonClick}
+                    className="mt-2 w-full h-[40px] bg-[#febd69] text-black rounded-md hover:bg-orange-400 active:bg-orange-500"
+                  >
+                      Tìm kiếm
+                  </button>
+              </div>
+
+              {/* FilterBar */}
+              <FilterBar onFilterChange={(filters) => console.log("Bộ lọc:", filters)}/>
+          </Drawer>
       </div>
     );
 };

@@ -21,7 +21,7 @@ const latestEpisode = movie.episodes?.length
 
   return (
       <div
-          className="relative w-45 h-72 mt-2 bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
+          className="relative w-38 h-66 sm:w-40 sm:h-68 lg:w-45 lg:h-72 mt-2 bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
           onClick={handleCardClick}
       >
         <img

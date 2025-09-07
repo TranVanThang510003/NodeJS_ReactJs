@@ -1,4 +1,3 @@
-
 .authButton {
     background-color: #ff6500;
     color: #fff;
@@ -13,15 +12,50 @@
     font-size: 16px;
     cursor: pointer;
     margin-right: 8px;
-    transition: background-color 0.3s, color 0.3s; /* Thêm hiệu ứng mượt mà */
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .authButton.login {
-    padding: 4px 18px; /* Điều chỉnh padding cho Login */
+    padding: 4px 18px;
 }
 
 .authButton:hover {
-    background-color: orange; /* Màu tối hơn khi hover */
+    background-color: orange;
     color: #fff;
 }
 
+/* ================= Responsive ================= */
+
+/* Màn hình nhỏ (mobile) */
+@media (max-width: 640px) {
+    .authButton {
+        width: 100px;
+        height: 36px;
+        font-size: 14px;
+        margin-right: 4px;
+        padding: 4px 8px;
+    }
+
+    .authButton.login {
+        padding: 4px 10px;
+    }
+}
+
+/* Màn hình vừa (tablet) */
+@media (min-width: 641px) and (max-width: 1024px) {
+    .authButton {
+        width: 120px;
+        height: 38px;
+        font-size: 15px;
+        margin-right: 6px;
+    }
+}
+
+/* Desktop lớn */
+@media (min-width: 1280px) {
+    .authButton {
+        width: 140px;
+        height: 44px;
+        font-size: 18px;
+    }
+}

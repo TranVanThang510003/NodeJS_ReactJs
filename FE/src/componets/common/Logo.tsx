@@ -13,12 +13,13 @@ const Logo = ({ width = 60, height = 60, className = '' }) => {
             <img
                 src="/img/logo.png"
                 alt="QuickCart Logo"
-                style={{ width, height }}
+                style={{width, height}}
                 className="object-contain"
             />
-            <span className="ml-2 text-gray-500 text-2xl font-bold drop-shadow">
-                AStream
+            <span className="hidden md:inline ml-2 text-gray-500 text-2xl font-bold drop-shadow">
+                 AStream
             </span>
+
         </div>
     );
 };

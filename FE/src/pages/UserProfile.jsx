@@ -13,7 +13,7 @@ const UserProfile = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
+    <div className="min-h-screen bg-gray-100 flex flex-col lg:flex-row items-center mt-[-100px] justify-center p-6 ">
       <div className="max-w-md w-full bg-white shadow-2xl rounded-2xl p-8">
         {/* Header */}
         <div className="flex flex-col items-center mb-6">
@@ -59,7 +59,7 @@ const UserProfile = () => {
         )}
       </div>
 
-      <div className="ml-6">
+      <div className="lg:ml-6">
         {showUpgradeCard && (
           <UpgradeCard onClose={() => setShowUpgradeCard(false)} />
         )}

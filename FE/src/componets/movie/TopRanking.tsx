@@ -3,13 +3,19 @@ import { useNavigate } from 'react-router-dom';
 import FavoriteButton from '../common/FavoriteButton';
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState, AppDispatch } from "../../redux/store";
+import {fetchTopRatedMovies} from "../../features/movieSlice";
 
 const TopRankings: React.FC = () => {
   const navigate = useNavigate();
-
+  const dispatch = useDispatch<AppDispatch>();
 
   const { topRated, loading } = useSelector((state: RootState) => state.movie);
 
+  useEffect(() => {
+    if (topRated.length === 0) {   // chỉ fetch khi chưa có dữ liệu
+      dispatch(fetchTopRatedMovies());
+    }
+  }, [dispatch, topRated.length]);
 
 
   if (loading) return <div className="text-white">Đang tải...</div>;

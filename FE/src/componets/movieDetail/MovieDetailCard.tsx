@@ -62,7 +62,7 @@ const MovieDetailCard: React.FC<MovieDetailProps> = ({ setSelectedEpisode }) => 
     return (
         <div className="flex justify-center items-center">
             <div
-                className="p-4 rounded-lg flex items-center w-full relative"
+                className="p-4 rounded-lg flex flex-col items-center lg:flex-row  lg:items-start  w-full relative"
                 onClick={(e) => e.stopPropagation()}
             >
                 <div className="relative">
@@ -91,7 +91,7 @@ const MovieDetailCard: React.FC<MovieDetailProps> = ({ setSelectedEpisode }) => 
                     </p>
 
                     <Flex gap="middle" align="center">
-                        <div className="flex justify-between">
+                        <div className="flex flex-col sm:flex-row justify-between">
                             <Rate
                                 className="custom-rate"
                                 allowHalf
@@ -99,11 +99,11 @@ const MovieDetailCard: React.FC<MovieDetailProps> = ({ setSelectedEpisode }) => 
                                 onChange={handleRatingChange}
                                 value={value}
                             />
-                            <div className="text-yellow-500 font-semibold text-lg">
+                            <div className="text-yellow-500 font-semibold text-lg lg:ml-2">
                                 {movie.averageRating} / 5 ({movie.ratingCount} đánh giá)
                             </div>
                         </div>
-                        <div className="ml-40">
+                        <div className=" ml-20 lg:ml-40 ">
                             {movieId && <FavoriteButton movieId={movieId} />}
                         </div>
                     </Flex>

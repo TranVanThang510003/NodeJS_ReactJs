@@ -78,9 +78,9 @@ const EpisodeList: React.FC<EpisodeListProps> = ({
     <div className="bg-gray-900 p-4 rounded-lg" ref={videoRef}>
       {/* Video player */}
       {selectedEp && selectedEp.videoUrl && (
-        <div className="aspect-w-16 aspect-h-9">
+        <div className="aspect-[16/9] aspect-h-9">
           <iframe
-            className="w-full h-[400px] rounded"
+            className="w-full  h-full rounded"
             src={`${convertToEmbedUrl(selectedEp.videoUrl)}?autoplay=1&rel=0`}
             title={`Tập ${selectedEp.episodeNumber}`}
             frameBorder="0"

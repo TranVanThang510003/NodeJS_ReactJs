@@ -28,29 +28,22 @@ const HomePage = () => {
 
 
     return (
-      <div className="p-6 bg-[#131314] text-white">
-          <MovieList
-            movies={topRatedMovies}
+        <div className="p-6 bg-[#131314] text-white">
+            <MovieList
+                movies={topRatedMovies}
 
-          />
-          <div className="flex">
-              <div className="w-5/7">
-                  <MovieCategory
-                    title="MỚI NHẤT"
-                    movies={newMovies}
+            />
+            <div className="flex flex-col lg:flex-row">
+                <div className="w-full lg:w-5/7">
+                    <MovieCategory title="MỚI NHẤT" movies={newMovies}/>
+                    <MovieCategory title="XEM NHIỀU NHẤT" movies={popularMovies}/>
+                </div>
+                <div className="w-full lg:w-2/7 mt-6 lg:mt-0">
+                    <TopRankings/>
+                </div>
+            </div>
 
-                  />
-                  <MovieCategory
-                    title="XEM NHIỀU NHẤT"
-                    movies={popularMovies}
-
-                  />
-              </div>
-              <div className="w-2/7">
-                  <TopRankings />
-              </div>
-          </div>
-      </div>
+        </div>
     );
 };
 

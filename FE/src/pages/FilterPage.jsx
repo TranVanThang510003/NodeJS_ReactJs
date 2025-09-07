@@ -97,8 +97,8 @@ const FilterPage = () => {
 
   return (
     <div className="p-6 text-white">
-      <div className="flex space-x-2">
-        <div className="w-5/7">
+      <div className=" flex flex-col justify-center lg:flex-row lg:items-start lg:justify-start gap-4">
+        <div className=" w-full lg:w-5/7">
           <h2
             className="inline-flex items-center px-4 py-2 mt-4 rounded-md bg-gradient-to-r from-orange-500 to-orange-600 text-white font-bold text-lg"
           >
@@ -156,7 +156,7 @@ const FilterPage = () => {
           </div>
         </div>
 
-        <div className="w-2/7">
+        <div className=" w-full lg:w-2/7 ">
           <TopRankings />
         </div>
       </div>

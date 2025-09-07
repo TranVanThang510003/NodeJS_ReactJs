@@ -38,7 +38,7 @@ const MovieCategory: React.FC<MovieCategoryProps> = ({ title, movies }) => {
   return (
       <div className="mb-6 relative mt-4">
         <h2 className="text-xl font-bold text-white mb-4">{title}</h2>
-        <div className="flex flex-wrap space-x-2 overflow-x-auto scrollbar-hide">
+        <div className="flex flex-wrap justify-center lg:justify-start space-x-2 overflow-x-auto scrollbar-hide">
           {movies.map((movie) => (
               <MovieCard key={movie._id} movie={movie} />
           ))}

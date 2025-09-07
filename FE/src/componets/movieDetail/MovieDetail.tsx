@@ -30,8 +30,8 @@ const MovieDetail = () => {
 
     return (
       <div className="p-6 text-white">
-          <div className="flex space-x-2">
-              <div className="w-5/7">
+          <div className="flex flex-col  lg:flex-row space-x-2">
+              <div className="w-full lg:w-5/7">
                   <MovieDetailCard
                     setSelectedEpisode={setSelectedEpisode}
 
@@ -44,7 +44,7 @@ const MovieDetail = () => {
                   <CommentSection />
               </div>
 
-              <div className="w-2/7">
+              <div className="w-full lg:w-2/7">
                   <TopRankings />
               </div>
           </div>
