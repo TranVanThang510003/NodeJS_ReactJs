@@ -10,7 +10,6 @@ import { FaHeart } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../features/authSlice.js";
 import { fetchFavorites } from "../../features/favoriteSlice.js";
-import styles from "./Header.module.css";
 
 const NAVIGATION_PATHS = {
     home: "/",
@@ -55,6 +54,7 @@ const Header = () => {
 
     const handleSearch = (value) => {
         navigate(`/filter?name=${encodeURIComponent(value)}`);
+        setIsDrawerOpen(false);
     };
 
     const handleInputChange = (e) => setSearchValue(e.target.value);
@@ -79,7 +79,7 @@ const Header = () => {
               <Logo width={45} height={45}/>
               {/* FilterBar chỉ hiện ở desktop */}
               <div className="hidden lg:block">
-                  <FilterBar onFilterChange={(filters) => console.log("Bộ lọc:", filters)}/>
+                  <FilterBar      onFilterChange={(filters) => console.log("Bộ lọc:", filters)}/>
               </div>
           </div>
 
@@ -188,7 +188,7 @@ const Header = () => {
 
           {/* Drawer cho mobile (search + filter) */}
           <Drawer
-            title="Menu"
+            title="Filter"
             placement="right"
             onClose={() => setIsDrawerOpen(false)}
             open={isDrawerOpen}
@@ -212,7 +212,7 @@ const Header = () => {
               </div>
 
               {/* FilterBar */}
-              <FilterBar onFilterChange={(filters) => console.log("Bộ lọc:", filters)}/>
+              <FilterBar setIsDrawerOpen={setIsDrawerOpen} onFilterChange={(filters) => console.log("Bộ lọc:", filters)}/>
           </Drawer>
       </div>
     );

@@ -156,7 +156,7 @@ const FilterPage = () => {
           </div>
         </div>
 
-        <div className=" w-full lg:w-2/7 ">
+        <div className="hidden w-full lg:w-2/7  lg:block">
           <TopRankings />
         </div>
       </div>
