@@ -59,7 +59,7 @@ const Login = () => {
             name="password"
             rules={[{ required: true, message: 'Please input your password!' }]}
           >
-            <Input.Password autoComplete="new-password" style={{ width: "400px" }}/>
+            <Input.Password autoComplete="new-password" />
           </Form.Item>
 
           <Form.Item className="text-center">
