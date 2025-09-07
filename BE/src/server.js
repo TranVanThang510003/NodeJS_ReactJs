@@ -8,7 +8,15 @@ const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 8888;
 
-app.use(cors());
+app.use(cors({
+  origin: [
+    "http://localhost:5173",               // local dev
+    "https://astream-289y.onrender.com"    // FE trên Render
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
+
 //config req.body
 app.use(express.json()) // for json
 app.use(express.urlencoded({ extended: true })) // for form data
