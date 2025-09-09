@@ -15,7 +15,7 @@ const EpisodeList = () => {
     const fetchEpisodes = async () => {
       try {
         const res = await getEpisodeByMovieId(movieId)
-        setEpisodes(res.episodes || [])
+        setEpisodes(res.data.episodes || [])
         console.log(res)
       } catch (error) {
         console.error('Lỗi khi lấy tập phim:', error)

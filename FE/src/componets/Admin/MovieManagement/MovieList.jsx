@@ -25,7 +25,7 @@ const UserPage = () => {
         fetchMovies();
     }, []);
     const handleEdit = (id) => navigate(`/dashboard/movies/edit/${id}`);
-    const handleView = (id) => navigate(`/dashboard/movies/${id}`);
+    const handleView = (id) => navigate(`/admin/movies/${id}`);
     const handleDelete = (id) => {
         const confirmed = window.confirm("Bạn có chắc muốn xoá phim này?");
         if (confirmed) {
@@ -65,13 +65,13 @@ const UserPage = () => {
             align: 'center',
             render: (_, record) => (
               <Space size="middle">
-                  <button onClick={handleView} className="px-3 py-1 text-sm bg-indigo-100 text-indigo-700 rounded hover:bg-indigo-200 transition">
+                  <button onClick={() => handleView(record._id)} className="px-3 py-1 text-sm bg-indigo-100 text-indigo-700 rounded hover:bg-indigo-200 transition">
                       Xem
                   </button>
-                  <button onClick={handleEdit} className="px-3 py-1 text-sm bg-yellow-100 text-yellow-700 rounded hover:bg-yellow-200 transition">
+                  <button  onClick={() => handleEdit(record._id)} className="px-3 py-1 text-sm bg-yellow-100 text-yellow-700 rounded hover:bg-yellow-200 transition">
                       Sửa
                   </button>
-                  <button onClick={handleDelete} className="px-3 py-1 text-sm bg-red-100 text-red-700 rounded hover:bg-red-200 transition">
+                  <button  onClick={() => handleDelete(record._id)} className="px-3 py-1 text-sm bg-red-100 text-red-700 rounded hover:bg-red-200 transition">
                       Xoá
                   </button>
               </Space>
