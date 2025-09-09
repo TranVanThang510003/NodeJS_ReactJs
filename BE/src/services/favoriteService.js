@@ -108,11 +108,11 @@ const getUserFavoritesService = async (userId) => {
           as: "movie"
         }
       },
-      { $unwind: "$movie" },
+      { $unwind: "$Movie" },
       {
         $lookup: {
           from: "ratings",
-          localField: "movie._id",
+          localField: "Movie._id",
           foreignField: "movieId",
           as: "ratings"
         }
@@ -123,7 +123,7 @@ const getUserFavoritesService = async (userId) => {
           "movie.ratingCount": { $size: "$ratings" }
         }
       },
-      { $replaceRoot: { newRoot: "$movie" } } // Chỉ giữ movie object, giống movieId trong code cũ
+      { $replaceRoot: { newRoot: "$Movie" } } // Chỉ giữ Movie object, giống movieId trong code cũ
     ]);
 
     return {

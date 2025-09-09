@@ -2,18 +2,19 @@
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Layout from "./Layout.jsx";
 import Register from "./componets/auth/Register.jsx";
-import HomePage from "./pages/HomePage.jsx";
-import UserPage from "./pages/UserPage.jsx";
+import HomePage from "./pages/Client/HomePage.tsx";
+import UserPage from "./pages/Admin/UserPage.jsx";
 import Login from "./componets/auth/Login.jsx";
 import './index.css';
-import MovieDetail from "./componets/movieDetail/MovieDetail.tsx";
-import CreateMovieForm from "./componets/Admin/MovieManagement/CreateMovieForm.tsx";
+import MovieDetail from "./componets/MovieDetail/MovieDetail.tsx";
 import AdminLayout from "./AdminLayout.jsx";
-import MovieList from "./componets/Admin/MovieManagement/MovieList.jsx";
 import EpisodeList from "./componets/Admin/MovieManagement/EpisodeList.jsx";
-import FilterPage from './pages/FilterPage.jsx'
-import FavoritePage from './pages/FavoritePage.jsx'
-import UserProfile from './pages/UserProfile.jsx'
+import FilterPage from './pages/Client/FilterPage.jsx'
+import FavoritePage from './pages/Client/FavoritePage.jsx'
+import UserProfile from './pages/Client/UserProfile.jsx'
+import MovieManagementPage from './pages/Admin/MovieManagementPage.jsx'
+import Dashboard from './pages/Admin/Dashboard.jsx'
+import CreateMoviePage from './pages/Admin/CreateMoviePage.jsx'
 const AnimatedRoute = ({ children }) => {
     const location = useLocation();
 
@@ -41,14 +42,7 @@ export default function App() {
                               </AnimatedRoute>
                           }
                       />
-                      <Route
-                          path="/user"
-                          element={
-                              <AnimatedRoute>
-                                  <UserPage />
-                              </AnimatedRoute>
-                          }
-                      />
+
                       <Route
                           path="/phim/:movieId"
                           element={
@@ -98,12 +92,28 @@ export default function App() {
                     }
                 />
 
-                <Route path="/dashboard" element={<AdminLayout />}>
+                <Route path="/admin" element={<AdminLayout />}>
                     <Route
-                        path="create-movie"
+                      path="dashboard"
+                      element={
+                        <AnimatedRoute>
+                          <Dashboard/>
+                        </AnimatedRoute>
+                      }
+                    />
+                  <Route
+                      path="users"
+                      element={
+                        <AnimatedRoute>
+                          <UserPage />
+                        </AnimatedRoute>
+                      }
+                    />
+                    <Route
+                        path="movies/create-movie"
                         element={
                             <AnimatedRoute>
-                                <CreateMovieForm/>
+                                <CreateMoviePage/>
                             </AnimatedRoute>
                         }
                     />
@@ -112,7 +122,7 @@ export default function App() {
                         path="movies"
                         element={
                             <AnimatedRoute>
-                                <MovieList/>
+                                <MovieManagementPage/>
                             </AnimatedRoute>
                         }
                     />

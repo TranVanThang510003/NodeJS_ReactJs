@@ -5,7 +5,7 @@ import { getEpisodeByMovieId } from '../../util/api'
 import MovieDetailCard from './MovieDetailCard'
 import EpisodeList from './EpisodesList.js'
 import CommentSection from './CommentSection'
-import TopRankings from '../movie/TopRanking'
+import TopRankings from '../Movie/TopRanking'
 import type {Episode} from "../../types/movie"
 
 

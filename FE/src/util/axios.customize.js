@@ -6,7 +6,7 @@ const instance = axios.create({
 });
 
 // Alter defaults after instance has been created
-// instance.defaults.headers.common['Authorization'] = localStorage.getItem("accessToken");
+// instance.defaults.headers.Common['Authorization'] = localStorage.getItem("accessToken");
 
 
 // Add a request interceptor

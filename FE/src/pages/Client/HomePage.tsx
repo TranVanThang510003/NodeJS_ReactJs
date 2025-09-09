@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import MovieList from "../componets/movie/MovieList";
-import MovieCategory from "../componets/movie/MovieCategory";
-import TopRankings from "../componets/movie/TopRanking";
-import type { RootState, AppDispatch } from "../redux/store";
+import MovieList from "../../componets/Movie/MovieList";
+import MovieCategory from "../../componets/Movie/MovieCategory";
+import TopRankings from "../../componets/Movie/TopRanking";
+import type { RootState, AppDispatch } from "../../redux/store";
 import {
     fetchNewMovies,
     fetchPopularMovies,
     fetchTopRatedMovies
-} from "../features/movieSlice";
+} from "../../features/movieSlice";
 
 const HomePage = () => {
     const dispatch = useDispatch<AppDispatch>();

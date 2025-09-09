@@ -8,7 +8,7 @@ const favoriteSchema = new mongoose.Schema({
   },
   movieId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'movie', // liên kết tới bảng movie
+    ref: 'movie', // liên kết tới bảng Movie
     required: true
   },
   createdAt: {
@@ -17,7 +17,7 @@ const favoriteSchema = new mongoose.Schema({
   }
 });
 
-// Đảm bảo 1 user không lưu trùng cùng 1 movie
+// Đảm bảo 1 user không lưu trùng cùng 1 Movie
 favoriteSchema.index({ userId: 1, movieId: 1 }, { unique: true });
 
 module.exports = mongoose.models.favorite || mongoose.model('favorite', favoriteSchema);

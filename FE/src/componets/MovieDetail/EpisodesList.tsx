@@ -134,7 +134,7 @@ const EpisodeList: React.FC<EpisodeListProps> = ({
         })}
       </div>
 
-      {/* Upgrade Card */}
+      {/* Upgrade MetricCard */}
       {upgradeEpisode && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50">
           <UpgradeCard onClose={() => setUpgradeEpisode(null)} />

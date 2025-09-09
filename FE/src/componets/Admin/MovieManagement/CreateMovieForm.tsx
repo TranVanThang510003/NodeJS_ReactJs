@@ -89,7 +89,7 @@ const CreateMovieForm: React.FC<CreateMovieFormProps> = ({ onSubmit }) => {
             layout="vertical"
             form={form}
             onFinish={onFinish}
-            style={{ padding: '60px' }}
+            style={{ padding: '0 20px' }}
             initialValues={{ country: 'Nhật Bản' }}
         >
             <Form.Item name="title" label="Tên phim (Tiếng Việt)" rules={[{ required: true }]}>

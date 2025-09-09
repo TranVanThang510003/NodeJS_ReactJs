@@ -1,29 +1,29 @@
-import { useEffect, useState } from "react";
-import {useNavigate, useParams} from "react-router-dom";
-import { getMovieApi } from "../../../util/api.ts";
 
-const MovieList = () => {
+import { getMovieApi } from "../../../util/api.ts";
+import React, { useEffect, useState } from 'react';
+import { notification, Space, Table, Tag } from 'antd';
+import {useNavigate} from "react-router-dom";
+const UserPage = () => {
     const [movies, setMovies] = useState([]);
-    const navigate = useNavigate();
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+   const navigate = useNavigate();
+
 
     useEffect(() => {
         const fetchMovies = async () => {
             try {
                 const response = await getMovieApi();
-                setMovies(response.sort((a, b) => new Date(b.releaseDate) - new Date(a.releaseDate)));
+                setMovies(response.data.sort((a, b) => new Date(b.releaseDate) - new Date(a.releaseDate)));
+                console.log(response.data);
             } catch (err) {
-                console.error("Error fetching movies:", err);
-                setError("Failed to load movies.");
-            } finally {
-                setLoading(false);
+                notification.error({
+                    message: "Lỗi",
+                    description: err.message || "Không thể lấy dữ liệu người dùng.",
+                });
             }
         };
 
         fetchMovies();
     }, []);
-
     const handleEdit = (id) => navigate(`/dashboard/movies/edit/${id}`);
     const handleView = (id) => navigate(`/dashboard/movies/${id}`);
     const handleDelete = (id) => {
@@ -32,83 +32,72 @@ const MovieList = () => {
             setMovies((prev) => prev.filter((movie) => movie._id !== id));
         }
     };
+    const handleAddNew=()=>{
+        navigate("/admin/movies/create-movie");
+    }
 
-    const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        return date.toLocaleDateString("vi-VN", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-        });
-    };
+    const columns = [
+        {
+            title: 'Tên phim',
+            dataIndex: 'title',
+            render: text => <span className="font-medium text-blue-600">{text}</span>,
+        },
+        {
+            title: 'Thể loại',
+            dataIndex: 'genres',
+            render: (genres) => Array.isArray(genres) ? genres.join(', ') : genres,
+        },
+        {
+            title: 'Ngày phát hành',
+            dataIndex: 'releaseDate',
+            render: (date) => {
+                const d = new Date(date);
+                return d.toLocaleDateString("vi-VN", {
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric",
+                });
+            }
+        },
+        {
+            title: 'Hành động',
+            key: 'action',
+            align: 'center',
+            render: (_, record) => (
+              <Space size="middle">
+                  <button onClick={handleView} className="px-3 py-1 text-sm bg-indigo-100 text-indigo-700 rounded hover:bg-indigo-200 transition">
+                      Xem
+                  </button>
+                  <button onClick={handleEdit} className="px-3 py-1 text-sm bg-yellow-100 text-yellow-700 rounded hover:bg-yellow-200 transition">
+                      Sửa
+                  </button>
+                  <button onClick={handleDelete} className="px-3 py-1 text-sm bg-red-100 text-red-700 rounded hover:bg-red-200 transition">
+                      Xoá
+                  </button>
+              </Space>
+            ),
+        },
+    ];
+
 
     return (
-        <div className="p-6">
-            <h1 className="text-3xl font-semibold text-gray-800 mb-6">🎬 Danh sách phim</h1>
-
-            {loading ? (
-                <p className="text-center text-gray-500">Đang tải...</p>
-            ) : error ? (
-                <p className="text-center text-red-500">{error}</p>
-            ) : (
-                <div className="overflow-x-auto">
-                    <table className="min-w-full bg-white shadow rounded-lg">
-                        <thead className="bg-gray-100 text-gray-700 text-sm uppercase font-semibold">
-                        <tr>
-                            <th className="p-4 text-left">Tên phim</th>
-                            <th className="p-4 text-left">Thể loại</th>
-                            <th className="p-4 text-left">Ngày phát hành</th>
-                            <th className="p-4 text-center">Hành động</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {movies.length === 0 ? (
-                            <tr>
-                                <td colSpan="4" className="p-4 text-center text-gray-500">
-                                    Không có phim nào.
-                                </td>
-                            </tr>
-                        ) : (
-                            movies.map((movie) => (
-                                <tr
-                                    key={movie._id}
-                                    className="border-t hover:bg-gray-50 transition"
-                                >
-                                    <td className="p-4">{movie.title}</td>
-                                    <td className="p-4">
-                                        {Array.isArray(movie.genres) ? movie.genres.join(', ') : movie.genres}
-                                    </td>
-
-                                    <td className="p-4">{formatDate(movie.releaseDate)}</td>
-                                    <td className="p-4 flex justify-center gap-3">
-                                        <button
-                                            onClick={() => handleView(movie._id)}
-                                            className="px-3 py-1 text-sm bg-indigo-100 text-indigo-700 rounded hover:bg-indigo-200 transition"
-                                        >
-                                            Xem
-                                        </button>
-                                        <button
-                                            onClick={() => handleEdit(movie.id)}
-                                            className="px-3 py-1 text-sm bg-yellow-100 text-yellow-700 rounded hover:bg-yellow-200 transition"
-                                        >
-                                            Sửa
-                                        </button>
-                                        <button
-                                            onClick={() => handleDelete(movie.id)}
-                                            className="px-3 py-1 text-sm bg-red-100 text-red-700 rounded hover:bg-red-200 transition"
-                                        >
-                                            Xoá
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))
-                        )}
-                        </tbody>
-                    </table>
-                </div>
-            )}
-        </div>
+      <div className="flex flex-col gap-6   min-h-screen">
+          <div className="w-full flex justify-between ">
+              <div className="text-3xl font-semibold text-gray-800 ">
+                  MANAGE USERS
+              </div>
+              <button className="text-lg font-semibold text-white rounded-lg bg-blue-400 px-4 py-2" onClick={handleAddNew}>Add new</button>
+          </div>
+          <Table
+            columns={columns}
+            dataSource={movies}
+            rowKey="_id"
+            bordered
+            pagination={{ pageSize: 10 }}
+            className="bg-white shadow-md rounded-lg"
+          />
+      </div>
     );
 };
 
-export default MovieList;
+export default UserPage;

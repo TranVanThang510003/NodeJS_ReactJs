@@ -50,7 +50,7 @@ const latestEpisode = movie.episodes?.length
               </p>
           )}
 
-          {/*{movie.stats && <p className="text-xs text-yellow-400">{movie.stats}</p>}*/}
+          {/*{Movie.stats && <p className="text-xs text-yellow-400">{Movie.stats}</p>}*/}
         </div>
       </div>
   );

@@ -26,7 +26,7 @@ routeAPI.post('/episodes/:id/increase-views', increaseViews);
 routeAPI.put('/user/update-account-type', auth, updateAccountType);
 routeAPI.post('/ratings', auth, handleRating);
 routeAPI.post('/comments', auth, postComment);
-routeAPI.post('/comments/:movieId', getComments);
+routeAPI.get('/comments/:movieId', getComments);
 
 routeAPI.post('/favorites/:movieId', auth, addFavorite);
 routeAPI.delete('/favorites/:movieId', auth, removeFavorite);

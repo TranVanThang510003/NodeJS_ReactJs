@@ -4,13 +4,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faHome,
     faFilm,
-    faListUl,
-    faCirclePlay,
     faUsers,
     faStar,
     faRightFromBracket,
-    faCircleQuestion,
-    faCalendarDays,
 } from "@fortawesome/free-solid-svg-icons";
 import Logo from "../../common/Logo.tsx";
 
@@ -19,10 +15,10 @@ const Sidebar = () => {
     const [activeItem, setActiveItem] = useState("Dashboard");
 
     const menuItems = [
-        { name: "Dashboard", icon: faHome, path: "/dashboard" },
-        { name: "Manage Movies", icon: faFilm, path: "/dashboard/movies" },
-        { name: "Manage Users", icon: faUsers, path: "/dashboard/users" },
-        { name: "Manage Reviews", icon: faStar, path: "/dashboard/reviews" },
+        { name: "Dashboard", icon: faHome, path: "/admin/dashboard" },
+        { name: "Manage Movies", icon: faFilm, path: "/admin/movies" },
+        { name: "Manage Users", icon: faUsers, path: "/admin/users" },
+        { name: "Manage Reviews", icon: faStar, path: "/admin/reviews" },
     ];
 
     const handleNavigation = (path, name) => {
@@ -69,7 +65,7 @@ const Sidebar = () => {
                         onClick={() => handleNavigation("/login")}
                     >
                         <FontAwesomeIcon icon={faRightFromBracket} className="text-[#ff6500]" />
-                        <span className="ml-3 text-gray-300">Log out</span>
+                        <span className="ml-3 text-gray-300  ">Log out</span>
                     </li>
                 </ul>
             </div>

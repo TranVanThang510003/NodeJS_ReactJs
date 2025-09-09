@@ -44,7 +44,7 @@ const getEpisodeByMovieId=(movieId: string)=>{
     return axios.get(URL_API)
 }
 const getMoviesApi = (params: Record<string, any> = {}) => {
-    const URL_API = '/api/movie/filter';
+    const URL_API = '/api/Movie/filter';
     return axios.get(URL_API, { params });
 };
 
@@ -75,7 +75,7 @@ const rating = (movieId: string, stars: number) => {
 
  const getCommentsByMovie = (movieId: string) => {
     const URL_API = `/api/comments/${movieId}`;
-    return axios.post(URL_API);
+    return axios.get(URL_API);
 };
 
 const addCommentApi = (payload: { movieId: string; content: string }) => {
