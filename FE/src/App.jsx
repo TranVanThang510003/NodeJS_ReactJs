@@ -15,6 +15,7 @@ import UserProfile from './pages/Client/UserProfile.jsx'
 import MovieManagementPage from './pages/Admin/MovieManagementPage.jsx'
 import Dashboard from './pages/Admin/Dashboard.jsx'
 import CreateMoviePage from './pages/Admin/CreateMoviePage.jsx'
+import UserTable from './componets/Admin/UserManagement/UserTable.jsx'
 const AnimatedRoute = ({ children }) => {
     const location = useLocation();
 
@@ -31,7 +32,7 @@ const AnimatedRoute = ({ children }) => {
 
 export default function App() {
     return (
-        <BrowserRouter>
+
             <Routes>
                   <Route path="/" element={<Layout />}>
                       <Route
@@ -102,6 +103,14 @@ export default function App() {
                       }
                     />
                   <Route
+                    path="test"
+                    element={
+                      <AnimatedRoute>
+                        <UserTable/>
+                      </AnimatedRoute>
+                    }
+                  />
+                  <Route
                       path="users"
                       element={
                         <AnimatedRoute>
@@ -137,8 +146,6 @@ export default function App() {
                 </Route>
 
             </Routes>
-
-        </BrowserRouter>
     );
 }
 

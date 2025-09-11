@@ -19,6 +19,7 @@
     "@reduxjs/toolkit": "^2.8.2",
     "@tailwindcss/vite": "^4.1.11",
     "antd": "^5.26.6",
+    "antd-style": "^3.7.1",
     "axios": "^1.10.0",
     "chart.js": "^4.5.0",
     "framer-motion": "^12.23.12",

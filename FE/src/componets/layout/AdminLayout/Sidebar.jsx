@@ -27,7 +27,7 @@ const Sidebar = () => {
     };
 
     return (
-        <div className="w-72 h-screen p-6 flex flex-col justify-between bg-gray-900">
+        <div className="w-72 flex-shrink-0 h-screen p-6 flex flex-col justify-between bg-gray-900">
             <div>
                 {/* Logo */}
                 <div className="flex items-center cursor-pointer py-2" onClick={() => navigate("/")}>
