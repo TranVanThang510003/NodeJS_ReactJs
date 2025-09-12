@@ -98,6 +98,7 @@ const removeFavoriteService = async (userId, movieId) => {
 };
 const getUserFavoritesService = async (userId) => {
   try {
+   
     const favorites = await Favorite.aggregate([
       { $match: { userId: new mongoose.Types.ObjectId(userId) } },
       {
@@ -108,11 +109,11 @@ const getUserFavoritesService = async (userId) => {
           as: "movie"
         }
       },
-      { $unwind: "$Movie" },
+      { $unwind: "$movie" },   // đúng field là movie
       {
         $lookup: {
           from: "ratings",
-          localField: "Movie._id",
+          localField: "movie._id",
           foreignField: "movieId",
           as: "ratings"
         }
@@ -123,8 +124,9 @@ const getUserFavoritesService = async (userId) => {
           "movie.ratingCount": { $size: "$ratings" }
         }
       },
-      { $replaceRoot: { newRoot: "$Movie" } } // Chỉ giữ Movie object, giống movieId trong code cũ
+      { $replaceRoot: { newRoot: "$movie" } } // cũng dùng "movie"
     ]);
+
 
     return {
       success: true,

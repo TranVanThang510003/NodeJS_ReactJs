@@ -90,32 +90,6 @@ const updateMovieService = async (id, updatedData) => {
         };
     }
 };
-const getMovieService = async () => {
-    try {
-        const result = await Movie.aggregate([
-            {
-                $lookup: {
-                    from: 'ratings',               // tên collection ratings
-                    localField: '_id',             // khóa từ Movie
-                    foreignField: 'movie',         // khóa từ Rating
-                    as: 'ratings'                  // gộp kết quả vào field
-                }
-            },
-            {
-                $addFields: {
-                    averageRating: {
-                        $ifNull: [{ $avg: "$ratings.stars" }, 0] // nếu không có thì là 0
-                    },
-                    ratingCount: { $size: "$ratings" } // số lượt đánh giá
-                }
-            }
-        ]);
-        return result;
-    } catch (error) {
-        console.error(error);
-        return null;
-    }
-};
 
 const getMoviesService = async (query) => {
     const {
@@ -279,5 +253,5 @@ const getMovieByIdService = async (movieId) => {
 
 
 module.exports = {
-    createMovieService, deleteMovieService,updateMovieService,getMovieService,getMovieByIdService,getMoviesService,
+    createMovieService, deleteMovieService,updateMovieService,getMovieByIdService,getMoviesService,
 };

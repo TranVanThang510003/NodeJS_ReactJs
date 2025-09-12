@@ -1,6 +1,6 @@
 
 const Movie = require('../models/movie');
-const { deleteMovieService, createMovieService,  updateMovieService,getMovieService,getMovieByIdService,getMoviesService} = require("../services/movieService");
+const { deleteMovieService, createMovieService,  updateMovieService,getMovieByIdService,getMoviesService} = require("../services/movieService");
 
 
 
@@ -28,10 +28,7 @@ const updateMovie = async (req, res) => {
     return res.status(result.statusCode).json(result);
 };
 
-const getAllMovie = async(req,res)=>{
-    const data = await getMovieService(req,res)
-    return res.status(201).json(data)
-}
+
 
 
 const getMovieById = async (req, res) => {
@@ -45,6 +42,7 @@ const getMovieById = async (req, res) => {
 const getMovies = async (req, res) => {
     try {
         const result = await getMoviesService(req.query);
+        console.log(result);
         return res.status(200).json(result);
     } catch (error) {
         console.error(error);
@@ -54,5 +52,5 @@ const getMovies = async (req, res) => {
 
 
 module.exports = {
-    createMovie,deleteMovie,updateMovie, getAllMovie, getMovieById,getMovies,
+    createMovie,deleteMovie,updateMovie, getMovieById,getMovies,
 };
