@@ -16,13 +16,14 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({ movieId }) => {
 
   const handleToggle = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if(isLoggedIn){
-    dispatch(toggleFavorite(movieId));
-    }else{
-
-     message.warning("Vui lòng đăng nhập để sử dụng tính năng này")
+    console.log("FavoriteButton clicked", { movieId, isFavorite, isLoggedIn });
+    if (isLoggedIn) {
+      dispatch(toggleFavorite(movieId) as any);
+    } else {
+      message.warning("Vui lòng đăng nhập để sử dụng tính năng này");
     }
   };
+
 
 
   return (

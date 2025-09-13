@@ -60,9 +60,10 @@ const EpisodeList: React.FC<EpisodeListProps> = ({
       return;
     }
 
-    setUpgradeEpisode(null); // 🆕 ẩn UpgradeCard nếu tập không bị khóa
+    setUpgradeEpisode(null); //ẩn UpgradeCard nếu tập không bị khóa
     setSelectedEpisode(ep.episodeNumber);
     handleWatch(ep._id);
+    addToHistory(ep); //lưu vào history
   };
 
   useEffect(() => {
@@ -73,6 +74,17 @@ const EpisodeList: React.FC<EpisodeListProps> = ({
       });
     }
   }, [selectedEpisode]);
+
+  const addToHistory = (ep: Episode) => {
+    const stored = localStorage.getItem("watchHistory");
+    const history: Episode[] = stored ? JSON.parse(stored) : [];
+
+    // tránh trùng lặp
+    if (!history.some(h => h._id === ep._id)) {
+      const newHistory = [...history, ep];
+      localStorage.setItem("watchHistory", JSON.stringify(newHistory));
+    }
+  };
 
   return (
     <div className="bg-gray-900 p-4 rounded-lg" ref={videoRef}>

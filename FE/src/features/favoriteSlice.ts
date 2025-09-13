@@ -27,6 +27,7 @@ export const fetchFavorites = createAsyncThunk<Favorite[], void, { rejectValue: 
       try {
         const res = await getFavoritesApi();
         return res.data.data || [];
+
       } catch (err: any) {
         return rejectWithValue({
           status: err.response?.status,

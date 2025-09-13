@@ -9,6 +9,8 @@ import {
     fetchPopularMovies,
     fetchTopRatedMovies
 } from "../../features/movieSlice";
+import {fetchFavorites} from "../../features/favoriteSlice";
+import RecommendedMovieList from "../../componets/Movie/RecommendedMovieList";
 
 const HomePage = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -20,6 +22,9 @@ const HomePage = () => {
         dispatch(fetchNewMovies());
         dispatch(fetchPopularMovies());
         dispatch(fetchTopRatedMovies());
+        if (localStorage.getItem("accessToken")) {
+            dispatch(fetchFavorites());
+        }
     }, [dispatch]);
 
 
@@ -29,10 +34,11 @@ const HomePage = () => {
 
     return (
         <div className="p-6 bg-[#131314] text-white">
-            <MovieList
-                movies={topRatedMovies}
+            {/*<MovieList*/}
+            {/*    movies={topRatedMovies}*/}
 
-            />
+            {/*/>*/}
+            <RecommendedMovieList/>
             <div className="flex flex-col lg:flex-row">
                 <div className="w-full lg:w-5/7">
                     <MovieCategory title="MỚI NHẤT" movies={newMovies}/>

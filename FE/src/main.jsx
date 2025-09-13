@@ -10,17 +10,17 @@ import './index.css'
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>
     <ConfigProvider
-      theme={{
-        token: {
-          // Seed Token
-          colorPrimary: '#00b96b',
-          borderRadius: 8,
-          colorText: '#1a1a1a',        // chữ chính đậm
-          colorTextSecondary: '#595959', // chữ phụ
-          // Alias Token
-          colorBgContainer: '#f5f5f5',
-        },
-      }}
+      // theme={{
+      //   token: {
+      //     // Seed Token
+      //     colorPrimary: '#00b96b',
+      //     borderRadius: 8,
+      //     colorText: '#1a1a1a',        // chữ chính đậm
+      //     colorTextSecondary: '#595959', // chữ phụ
+      //     // Alias Token
+      //     colorBgContainer: '#f5f5f5',
+      //   },
+      // }}
     >
       <BrowserRouter>
         <StrictMode>

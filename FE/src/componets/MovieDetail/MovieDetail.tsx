@@ -7,26 +7,27 @@ import EpisodeList from './EpisodesList.js'
 import CommentSection from './CommentSection'
 import TopRankings from '../Movie/TopRanking'
 import type {Episode} from "../../types/movie"
-
+import {useMovie} from '../../hook/useMovies'
+import {useEpisodes} from "../../hook/useEpisodes";
 
 const MovieDetail = () => {
     const [selectedEpisode, setSelectedEpisode] = useState<number | null>(null);
-    const [episodes, setEpisodes] = useState<Episode[]>([]);
+    // const [episodes, setEpisodes] = useState<Episode[]>([]);
     const { movieId } = useParams<{ movieId: string }>();
-
-
-    useEffect(() => {
-        const fetchEpisodes = async () => {
-            try {
-                const res = await getEpisodeByMovieId(movieId as string);
-                setEpisodes(res?.data?.episodes || []);
-            } catch (error) {
-                console.error("Lỗi khi lấy danh sách tập phim:", error);
-            }
-        };
-
-        if (movieId) fetchEpisodes();
-    }, [movieId]);
+    const {  movie } = useMovie(movieId as string)
+   const { episodes } =useEpisodes(movieId as string)
+    // useEffect(() => {
+    //     const fetchEpisodes = async () => {
+    //         try {
+    //             const res = await getEpisodeByMovieId(movieId as string);
+    //             setEpisodes(res?.data?.episodes || []);
+    //         } catch (error) {
+    //             console.error("Lỗi khi lấy danh sách tập phim:", error);
+    //         }
+    //     };
+    //
+    //     if (movieId) fetchEpisodes();
+    // }, [movieId]);
 
     return (
       <div className="p-6 text-white">
@@ -34,7 +35,7 @@ const MovieDetail = () => {
               <div className="w-full lg:w-5/7">
                   <MovieDetailCard
                     setSelectedEpisode={setSelectedEpisode}
-
+                    movie={movie}
                   />
                   <EpisodeList
                     episodes={episodes}

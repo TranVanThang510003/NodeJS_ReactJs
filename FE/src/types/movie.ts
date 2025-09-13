@@ -32,7 +32,7 @@ export interface Movie {
     createdAt?: string;
     __v?: number;
 
-    episodes?: Episode[];
+    episodes: Episode[];
     latestEpisodeDate?: string;
     totalViews?: number;
 

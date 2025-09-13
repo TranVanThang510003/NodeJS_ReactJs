@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Flex, message, Rate } from "antd";
 import "../../style/global.css";
-import { getMovieByIdApi, rating } from "../../util/api";
+import {  rating } from "../../util/api";
 import { useParams } from "react-router-dom";
 import FavoriteButton from "../common/FavoriteButton";
 import type { Movie } from "../../types/movie";
@@ -9,21 +9,14 @@ import type { Movie } from "../../types/movie";
 const desc = ["terrible", "bad", "normal", "good", "wonderful"];
 
 interface MovieDetailProps {
+    movie: Movie | null;
     setSelectedEpisode: React.Dispatch<React.SetStateAction<number | null>>;
 }
 
-const MovieDetailCard: React.FC<MovieDetailProps> = ({ setSelectedEpisode }) => {
-    const [movie, setMovie] = useState<Movie | null>(null);
+const MovieDetailCard: React.FC<MovieDetailProps> = ({movie, setSelectedEpisode }) => {
     const { movieId } = useParams<{ movieId: string }>();
     const [value, setValue] = useState(0);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const response = await getMovieByIdApi(movieId as string);
-            setMovie(response.data);
-        };
-        fetchData();
-    }, [movieId]);
 
     const year =
         movie?.releaseDate ? new Date(movie.releaseDate).getFullYear() : "";

@@ -42,7 +42,6 @@ const getMovieById = async (req, res) => {
 const getMovies = async (req, res) => {
     try {
         const result = await getMoviesService(req.query);
-        console.log(result);
         return res.status(200).json(result);
     } catch (error) {
         console.error(error);

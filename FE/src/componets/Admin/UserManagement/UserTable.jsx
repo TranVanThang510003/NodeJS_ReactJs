@@ -1,6 +1,6 @@
 
 
-import { useUsers } from '../../../hook/useUsers.js'
+import { useUsers } from '../../../hook/useUsers.ts'
 import CommonTable from '../Common/CommonTable.jsx'
 import { Tag, Space } from "antd";
 const columns = [

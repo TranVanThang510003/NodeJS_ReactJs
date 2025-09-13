@@ -23,11 +23,7 @@ const getUserApi =()=>{
     return axios.get(URL_API)
 }
 
-const getMovieApi =()=>{
 
-    const URL_API='/api/movies'
-    return axios.get(URL_API)
-}
 const getMovieByIdApi =(movieId: string)=>{
 
     const URL_API=`/api/movies/${movieId}`
@@ -44,7 +40,7 @@ const getEpisodeByMovieId=(movieId: string)=>{
     return axios.get(URL_API)
 }
 const getMoviesApi = (params: Record<string, any> = {}) => {
-    const URL_API = '/api/Movie/filter';
+    const URL_API = '/api/movies/filter';
     return axios.get(URL_API, { params });
 };
 
@@ -102,7 +98,6 @@ export {
     getUserApi,
     createMovieApi,
     createEpisodeApi,
-    getMovieApi,
     getMovieByIdApi,
     getEpisodeByMovieId,
     getMoviesApi,

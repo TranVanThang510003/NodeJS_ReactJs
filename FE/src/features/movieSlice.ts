@@ -59,11 +59,11 @@ export const fetchTopRatedMovies = createAsyncThunk<
   async (_, { rejectWithValue }) => {
     try {
         const res = await getMoviesApi({
-            sortBy: "averageRating",
+            sortBy: "rating",
             sortOrder: "desc",
             limit: 10
         })
-        console.log(res)
+
       return res.data|| []
     } catch (err: any) {
 

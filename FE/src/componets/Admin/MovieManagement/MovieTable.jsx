@@ -1,6 +1,6 @@
 
 import {useNavigate} from "react-router-dom";
-import useMovies from '../../../hook/useMovies.js'
+import {useMovies} from '../../../hook/useMovies.ts'
 import CommonTable from '../Common/CommonTable.jsx'
 import {Space} from 'antd'
 

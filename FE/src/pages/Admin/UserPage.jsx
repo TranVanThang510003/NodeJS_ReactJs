@@ -7,7 +7,9 @@ const UserPage = () => {
           <div className="text-3xl font-semibold text-gray-800 ">
               MANAGE USERS
           </div>
-          <UserTable/>
+          <div className="flex justify-center">
+             <UserTable/>
+          </div>
       </div>
     );
 };
