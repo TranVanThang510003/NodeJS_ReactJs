@@ -53,24 +53,34 @@ export const fetchPopularMovies = createAsyncThunk <
 export const fetchTopRatedMovies = createAsyncThunk<
     Movie[],
     void,
-    {rejectValue: ApiError}
+    { rejectValue: ApiError }
 >(
-  "movies/fetchTopRated",
-  async (_, { rejectWithValue }) => {
-    try {
-        const res = await getMoviesApi({
-            sortBy: "rating",
-            sortOrder: "desc",
-            limit: 10
-        })
+    "movies/fetchTopRated",
+    async (_, { rejectWithValue }) => {
+        try {
+            // fetch nhiều hơn để có đủ dữ liệu lọc
+            const res = await getMoviesApi({
+                sortBy: "rating",
+                sortOrder: "desc",
+                limit: 50,
+            });
 
-      return res.data|| []
-    } catch (err: any) {
+            // lọc phim có ít nhất 1 tập
+            const validMovies: Movie[] = (res.data || []).filter(
+                (m: Movie) => m.episodes && m.episodes.length > 0
+            );
 
-      return rejectWithValue(err.response?.data || "Lỗi fetch top rated movies");
+            // cắt đúng 10 phim
+            return validMovies.slice(0, 10);
+        } catch (err: any) {
+            return rejectWithValue(
+                err.response?.data || "Lỗi fetch top rated movies"
+            );
+        }
     }
-  }
 );
+
+
 
 // ================= State type =================
 export interface MovieState {

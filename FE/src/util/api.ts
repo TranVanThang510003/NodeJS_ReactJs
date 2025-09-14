@@ -43,6 +43,10 @@ const getMoviesApi = (params: Record<string, any> = {}) => {
     const URL_API = '/api/movies/filter';
     return axios.get(URL_API, { params });
 };
+const getRecommendationsApi = () => {
+    const URL_API = "/api/recommendations";
+    return axios.get(URL_API);
+};
 
 const increaseEpisodeViewsApi = async (episodeId: string) => {
     try {
@@ -92,6 +96,16 @@ const deleteFavoriteApi = (payload: { movieId: string }) => {
     const URL_API = `/api/favorites`;
     return axios.get(URL_API);
 };
+
+ const updateWatchHistory=(payload: { movieId: string, episodeId: string,progress: number, isCompleted:boolean })=>{
+     const URL_API = `/api/history/${payload.movieId}/${payload.episodeId}`;
+     return axios.patch(URL_API,payload);
+ }
+const getWatchHistory=(payload: { movieId: string, episodeId: string })=>{
+    const URL_API = `/api/history/${payload.movieId}/${payload.episodeId}`;
+    return axios.get(URL_API);
+}
+
 export {
     createUserApi,
     loginApi,
@@ -110,5 +124,8 @@ export {
     deleteFavoriteApi,
     getFavoritesApi,
     userInformationApi,
+    updateWatchHistory,
+    getWatchHistory,
+    getRecommendationsApi
 };
 

@@ -13,7 +13,7 @@ app.use(cors({
     "http://localhost:5173",               // local dev
     "https://astream-289y.onrender.com"    // FE trên Render
   ],
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  methods: ["GET", "POST", "PUT", "DELETE","PATCH"],
   credentials: true
 }));
 

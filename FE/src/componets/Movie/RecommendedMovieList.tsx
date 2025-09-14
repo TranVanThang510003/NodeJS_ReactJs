@@ -1,85 +1,42 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import MovieCard from "./MovieCard";
 import "../../style/global.css";
 import type { Movie } from "../../types/movie";
-import { getMoviesApi } from "../../util/api";
+import { getRecommendationsApi } from "../../util/api";
+import type { RootState } from "../../redux/store";
 
 const RecommendedMovieList: React.FC = () => {
   const [recommendedMovies, setRecommendedMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
-  // Hàm check phim có ít nhất 1 tập đã phát hành
-  const hasReleasedEpisode = (movie: Movie): boolean => {
-    if (!movie.episodes || movie.episodes.length === 0) return false;
-    const now = new Date();
-    return movie.episodes.some(
-        (ep) => ep.releaseTime && new Date(ep.releaseTime) <= now
-    );
-  };
+  // lấy topRated từ redux khi chưa login
+  const { topRated } = useSelector((state: RootState) => state.movie);
 
   useEffect(() => {
+    const isLoggedIn = !!localStorage.getItem("accessToken");
+
+    // Nếu chưa login -> dùng topRated luôn
+    if (!isLoggedIn) {
+      setRecommendedMovies(topRated);
+      setLoading(false);
+      return;
+    }
+
+    // Nếu đã login -> fetch recommendations
     const cached = localStorage.getItem("recommendations");
     if (cached) {
       setRecommendedMovies(JSON.parse(cached));
-      setLoading(false); // hiển thị ngay cache
+      setLoading(false);
     }
-    const fetchMovies = async (): Promise<void> => {
+
+    const fetchMovies = async () => {
       try {
-        const stored = localStorage.getItem("watchHistory");
-        const history: string[] = stored
-            ? (JSON.parse(stored) as { movieId: string }[]).map((ep) => ep.movieId)
-            : [];
+        const res = await getRecommendationsApi();
+        const movies: Movie[] = res.data;
 
-        const watchedIds: string[] = Array.from(new Set(history));
-
-        const allMovies = await getMoviesApi({ limit: 100, sortBy: "rating" });
-        const movies: Movie[] = allMovies.data;
-
-        // --- Ưu tiên 1: phim đang xem ---
-        const watchingMovies = movies.filter(
-            (m) => watchedIds.includes(m._id) && hasReleasedEpisode(m)
-        );
-
-        // --- Ưu tiên 2: phim cùng thể loại ---
-        const genreCount: Record<string, number> = {};
-        watchingMovies.forEach((movie) => {
-          movie.genres?.forEach((g) => {
-            genreCount[g] = (genreCount[g] || 0) + 1;
-          });
-        });
-
-        const favoriteGenre: string | undefined = Object.keys(genreCount)
-            .sort((a, b) => (genreCount[b] ?? 0) - (genreCount[a] ?? 0))[0];
-
-        const sameGenreMovies = favoriteGenre
-            ? movies.filter(
-                (m) =>
-                    !watchedIds.includes(m._id) &&
-                    m.genres?.includes(favoriteGenre) &&
-                    hasReleasedEpisode(m)
-            )
-            : [];
-
-        // --- Ưu tiên 3: fallback theo rating ---
-        const topRatedMovies = movies.filter(
-            (m) => !watchedIds.includes(m._id) && hasReleasedEpisode(m)
-        );
-
-        // --- Merge ---
-        const combined: Movie[] = [
-          ...watchingMovies,
-          ...sameGenreMovies,
-          ...topRatedMovies,
-        ];
-
-        // Loại bỏ trùng lặp theo _id
-        const uniqueMovies: Movie[] = Array.from(
-            new Map(combined.map((m) => [m._id, m])).values()
-        ).slice(0, 10);
-// update state + cache
-        setRecommendedMovies(uniqueMovies);
-        localStorage.setItem("recommendations", JSON.stringify(uniqueMovies));
-
+        setRecommendedMovies(movies);
+        localStorage.setItem("recommendations", JSON.stringify(movies));
       } catch (error) {
         console.error("Lỗi khi fetch phim:", error);
         setRecommendedMovies([]);
@@ -89,7 +46,7 @@ const RecommendedMovieList: React.FC = () => {
     };
 
     fetchMovies();
-  }, []);
+  }, [topRated]);
 
   if (loading) {
     return <p className="text-gray-400 p-4">Đang tải dữ liệu...</p>;
