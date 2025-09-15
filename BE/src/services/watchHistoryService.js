@@ -1,4 +1,6 @@
 const WatchHistory = require("../models/watchHistory");
+const Movie = require("../models/movie");
+const { Types } = require("mongoose");
 
 const createHistoryService = async (historyData, userId) => {
   try {
@@ -51,7 +53,7 @@ const createHistoryService = async (historyData, userId) => {
 };
 
 // Lấy lịch sử xem của user theo movie + episode
-const  getWatchHistoryService = async (movieId, episodeId, userId) => {
+const  getEpisodeWatchHistoryService = async (movieId, episodeId, userId) => {
   try {
     const history = await WatchHistory.findOne({
       userId,
@@ -85,4 +87,131 @@ const  getWatchHistoryService = async (movieId, episodeId, userId) => {
   }
 };
 
-module.exports = { createHistoryService, getWatchHistoryService };
+const getMovieWatchHistoryService = async (movieId, userId) => {
+  try {
+    const histories = await WatchHistory.find({ userId, movieId }).lean();
+
+    const watchedEpisodeIds = histories.map(h => h.episodeId.toString());
+
+    return {
+      success: true,
+      statusCode: 200,
+      data: watchedEpisodeIds,
+      message: watchedEpisodeIds.length
+        ? "Lấy danh sách tập đã xem thành công"
+        : "Chưa xem tập nào",
+    };
+  } catch (error) {
+    console.error("Lỗi lấy lịch sử xem:", error);
+    return {
+      success: false,
+      statusCode: 500,
+      message: "Lỗi máy chủ khi lấy lịch sử xem",
+    };
+  }
+};
+
+// --- Lấy danh sách phim đã xem  ---
+const getWatchedMoviesService = async (userId) => {
+  try {
+    const histories = await WatchHistory.find({ userId }).lean();
+    const watchedIds = [...new Set(histories.map(h => h.movieId.toString()))];
+
+    if (watchedIds.length === 0) {
+      return {
+        success: true,
+        statusCode: 200,
+        message: "Chưa có phim đã xem",
+        data: []
+      };
+    }
+
+    const objectIds = watchedIds.map(id => new Types.ObjectId(id));
+
+    let movies = await Movie.aggregate([
+      { $match: { _id: { $in: objectIds } } },
+      {
+        $lookup: {
+          from: "episodes",
+          localField: "_id",
+          foreignField: "movieId",
+          as: "episodes"
+        }
+      },
+      {
+        $addFields: {
+          latestEpisodeDate: { $max: "$episodes.createdAt" },
+          totalViews: { $sum: "$episodes.views" }
+        }
+      },
+      {
+        $lookup: {
+          from: "ratings",
+          localField: "_id",
+          foreignField: "movieId",
+          as: "ratings"
+        }
+      },
+      {
+        $addFields: {
+          averageRating: { $ifNull: [{ $avg: "$ratings.stars" }, 0] },
+          ratingCount: { $size: "$ratings" }
+        }
+      }
+    ]);
+
+    // Map movieId -> latestWatchedAt
+    const latestWatchMap = {};
+    histories.forEach(h => {
+      const mId = h.movieId.toString();
+      if (!latestWatchMap[mId] || new Date(h.watchedAt) > new Date(latestWatchMap[mId])) {
+        latestWatchMap[mId] = h.watchedAt;
+      }
+    });
+
+    // Đánh dấu isFullyWatched + gắn latestWatchedAt
+    const watchMap = {};
+    histories.forEach(h => {
+      const mId = h.movieId.toString();
+      if (!watchMap[mId]) watchMap[mId] = new Set();
+      if (h.episodeId) watchMap[mId].add(h.episodeId.toString());
+    });
+
+    for (const movie of movies) {
+      const watchedEpisodes = watchMap[movie._id.toString()] || new Set();
+      movie.isFullyWatched =
+        movie.episodes.length > 0 &&
+        watchedEpisodes.size >= movie.episodes.length;
+
+      movie.latestWatchedAt = latestWatchMap[movie._id.toString()] || null;
+    }
+
+    // Sort theo latestWatchedAt (mới nhất lên trước)
+    movies.sort((a, b) => new Date(b.latestWatchedAt) - new Date(a.latestWatchedAt));
+
+    return {
+      success: true,
+      statusCode: 200,
+      message: "Lấy danh sách phim đã xem thành công",
+      data: movies
+    };
+  } catch (error) {
+    console.error("Lỗi lấy danh sách phim đã xem:", error);
+    return {
+      success: false,
+      statusCode: 500,
+      message: "Lỗi máy chủ khi lấy danh sách phim đã xem",
+      data: null
+    };
+  }
+};
+
+
+
+
+module.exports = {
+  createHistoryService,
+  getEpisodeWatchHistoryService,  // Lấy chi tiết lịch sử xem cho 1 movie + episode
+  getWatchedMoviesService,// Lấy danh sách tất cả phim đã xem
+  getMovieWatchHistoryService
+};

@@ -58,3 +58,34 @@ export const useWatchHistory = (player: any, user: any, episode: Episode | null)
         };
     }, [player, user, episode]);
 };
+
+import { getWatchHistoryByMovie } from "../util/api";
+
+export const useMovieWatchHistory = (movieId: string) => {
+    const [watchedEpisodes, setWatchedEpisodes] = useState<{[key: string]: number}>({});
+
+    useEffect(() => {
+        if (!movieId) return;
+
+        const fetchHistory = async () => {
+            try {
+                const res = await getWatchHistoryByMovie({movieId });
+                console.log("res",res)
+                if (res.data.success && Array.isArray(res.data.data)) {
+                    const map: {[key: string]: number} = {};
+                    res.data.data.forEach((episodeId: string) => {
+                        map[episodeId] = 100; // hoặc chỉ mark là đã xem
+                    });
+                    setWatchedEpisodes(map);
+                }
+
+            } catch (err) {
+                console.error("Lỗi lấy lịch sử xem:", err);
+            }
+        };
+
+        fetchHistory();
+    }, [movieId]);
+
+    return watchedEpisodes;
+};

@@ -49,17 +49,8 @@ const getMovies = async (req, res) => {
     }
 };
 
-const getRecommendations=async(req,res)=>{
-    const userId = req.user?.userId;
-    try {
-        const result = await getRecommendationsService(userId);
-        return res.status(200).json(result);
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: "Lỗi khi lấy danh sách phim." });
-    }
-}
+
 
 module.exports = {
-    createMovie,deleteMovie,updateMovie, getMovieById,getMovies,getRecommendations
+    createMovie,deleteMovie,updateMovie, getMovieById,getMovies
 };

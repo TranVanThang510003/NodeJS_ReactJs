@@ -16,6 +16,7 @@ const MovieCategory: React.FC<MovieCategoryProps> = ({ title, movies }) => {
   const navigate = useNavigate();
   const isFilterPage = location.pathname === "/filter";
   const isFavoritePage = location.pathname === "/favorite-list";
+  const isHistoryPage = location.pathname === "/history-list";
 
   const getFilterParams = () => {
     switch (title) {
@@ -43,7 +44,7 @@ const MovieCategory: React.FC<MovieCategoryProps> = ({ title, movies }) => {
               <MovieCard key={movie._id} movie={movie} />
           ))}
         </div>
-        {!isFilterPage && !isFavoritePage && (
+        {!isFilterPage && !isFavoritePage && !isHistoryPage && (
             <div className="w-full mt-2 flex justify-end">
               <div
                   className="text-orange-500 flex px-4 py-2 cursor-pointer items-center space-x-1 mr-8 hover:text-orange-700 transition duration-300"

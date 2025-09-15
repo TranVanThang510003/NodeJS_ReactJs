@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchFavorites, toggleFavorite } from "../../features/favoriteSlice.ts";
+import { fetchFavorites} from "../../features/favoriteSlice.ts";
 import MovieCategory from "../../componets/Movie/MovieCategory.tsx";
 
 const FavoritePage = () => {
-  const [searchParams] = useSearchParams();
   const [page, setPage] = useState(1);
   const itemsPerPage = 15;
 
   const dispatch = useDispatch();
-  const { items: favorites, loading } = useSelector((state) => state.favorite);
+  const { items: favorites } = useSelector((state) => state.favorite);
 
   useEffect(() => {
     dispatch(fetchFavorites());
-  }, [dispatch, searchParams]);
+  }, [dispatch]);
 
   const totalPages = favorites.length
     ? Math.ceil(favorites.length / itemsPerPage)
@@ -34,9 +32,7 @@ const FavoritePage = () => {
       <MovieCategory
         title=""
         movies={paginatedMovies}
-        loading={loading}
-        favorites={favorites}
-        toggleFavorite={(id) => dispatch(toggleFavorite(id))}
+
       />
 
       {/* Pagination */}

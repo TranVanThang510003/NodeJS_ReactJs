@@ -105,7 +105,14 @@ const getWatchHistory=(payload: { movieId: string, episodeId: string })=>{
     const URL_API = `/api/history/${payload.movieId}/${payload.episodeId}`;
     return axios.get(URL_API);
 }
-
+const getWatchHistoryByMovie=(payload: { movieId: string })=>{
+    const URL_API = `/api/history/${payload.movieId}`;
+    return axios.get(URL_API);
+}
+const getWatchedMovies=()=>{
+    const URL_API = `/api/history`;
+    return axios.get(URL_API);
+}
 export {
     createUserApi,
     loginApi,
@@ -126,6 +133,8 @@ export {
     userInformationApi,
     updateWatchHistory,
     getWatchHistory,
-    getRecommendationsApi
+    getWatchHistoryByMovie,
+    getRecommendationsApi,
+    getWatchedMovies
 };
 

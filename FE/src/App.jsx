@@ -16,6 +16,7 @@ import MovieManagementPage from './pages/Admin/MovieManagementPage.jsx'
 import Dashboard from './pages/Admin/Dashboard.jsx'
 import CreateMoviePage from './pages/Admin/CreateMoviePage.jsx'
 import UserTable from './componets/Admin/UserManagement/UserTable.jsx'
+import HistoryPage from './pages/Client/HistoryPage.js'
 const AnimatedRoute = ({ children }) => {
     const location = useLocation();
 
@@ -63,6 +64,13 @@ export default function App() {
                            element={
                              <AnimatedRoute>
                                <FavoritePage />
+                             </AnimatedRoute>
+                           }
+                    />
+                    <Route path="/history-list"
+                           element={
+                             <AnimatedRoute>
+                               <HistoryPage />
                              </AnimatedRoute>
                            }
                     />

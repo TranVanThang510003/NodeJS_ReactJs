@@ -2,11 +2,12 @@ const express = require('express');
 const routeAPI = express.Router();
 const {createUser, handleLogin, getUser ,updateAccountType,getAllUser } = require('../controllers/userController');
 const auth = require("../middleware/auth");
-const {createMovie, deleteMovie,updateMovie,getMovieById,getMovies, getRecommendations } = require("../controllers/movieController");
+const {createMovie, deleteMovie,updateMovie,getMovieById,getMovies } = require("../controllers/movieController");
+const { getRecommendations } = require("../controllers/recommendController");
 const {createEpisode, deleteEpisode,updateEpisode,increaseViews} = require("../controllers/episodeController");
 const { handleRating ,postComment,getComments } = require('../controllers/ratingController');
 const { addFavorite, removeFavorite, getUserFavorites} = require("../controllers/favoriteController");
-const { createHistory , getWatchHistory} = require('../controllers/watchHistoryController')
+const { createHistory , getWatchHistory, getWatchedMovies,getMovieWatchHistory} = require('../controllers/watchHistoryController')
  // routeAPI.all('/{*any}', auth);
 routeAPI.post('/register',createUser)
 routeAPI.post('/login',handleLogin)
@@ -36,4 +37,6 @@ routeAPI.get('/favorites', auth, getUserFavorites);
 //history
 routeAPI.patch('/history/:movieId/:episodeId',auth,createHistory)
 routeAPI.get('/history/:movieId/:episodeId',auth,getWatchHistory)
+routeAPI.get('/history/:movieId',auth,getMovieWatchHistory)
+routeAPI.get('/history/',auth,getWatchedMovies)
 module.exports= routeAPI;

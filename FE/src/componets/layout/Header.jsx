@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { UserOutlined, LogoutOutlined, MenuOutlined } from "@ant-design/icons";
+import { UserOutlined, LogoutOutlined, MenuOutlined} from "@ant-design/icons";
 import { Dropdown, Space, Drawer } from "antd";
 import Logo from "../common/Logo.tsx";
 import FilterBar from "../common/FilterBar.tsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { FaHeart } from "react-icons/fa";
+import { faSearch} from "@fortawesome/free-solid-svg-icons";
+import { FaRegHeart,FaHistory } from "react-icons/fa"
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../features/authSlice.js";
 import { fetchFavorites } from "../../features/favoriteSlice.js";
@@ -19,6 +19,7 @@ const NAVIGATION_PATHS = {
     logout: "/login",
     cart: "/cart",
     favoritList: "/favorite-list",
+    historyList: "/history-list",
 };
 
 const Header = () => {
@@ -112,28 +113,45 @@ const Header = () => {
 
               {/* Favorite */}
               {isLoggedIn && (
-                <div
-                  className="relative cursor-pointer"
-                  onClick={() => navigate(NAVIGATION_PATHS.favoritList)}
-                >
-                    <FaHeart
-                      size={24}
-                      className="text-orange-500 transition-transform duration-300 transform hover:scale-125"
-                    />
-                    {favorites.length > 0 && (
-                      <span
-                        className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                {favorites.length}
-              </span>
-                    )}
+                <div className="flex gap-4 px-2">
+                    <div
+                      className="relative cursor-pointer"
+                      onClick={() => navigate(NAVIGATION_PATHS.favoritList)}
+                    >
+                        <FaRegHeart
+                          size={24}
+                          className="text-orange-500 transition-transform duration-300 transform hover:scale-125"
+                          title="Danh sách yêu thích"
+                        />
+                        {favorites.length > 0 && (
+                          <span
+                            className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                            {favorites.length}
+                          </span>
+                        )}
+                    </div>
+                    <div
+                      className="cursor-pointer inline-block transition-transform duration-300 transform hover:scale-125"
+                      onClick={() => navigate(NAVIGATION_PATHS.historyList)}
+                    >
+                        <FaHistory
+                          size={24}
+                          className="text-orange-500 transition-transform duration-300 transform hover:scale-125"
+                          title="Lịch sử xem"
+                        />
+
+                    </div>
+
+
                 </div>
+
               )}
 
               {/* User */}
               {isLoggedIn ? (
                 <Dropdown menu={{ items: userMenu, onClick: handleMenuClick }} placement="bottomRight" arrow>
                     <Space className="cursor-pointer">
-                        <span className="hidden sm:block text-white">{user?.name || "User"}</span>
+                        <span className="hidden sm:block text-white">{user?.name || 'User'}</span>
                         <div
                           className="w-10 h-10 rounded-full bg-gradient-to-r from-orange-400 to-blue-500 flex items-center justify-center text-white text-lg font-bold shadow-md">
                             {user?.name?.charAt(0)}
